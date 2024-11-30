@@ -15,7 +15,7 @@ int main()
     for (int &i : arr)
         cin >> i;
     int l = 0, r = n - 1;
-    while (l > r)
+    while (l <= r)
     {
         res++;
         while (l <= r && arr[l] != res)

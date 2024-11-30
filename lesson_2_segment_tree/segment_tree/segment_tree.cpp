@@ -24,24 +24,7 @@ void buildTree()
         a[i] = a[2 * i] + a[2 * i + 1];
     }
 }
-vector<int64_t> buildTree(vector<int64_t> arr)
-{
-    vector<int64_t> segmentTree;
-    int ln = arr.size();
-    int p = 1;
-    while (p < ln)
-        p <<= 1;
-    segmentTree.assign(4 * p, 0);
-    for (int i = 0; i < ln; i++)
-    {
-        segmentTree[p + i] = arr[i];
-    }
-    for (int i = p - 1; i > 0; i--)
-    {
-        segmentTree[i] = segmentTree[2 * i] + segmentTree[2 * i + 1];
-    }
-    return segmentTree;
-}
+
 void update(int i, int64_t val)
 {
     int u = p + i;
@@ -69,7 +52,48 @@ int64_t sumRange(int L, int R)
     }
     return sum;
 }
-
+void buildTree(int node, int start, int end)
+{
+    if (start == end) // Leaf node
+    {
+        cin >> a[node];
+    }
+    else
+    {
+        int mid = (start + end) / 2;
+        int leftChild = 2 * node;
+        int rightChild = 2 * node + 1;
+        buildTree(leftChild, start, mid);
+        buildTree(rightChild, mid + 1, end);
+        a[node] = a[leftChild] + a[rightChild];
+    }
+}
+void update(int i, int l, int r, const int &position, const int64_t &val)
+{
+    if (position < l || position > r)
+        return;
+    if (l == r)
+        a[position] = val;
+    int mid = (l + r) / 2;
+    update(2 * i, l, mid, position, val);
+    update(2 * i + 1, mid + 1, r, position, val);
+    a[i] = a[2 * i] + a[2 * i + 1];
+}
+int64_t sumrange(int i, int L, int R, int l, int r)
+{
+    if (r < L || R < l)
+    {
+        return 0;
+    }
+    if (l <= L && R <= r)
+    {
+        return a[i];
+    }
+    int mid = (L + R) / 2;
+    int64_t valueLeft = sumrange(2 * i, L, mid, l, r);
+    int64_t valueRight = sumrange(2 * i + 1, mid + 1, r, l, r);
+    return valueLeft + valueRight;
+}
 int main()
 {
     fi >> n;
