@@ -14,9 +14,9 @@ int main()
     int p = 1;
     while (p < n)
         p <<= 1;
-    vector<pii> t(4 * n + 10, {123, 1});
-    stack<int> st;
-    // tìm và xử lý kí tự min tỏng xâu
+    vector<pii> t(4 * n + 10, {123, 1}); // quản lý min
+    stack<int> st;                       // lưu vị trí kí tự được chọn
+    // tìm và xử lý kí tự min trỏng xâu
     char ch = *min_element(s.begin(), s.end());
     // ký tự cuối cùng không phải là ch
     if (s[n - 1] != ch)
@@ -24,6 +24,8 @@ int main()
     // tìm và xử lý kí tự min
     for (int i = n - 1; i >= 0; --i)
     {
+        // nếu là min: thay thế trong s thành '{', lưu vị trí vào stack,lưu cả vị trí trước đó;
+        // nếu không phải thêm phần tử vào segment tree
         if (s[i] == ch)
         {
             ans += ch;
@@ -56,11 +58,11 @@ int main()
         pii r = t[v];
         while (v > 0)
         {
-            if (v & (-v) == v)
+            if ((v & (-v)) == v) // là lũy thừa của 2
                 break;
-            if (v & 1)
+            if (v & 1) // là nút bên phải
                 r = min(r, t[v - 1]);
-            v >>= 1;
+            v >>= 1; // chuyển lên nút cha
         }
         return r;
     };
@@ -91,6 +93,4 @@ chọn kí tự si
 tách s thành 2 xâu sl=s[1...i-1]; sr=s[i+1...sn]
 thực hiện hiện với xâu s1 và sau đó với xâu sr
 output: thứ tự từ điển nhỏ nhất  theo giải thuật trên
-
-
 */
