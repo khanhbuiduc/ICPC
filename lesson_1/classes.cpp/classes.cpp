@@ -28,7 +28,7 @@ int main()
     for (int i = 0; i < n; i++)
     {
         fi >> a;
-        if (countDivisors(a) % 2 == 0) // vd: 100=2*2*5*5;count=2
+        if (countDivisors(a) % 2 == 0) // vd: 100=2*2*5*5;count=4
         {
             fo << "1 ";
         }

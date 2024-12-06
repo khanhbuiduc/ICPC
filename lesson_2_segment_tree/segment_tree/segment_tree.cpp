@@ -52,6 +52,22 @@ int64_t sumRange(int L, int R)
     }
     return sum;
 }
+int64_t sumRange(int i) // phần tử thứ i: 1,2,3...
+{
+    int u;
+    int64_t f;
+    if (i == 0)
+        return 0;
+    u = i + p - 1;
+    f = a[u];
+    while (u > 0)
+    {
+        if (u & 1)
+            f += a[u - 1]; // nếu là lẻ: thì k có cha nữa nên cộng vào f
+        u >>= 1;
+    }
+    return f;
+}
 void buildTree(int node, int start, int end)
 {
     if (start == end) // Leaf node
@@ -103,7 +119,7 @@ int main()
     // Ví dụ: tính tổng đoạn và cập nhật giá trị
     int L, R;
     fi >> L >> R;
-    fo << "Tổng của đoạn [" << L << ", " << R << "] là: " << sumRange(L, R) << endl;
+    fo << "Tổng của đoạn [" << L << ", " << R << "] là: " << sumRange(4) << endl;
 
     int index;
     int64_t newVal;
