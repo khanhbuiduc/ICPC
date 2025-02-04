@@ -19,7 +19,7 @@ bool isValid(int number, int digit)
     }
     return false;
 }
-void buildTree(int i, int L, int R, int digit)
+void buildTree(int i, int L, int R, int digit) // 11n
 {
     if (L == R) // Leaf node
     {
@@ -63,7 +63,7 @@ void update(int i, int l, int r, const int &position, const int &val, int digit)
         segmentTrees[digit][i] = segmentTrees[digit][2 * i] + segmentTrees[digit][2 * i + 1];
     }
 }
-int64_t sumRange(int i, int L, int R, int l, int r, int digit)
+int64_t sumRange(int i, int L, int R, int l, int r, int digit) // từ l đến r
 {
     if (r < L || R < l)
     {
@@ -80,8 +80,8 @@ int64_t sumRange(int i, int L, int R, int l, int r, int digit)
 }
 int main()
 {
-    freopen("candy.inp", "r", stdin);
-    freopen("candy.out", "w", stdout);
+    // freopen("candy.inp", "r", stdin);
+    // freopen("candy.out", "w", stdout);
 
     cin >> n >> q;
     a.resize(n + 1);

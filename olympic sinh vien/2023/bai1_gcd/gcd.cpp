@@ -49,6 +49,7 @@ int main()
     cin >> a >> b >> M;
     // int64_t findGcd = gcd(nthFibonacci(a), nthFibonacci(b));
     int64_t findGcd = nthFibonacci(__gcd(a, b));
+
     int64_t balance = findGcd;
     cout << balance;
     return 0;

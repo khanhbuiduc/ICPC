@@ -1,0 +1,62 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define inf 1'000'000'007
+
+const int MAX = 1000; // Assuming maximum size for m and n
+int a[MAX + 1][MAX + 1];
+
+int main()
+{
+    // freopen("path.inp", "r", stdin);
+    // freopen("path.out", "w", stdout);
+    int m, n, k;
+    int xt, yt; // xt, yt < 1000
+    cin >> m >> n >> k;
+
+    // Initialize the array with 0
+    for (int i = 1; i <= m; ++i)
+    {
+        for (int j = 1; j <= n; ++j)
+        {
+            a[i][j] = 0;
+        }
+    }
+
+    // điểm rào là -1
+    while (k--)
+    {
+        cin >> xt >> yt;
+        a[xt][yt] = -1;
+    }
+
+    if (a[m][n] == -1 || a[1][1] == -1)
+    {
+        cout << "0";
+        return 0;
+    }
+
+    /*
+    khởi tạo điểm đầu tiên là 1
+    nếu đểm đó không phải rào
+    điểm trên đó không phải rào: + đểm trên
+    điểm bên phải là hàng rào: + bên phải
+    */
+    a[1][1] = 1;
+
+    for (int i = 1; i <= m; ++i)
+    {
+        for (int j = 1; j <= n; ++j)
+        {
+            if (a[i][j] == -1)
+                continue;
+            if (i > 1 && a[i - 1][j] != -1)
+                a[i][j] += a[i - 1][j];
+            if (j > 1 && a[i][j - 1] != -1)
+                a[i][j] += a[i][j - 1];
+            a[i][j] %= inf;
+        }
+    }
+
+    cout << a[m][n];
+    return 0;
+}

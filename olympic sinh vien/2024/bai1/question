@@ -1,0 +1,39 @@
+Bài 1. Đường đi (100 điểm)
+Alice đang thử nghiệm khả năng tìm đường của một robot trên lưới ô vuông kích thước
+ . Các hàng của lưới được đánh số từ đến từ trên xuống dưới, các cột được đánh số
+từ đến từ trái sang phải. Ô giao giữa hàng , cột gọi là ô
+ . Trên lưới có ô cấm
+
+
+
+ là các ô robot không thể di chuyển
+vào được, các ô còn lại là ô tự do là các ô robot có thể di chuyển vào. Robot xuất phát tại ô
+tự do cần tìm đường đến ô tự do , mỗi lượt robot chỉ được đi sang ô tự do kề bên
+phải hoặc ô kề bên dưới. Để đánh giá khả năng tìm đường của robot, Alice muốn đếm xem
+có bao nhiêu đường đi thỏa mãn.
+Yêu cầu: Cho lưới và vị trí ô cấm, hãy giúp Alice đếm số đường đi thỏa mãn.
+Dữ liệu: Vào từ thiết bị vào chuẩn có khuôn dạng:
+- Dòng đầu chứa ba số nguyên
+ ;
+- Dòng thứ trong dòng sau chứa hai số nguyên dương
+
+ .
+Kết quả: Ghi ra thiết bị ra chuẩn một số là phần dư của số đường đi chia cho .
+
+Ví dụ:
+Dữ liệu vào 
+4 5 5
+2 2
+2 3
+2 4
+4 2
+4 3
+Kết quả
+3
+
+Giới hạn:
+Subtask 1 (20% số điểm): m,n<=10;k=0;
+Subtask 2 (20% số điểm): m,n<=1000;
+Subtask 3 (20% số điểm): k=0;
+Subtask 4 (20% số điểm): k<=5;
+Subtask 5 (20% số điểm): Không có ràng buộc nào thêm.
