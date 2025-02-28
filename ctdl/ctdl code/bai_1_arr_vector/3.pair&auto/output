@@ -1,0 +1,15 @@
+Input data: 1 2 3 2 
+
+=== PAIR DEMONSTRATIONS ===
+1. Basic pair: {1, one}
+2. Make_pair: {2, two}
+3. Nested pair: {test, {10, 3.14}}
+4. Vector of pairs: {1,one} {2,two} 
+
+=== AUTO DEMONSTRATIONS ===
+1. Auto basic types: i, d, PKc
+2. Auto with iterators: 1 2 3 
+3. Range-based for with auto: 1 2 3 
+4. Structured bindings: 
+   Alice: 100
+   Bob: 90

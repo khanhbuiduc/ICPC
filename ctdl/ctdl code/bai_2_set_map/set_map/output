@@ -1,0 +1,54 @@
+
+=== SET METHODS DEMONSTRATION ===
+1. Insertion Methods:
+   After insertions: 1 3 4 5 6 7 8 9 10 
+2. Removal Methods:
+   After erasures: 3 4 5 7 
+3. Search Methods:
+   Contains 4? 1
+   Find 3: 3
+   Lower bound of 3: 3
+   Upper bound of 3: 4
+4. Size Methods:
+   Size: 4
+   Max size: 230584300921369395
+   Empty? 0
+5. Iterator Methods:
+   First element: 3
+   Last element: 7
+   Reverse first: 7
+
+=== MAP METHODS DEMONSTRATION ===
+1. Insertion Methods:
+   After insertions:
+   five: 5
+   four: 4
+   one: 1
+   six: 6
+   three: 3
+   two: 2
+2. Access Methods:
+   Direct access: 1
+   Using at(): 2
+3. Removal Methods:
+   After erasures:
+   five: 5
+   four: 4
+   six: 6
+   three: 3
+4. Search Methods:
+   Contains 'three'? 1
+   Found four: 4
+   Lower bound of 'four': four
+5. Size Methods:
+   Size: 4
+   Max size: 128102389400760775
+   Empty? 0
+6. Advanced Operations:
+   After merge:
+   FOUR: 4
+   eight: 8
+   five: 5
+   seven: 7
+   six: 6
+   three: 3

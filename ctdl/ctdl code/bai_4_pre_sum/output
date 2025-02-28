@@ -1,0 +1,16 @@
+
+=== 1D PREFIX SUM DEMONSTRATIONS ===
+Original array: 1 2 3 4 5 
+Prefix sum array: 1 3 6 10 15 
+Sum from index 1 to 3: 9
+
+=== 2D PREFIX SUM DEMONSTRATIONS ===
+Original matrix:
+1 2 3 
+4 5 6 
+7 8 9 
+Prefix sum matrix:
+1 3 6 
+5 12 21 
+12 27 45 
+Sum in rectangle from (1,1) to (2,2): 28

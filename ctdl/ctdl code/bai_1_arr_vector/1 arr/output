@@ -1,0 +1,15 @@
+Original array: 1 2 3 2 
+Sorted ascending: 1 2 2 3 
+Sorted descending: 3 2 2 1 
+Min element: 1
+Max element: 3
+Binary search for 2: Found
+Count of 2: 2
+Reversed array: 3 2 2 1 
+Sum of elements: 8
+First occurrence of 2 at position: 1
+Array after removing duplicates: 1 2 3 
+Array after filling with 5: 5 5 5 5 
+Array after rotating left by 1: 5 5 5 5 
+Is array sorted? Yes
+Adjacent duplicates found at position: 0
