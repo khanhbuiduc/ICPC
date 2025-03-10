@@ -13,7 +13,7 @@ int main()
 
         if (i & ~n)
             continue;
-        ans ~ ^= ((s[i] - '0'));
+        ans ^= ((s[i] - '0'));
     }
     cout << ans;
 }

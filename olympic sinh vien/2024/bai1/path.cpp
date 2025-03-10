@@ -150,6 +150,8 @@ void process()
 
 int main()
 {
+    // freopen("path.inp", "r", stdin);
+    // freopen("path.out", "w", stdout);
     // Chuẩn bị tiền xử lý giai thừa
     prepare();
     // Đọc dữ liệu đầu vào và khởi tạo các biến

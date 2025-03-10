@@ -1,129 +1,139 @@
+// Categories: Dynamic Programming
 #include <bits/stdc++.h>
 using namespace std;
 #define LIM 1002
-#define MOD 1'000'000'002
-#define MAX 200'000
-int row, col, maxBlockRow = 1, maxBlockColumn = 1;
-bool canGo[LIM][LIM]; // mặc định false
-int numway[LIM][LIM]; // mặc định bằng 0
-int frac[MAX], finv[MAX];
-// Frac[n]=n!
-// finv[n]=((n!)^(mod-2))
-int PowMod(int num, int pow)
+#define MOD 1'000'000'007 // 2^32~10^9
+#define MAX 200'002
+typedef long long ll;
+// khởi tạo
+int numRow, numCol, numBlocked, maxBlockedRow, maxBlockedCol;
+int canGo[LIM][LIM];
+int numWay[LIM][LIM];
+// lưu giai thừa và nghịch đảo giai thừa
+ll fact[MAX], finv[MAX];
+// 1 tinh nghich dao modul
+ll modPow(ll a, ll b)
 {
-    int res = 1;
-    while (pow > 0)
+    ll result = 1;
+    while (b > 0)
     {
-        if (pow & 1)
-            res = (1ll * res * num) % MOD;
-        num = (1ll * num * num) % MOD;
-        pow >>= 1;
+        if (b & 1)
+            result = (result * a) % MOD;
+        a = (a * a) % MOD;
+        b >>= 1;
     }
-    return res;
+    return result;
 }
-void CaculateFrac()
+ll modInverse(ll a)
 {
-    frac[0] = 1;
+    return modPow(a, MOD - 2);
+}
+// tinh giai thua va nghich dao giai thua
+void prepare()
+{
+    fact[0] = 1;
     finv[0] = 1;
-    // tính frac
-    for (int i = 2; i < 200'000; i++)
+    for (int i = 1; i < MAX; i++)
     {
-        frac[i] = ((1ll * frac[i - 1] * i) % MOD);
-    }
-    finv[MAX - 1] = PowMod(frac[MAX - 1], MOD - 2); // có thể tối ưu
-    for (int i = MAX - 1; i > 0; i--)
-    {
-        finv[i - 1] = ((1ll * finv[i] * i) % MOD);
+        fact[i] = (fact[i - 1] * i) % MOD;
+        finv[i] = modInverse(fact[i]);
     }
 }
-int C(int k, int n)
+//  2 tinh to hop
+ll comb(int n, int k)
 {
-    __int64 res = frac[n] * finv[k] * finv[n - k];
-    return res % MOD;
+    return ((fact[n] * finv[k]) % MOD * finv[n - k]) % MOD; // chú ý mặc dù 2 số là ll nhưng khi nhân 2 số vẫn có thể tràn;
 }
-int Combi(int x1, int y1, int x2, int y2)
+ll combByCoordinates(int x1, int y1, int x2, int y2)
 {
-    int right = x2 - x1;
-    int down = y2 - y1;
-    return C(down, right + down);
+    int down = x2 - x1, right = y2 - y1;
+    return comb(down + right, down);
 }
-void add(int &a, int b)
-{
-    a = (1ll + a + b) % MOD;
-    return;
-}
-void process()
-{ // tính số cách đi (1,1)->(maxBlockRow,maxBlockColumn)
-    // khởi tạo ô đầu tiên =1
-    numway[1][1] = 1;
-    for (int i = 1; i <= maxBlockRow; i++)
-    {
-        for (int j = 1; j <= maxBlockColumn; j++)
-        {
-            // tính số cách đi ô kề trái
-            if (i < maxBlockRow && canGo[i + 1][j])
-                add(numway[i + 1][j], numway[i][j]);
-            // tính số cách đi ô kề dưới
-            if (j < maxBlockColumn && canGo[i][j + 1])
-                add(numway[i][j + 1], numway[i][j]);
-        }
-    }
-    // nếu khoảng ô block ở vị trí max cũng chính là giới hạn
-    if (row == maxBlockRow && col == maxBlockColumn)
-    {
-        cout << numway[row][col];
-        return;
-    }
-    // Xử lý phần còn lại không có block bằng tổ hợp
-    int ways = 0;
-    // xét từng ô bên phải
-    if (col > maxBlockColumn)
-    {
-        int caculationRight;
-        for (int i = 1; i < maxBlockRow; i++)
-        {
-            caculationRight = numway[i][maxBlockColumn];
-            caculationRight = (1ll * caculationRight * Combi(i, maxBlockColumn + 1, row, col)) % MOD;
-            add(ways, caculationRight);
-        }
-    }
-    // xét từng ô bên dướ
-    if (row > maxBlockRow)
-    {
-        int caculationDown;
-        for (int i = 1; i < maxBlockColumn; i++)
-        {
-            caculationDown = numway[maxBlockRow][i];
-            caculationDown *= Combi(maxBlockRow + 1, i, row, col);
-            ways += caculationDown;
-        }
-    }
-    cout << ways;
-}
+// Hàm đọc dữ liệu
 void init()
 {
-    int t, xt, yt;
+    cin >> numRow >> numCol >> numBlocked;
+    // Khởi tạo toàn bộ ô là được đi
     for (int i = 0; i < LIM; i++)
     {
         for (int j = 0; j < LIM; j++)
         {
             canGo[i][j] = true;
+            numWay[i][j] = 0;
         }
     }
-    cin >> row >> col >> t;
-    for (int i = 0; i < t; i++)
+    // Ban đầu vùng bị ảnh hưởng là ít nhất (1,1)
+    maxBlockedRow = 1, maxBlockedCol = 1;
+    // Đánh dấu các ô bị chặn và cập nhật giới hạn vùng chặn
+    int xt, yt;
+    for (int i = 1; i <= numBlocked; i++)
     {
         cin >> xt >> yt;
         canGo[xt][yt] = false;
-        maxBlockRow = max(maxBlockRow, xt);
-        maxBlockColumn = max(maxBlockColumn, yt);
+        maxBlockedRow = max(maxBlockedRow, xt);
+        maxBlockedCol = max(maxBlockedCol, yt);
     }
-    CaculateFrac();
+}
+
+// Hàm xử lý: tính số cách đi từ (1,1) đến (numRow, numCol)
+void process()
+{
+    // Dùng quy hoạch động trong vùng [1..maxBlockedRow] x [1..maxBlockedCol]
+    numWay[1][1] = 1;
+    for (int i = 1; i <= maxBlockedRow; i++)
+    {
+        for (int j = 1; j <= maxBlockedCol; j++)
+        {
+            if (!canGo[i][j])
+                continue;
+            // Di chuyển xuống (i+1, j) nếu trong vùng và ô đó không bị chặn
+            if (canGo[i + 1][j])
+            {
+                numWay[i + 1][j] = (numWay[i + 1][j] + numWay[i][j]) % MOD;
+            }
+            // Di chuyển sang phải (i, j+1)
+            if (canGo[i][j + 1])
+            {
+                numWay[i][j + 1] = (numWay[i][j + 1] + numWay[i][j]) % MOD;
+            }
+        }
+    }
+    // Nếu đích nằm trong vùng quy hoạch động, in luôn kết quả
+    if (numRow == maxBlockedRow && numCol == maxBlockedCol)
+    {
+        cout << numWay[numRow][numCol];
+        return;
+    }
+    // Nếu đích nằm ngoài vùng, dùng công thức tổ hợp để nối các đường đi “free”
+    ll res = 0;
+    ll ways = 0;
+    // Nếu phía bên phải vùng bị ảnh hưởng chưa đến cột đích
+    if (maxBlockedCol < numCol)
+    {
+        for (int i = 1; i <= maxBlockedRow; i++)
+        {
+            ways = combByCoordinates(i, maxBlockedCol + 1, numRow, numCol);
+            ways = (ways * numWay[i][maxBlockedCol]) % MOD;
+            res = (res + ways) % MOD;
+        }
+    }
+    // Nếu phía dưới vùng bị ảnh hưởng chưa đến hàng đích
+    if (maxBlockedRow < numRow)
+    {
+        for (int i = 1; i <= maxBlockedCol; i++)
+        {
+            ways = combByCoordinates(maxBlockedRow + 1, i, numRow, numCol);
+            ways = (ways * numWay[maxBlockedRow][i]) % MOD;
+            res = (res + ways) % MOD;
+        }
+    }
+    cout << res;
 }
 int main()
 {
-    freopen("path.inp", "r", stdin);
-    freopen("path.out", "w", stdout);
+    // freopen("path.inp", "r", stdin);
+    // freopen("path.out", "w", stdout);
+    prepare();
     init();
     process();
 }
