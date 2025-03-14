@@ -1,89 +1,165 @@
 #include <bits/stdc++.h>
+
 using namespace std;
-// lưu trữ hàm ban đầuđầu
-vector<string> allowed_substrings = {"AA", "BB", "CC", "DDDD", "BABA", "ACAC", "DABCACB"};
-// lưu trữ các bước;
-// phuơng pháp này chỉ giải quyết khi steps<10;
-struct State
-{
-    string current;
-    vector<pair<int, int>> steps;
-};
 
-vector<pair<int, int>> get_transformations(string S, string T)
+// Hàm hỗ trợ tối ưu hóa giá trị
+template <class X, class Y>
+bool minimize(X &x, const Y &y)
 {
-    queue<State> q;
-    unordered_set<string> visited;
-    q.push({S, {}});
-    visited.insert(S);
-
-    while (!q.empty())
+    if (x > y)
     {
-        State state = q.front();
-        q.pop();
-        if (state.current == T)
-            return state.steps;
+        x = y;
+        return true;
+    }
+    return false;
+}
 
-        // Try inserting
-        for (int i = 0; i < allowed_substrings.size(); ++i)
+template <class X, class Y>
+bool maximize(X &x, const Y &y)
+{
+    if (x < y)
+    {
+        x = y;
+        return true;
+    }
+    return false;
+}
+
+template <class T>
+T Abs(const T &x)
+{
+    return (x < 0 ? -x : x);
+}
+
+const int AB_TO_BA[3][2] = {{1, 2}, {5, 1}, {2, -5}};
+const int AC_TO_CA[3][2] = {{1, 3}, {2, 1}, {3, -6}};
+const int D_TO_EMPTY[6][2] = {{2, 1}, {3, 5}, {6, -1}, {5, 6}, {4, -1}, {1, -7}};
+
+vector<pair<int, int>> transABtoBA, transACtoCA, transDtoEmpty;
+
+void convert(const int arr[][2], int sz, vector<pair<int, int>> &trans)
+{
+    trans.resize(sz);
+    for (int i = 0; i < sz; i++)
+    {
+        trans[i].first = arr[i][0] - 1;
+        trans[i].second = arr[i][1];
+    }
+}
+
+void reverseTransform(vector<pair<int, int>> &trans)
+{
+    reverse(trans.begin(), trans.end());
+    for (auto &p : trans)
+        p.second *= -1;
+}
+
+bool prepared = false;
+void prepare()
+{
+    if (prepared)
+        return;
+    prepared = true;
+
+    convert(AB_TO_BA, 3, transABtoBA);
+    convert(AC_TO_CA, 3, transACtoCA);
+    convert(D_TO_EMPTY, 6, transDtoEmpty);
+}
+
+void transformToCore(string &source, vector<pair<int, int>> &trans)
+{
+    trans.clear();
+
+    // Bước 1: Xóa tất cả ký tự 'D'
+    for (int i = source.size() - 1; i >= 0; i--)
+    {
+        if (source[i] == 'D')
         {
-            const string &sub = allowed_substrings[i];
-            for (int pos = 0; pos <= state.current.size(); ++pos)
+            for (const auto &p : transDtoEmpty)
             {
-                string new_str = state.current.substr(0, pos) + sub + state.current.substr(pos);
-                if (visited.find(new_str) == visited.end())
-                {
-                    visited.insert(new_str);
-                    auto new_steps = state.steps;
-                    new_steps.emplace_back(pos + 1, i + 1);
-                    q.push({new_str, new_steps});
-                }
+                trans.emplace_back(p.first + i, p.second);
             }
+            source.erase(source.begin() + i);
         }
+    }
 
-        // Try deleting
-        for (int i = 0; i < allowed_substrings.size(); ++i)
+    // Bước 2: Di chuyển tất cả 'A' về cuối chuỗi
+    for (int i = source.size() - 1; i >= 0; i--)
+    {
+        if (source[i] == 'A')
         {
-            const string &sub = allowed_substrings[i];
-            size_t pos = 0;
-            while ((pos = state.current.find(sub, pos)) != string::npos)
+            int j = i;
+            while (j + 1 < source.size() && source[j + 1] != 'A')
             {
-                string new_str = state.current.substr(0, pos) + state.current.substr(pos + sub.size());
-                if (visited.find(new_str) == visited.end())
+                const auto &transList = (source[j + 1] == 'B') ? transABtoBA : transACtoCA;
+                for (const auto &p : transList)
                 {
-                    visited.insert(new_str);
-                    auto new_steps = state.steps;
-                    new_steps.emplace_back(pos + 1, -(i + 1));
-                    q.push({new_str, new_steps});
+                    trans.emplace_back(p.first + j, p.second);
                 }
-                pos += 1;
+                swap(source[j], source[j + 1]);
+                j++;
             }
         }
     }
 
-    return {}; // No solution found
+    // Bước 3: Xóa các cặp 'AA' ở cuối
+    while (source.size() >= 2 && source[source.size() - 2] == 'A' && source[source.size() - 1] == 'A')
+    {
+        trans.emplace_back(source.size() - 2, -1);
+        source.pop_back();
+        source.pop_back();
+    }
+
+    // Bước 4: Xóa các cặp 'BB' và 'CC'
+    while (source.size() >= 2)
+    {
+        bool needContinue = false;
+        for (int i = source.size() - 2; i >= 0; i--)
+        {
+            if (source[i] == source[i + 1])
+            {
+                trans.emplace_back(i, (source[i] == 'B' ? -2 : -3));
+                source.erase(i, 2);
+                needContinue = true;
+            }
+        }
+        if (!needContinue)
+            break;
+    }
+}
+
+void solve(string sta, string fin)
+{
+    prepare();
+
+    vector<pair<int, int>> transSta, transFin;
+    transformToCore(sta, transSta);
+    transformToCore(fin, transFin);
+
+    assert(sta == fin);
+
+    reverseTransform(transFin);
+    cout << transSta.size() + transFin.size() << "\n";
+    for (const auto &p : transSta)
+    {
+        cout << p.first + 1 << " " << p.second << "\n";
+    }
+    for (const auto &p : transFin)
+    {
+        cout << p.first + 1 << " " << p.second << "\n";
+    }
+    cout << endl;
 }
 
 int main()
 {
-    freopen("transf.inp", "r", stdin);
-    freopen("transf.out", "w", stdout);
-    string S, T;
-    cin >> S >> T;
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-    vector<pair<int, int>> steps = get_transformations(S, T);
-    if (!steps.empty())
+    string sta, fin;
+    while (cin >> sta >> fin)
     {
-        cout << steps.size() << "\n";
-        for (const auto &step : steps)
-        {
-            cout << step.first << " " << step.second << "\n";
-        }
+        solve(sta, fin);
     }
-    else
-    {
-        cout << -1 << "\n"; // No solution found
-    }
-
     return 0;
 }
