@@ -1,0 +1,29 @@
+Minh họa các thao tác trên stack:
+-------------------------------------
+Thêm các phần tử: 10, 20, 30, 40, 50
+Kích thước của stack: 5
+Phần tử ở đỉnh: 50
+Sau khi thực hiện pop: Phần tử đỉnh mới: 40
+Stack có rỗng không? Không
+Thực hiện pop tất cả các phần tử:
+Pop: 40
+Pop: 30
+Pop: 20
+Pop: 10
+Stack có rỗng bây giờ không? Có
+
+Ví dụ về stack với chuỗi:
+Kích thước: 4
+Phần tử ở đỉnh: Stack
+Các phần tử (từ trên xuống dưới):
+Stack
+thế giới
+chào
+Xin
+
+Các phương thức chính của stack STL:
+1. push(element): Thêm phần tử vào đỉnh stack
+2. pop(): Loại bỏ phần tử ở đỉnh stack
+3. top(): Trả về phần tử ở đỉnh mà không loại bỏ nó
+4. empty(): Kiểm tra xem stack có rỗng không
+5. size(): Trả về số phần tử trong stack
