@@ -1,0 +1,136 @@
+buổi 3: queue/ deque
+
+queue: CTDL dạng FI-FO
+
+hàm: 
+	push
+	pop
+	empty
+	size
+	top
+-------------------------------------------------------
+Hàng đợi bệnh nhân
+
+Có một hàng đợi bệnh nhân, ban đầu rỗng.
+Có 2 loại thao tác:
+	1. E x : Ưu tiên bệnh nhân thứ x lên đầu hàng (x là số nguyên dương).
+	2. N :  Người đầu hàng được gọi vào khám. Sau đó, in ra số thứ tự của người đó.
+Yêu cầu:  
+Với mỗi thao tác N, hãy xuất ra số thứ tự của người được khám.
+
+Input:
+E 5  
+E 3  
+N  
+N  
+N  
+
+Output:
+3  
+5  
+1  
+
+Ý tưởng ngây thơ:
+
+Tạo một hàng đợi Q và đưa các bệnh nhân 1, 2, 3, ..., N vào hàng đợi Q.
+
+Với yêu cầu N:  Đặt v = Q.front(), Q.pop(), Q.push(v)
+
+Với yêu cầu E x:  Tạo một Q2, đổ tất cả các phần tử trong Q vào Q2 (ngoại trừ x).  
+Sau đó đưa x vào Q và đưa tất cả các phần tử trong Q2 vào Q.
+
+1<= N <= 10^9
+1<= C <= 1000
+
+Ý tưởng chính:
+
+Tạo một hàng đợi Q và đưa các bệnh nhân 1, 2, 3, ..., min(N,C) vào hàng đợi Q.
+
+Với yêu cầu N:  Đặt v = Q.front(), Q.pop(), Q.push(v)
+
+Với yêu cầu E x:  Tạo một Q2, đổ tất cả các phần tử trong Q vào Q2 (ngoại trừ x).  
+Sau đó đưa x vào Q và đưa tất cả các phần tử trong Q2 vào Q.
+
+có 1000 câu lệnh mỗi câu kệnh 1000 thao tác không thể TLE
+====================================================================================================
+
+deque: là CTDL có thể thao tác 2 đầu
+
+
+hàm:
+	push_back, 
+	push_front, 
+	pop_back,
+	pop_front, 
+	size
+	empty
+------------------------------------------------------------------------------
+Mink
+
+Đề bài:
+
+Cho một dãy số nguyên dương a gồm N số. Cho trước một số nguyên K.
+
+Yêu cầu:
+- Với mỗi đoạn gồm K số liên tiếp trong dãy a,
+  hãy in ra **giá trị nhỏ nhất** trong đoạn đó.
+
+
+a = [5, 9, 1, 1, 4, 6, 2, 7, 3, 3, 5, 8, 3]  
+K = 5
+Ràng buộc:
+- 1 ≤ N ≤ 100000  
+- 1 ≤ K ≤ N ≤ 10^5
+
+
+Kho= [3] lưu vị trí ứng viên min trong 4 vị trí đang sét từ L->R;
+	có thể pop đầu ra
+	có thể pop cuối ra
+	có push vào cuối
+
+--------------------------------------------------
+
+max value euquation
+
+yi + yj + |xi - xj| = yi + yj - (xi - xj) = yi + yj + xj - xi
+
+Bài toán đưa về:
+
+Xét các cặp chỉ số (i, j) sao cho:
+- i < j  
+- xj - xi <= k  
+- yi - xi + yj + xj là lớn nhất có thể
+
+Xét thuật ngây thơ:
+
+ans = -200000001  
+for j = 0 -> n - 1:  
+    for i = 0 -> j - 1:  
+        nếu x[j] - x[i] <= k:  
+            ans = max(ans, y[i] - x[i] + y[j] + x[j]) 
+
+Nhận xét: Khi ta có điểm thứ j, những điểm i cần thiết là những điểm i sao cho:   x[j] - x[i] <= k
+
+Ví dụ:
+N = 10, k = 5
+
+Danh sách điểm (x, y):
+<1, 4>
+<2, 8>
+<5, -1>
+<7, 2>
+<11, 9>
+<12, 4>
+<14, 4>
+<19, 7>
+<22, -5>
+<25, -10>
+
+Xét j = 1, những điểm thỏa mãn x[j] - x[i] <= k:   {}
+Xét j = 2:  {1}	-----------> tổng lớn nhất 13  : 
+Xét j = 3:  {1, 2}->{2}------> tổng lớn nhất 10; tổng 2 >= tổng 1 vứt 1
+Xét j = 4:   {2, 3} --------> tổng lớn nhất  =15: tổng 3 < tổng 2: giữ 2 (2 vẫn là max)
+
+dùng deque: cần lấy ở đầu ra khi  tổng sau >= tổng trc
+cần xem đầu: lấy max
+cần xem cuối để so sánh

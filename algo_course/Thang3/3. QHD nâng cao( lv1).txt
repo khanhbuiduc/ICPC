@@ -1,0 +1,193 @@
+Stmerge:
+
+Có 2 chuỗi X và Y, chuỗi X gồm N ký tự X1 X2 ... Xn, chuỗi Y gồm M ký tự Y1 Y2 ... Ym
+Chuỗi T được gọi là chuỗi trộn của 2 chuỗi trên nếu T được tạo nên bằng việc trộn toàn bộ các ký tự của X và Y lại với nhau và vẫn bao toàn thứ tự xuất hiện của các
+chữ trai trong 2 chuoi X va Y
+
+Chỉ phí để trộn được tính như sau:
+
+Xét 2 ký tự T[i] và T[i+1], nếu 2 ký tự cùng thuộc chuỗi X hoặc chuỗi Y thì chi phí = 0, nếu 2 ký tự thuộc ký tự thứ i của chuỗi X và j của chuỗi Y, chi phí cộng vào
+là cost[i][j]
+
+Hỏi: Ta trộn như thế nào để chi phí là toi thiểu.
+
+n=2 m=3
+3 2 30  // x1,y1 chi phí = 3
+15 5 4
+
+x1 x2
+y1 y2 y3
+
+T = x1 x2 y1 y2 y3
+cphi= 0 15 0 0 = 15
+T= y1 y2 x1 x2 y3
+cphi= 0 2 0 4 = 6
+
+-----------
+gọi f[i][j] là chi phí nhỏ nhất khi trộn i kí tự của X và j kí tự của Y
+
+btcs: f[0][i] =0, f[j][0]=0
+
+đáp án: f[i][j];
+
+case1 nếu cuối là xi; f[i][j]=f[i][j-1] + (nếu trc là y thì cộng thêm c[i][j])
+
+--cách trên phá sản do k biết trc là x hay y;
+
+gọi f[i][j][state] là chi phí nhỏ nhất khi trộn i kí tự của X và j kí tự của Y và kí tự cuối cùng là state
+state=0; x cuối
+state=1; y cuối
+
+btcs: 
+    f[0][j][0] =inf
+    f[0][j][1] =0
+    f[i][0][0] =0
+    f[i][0][1] =inf
+
+đáp án: f[n][m];
+
+công thức quy hoạch động:
+    state = 0:  f[i][j][0] = f[i-1][j][0], f[i-1][j][1] + cost[i][j]
+    state = 2; f[i][j][1] =  f[i][j-1][0] + cost[i][j], f[i][j-1][1]
+--------------------------------------
+Khuyến mãi:
+Một cửa hàng siêu thị có N môn đô. Món thứ 1 có giá là a[i].
+Hệ thống sẽ có chương trình khuyến mãi, กลับ mua môn đó có giá là a[i] > 100 thì ta sẽ được tặng 1 thẻ khuyến mãi và có thể dùng thẻ đó để trả cho bất kỳ món có giá tiên là bao nhiêu mà không cần phải mất thêm tiên.
+Lưu ý: Nếu dùng thẻ khuyến mãi để trả cho một món có giá tiên > 100 thì ta sẽ không nhận thêm thẻ khuyến mãi nào nữa.(tức là phải chi 100 đ mới đc thẻ khuyến mãi)
+Hỏi: Chi phí tối thiểu để có thể mua toàn bộ N món đồ là bao nhiêu ? Biết ta sẽ mua lần lượt từ môn 1 món N.
+N=6
+p[9,102, 80, 109, 1, 45]
+
+mua 1,2 bằng tiền mặt 111;1 coupon
+mua 3 = coupon: 111, 0
+mua 3 = tiền: 191, 1 coupon
+f[3][0]= f[2][1] + 0, 
+f[3][1]= f[2][1] + p[3]; 
+mua 4 = coupon: 191, 0 coupon
+f[4][0] = f[3][0] + p[4] || f[3][1]
+f[4][1] = 
+f[4][2] = 
+
+-------------------
+gọi f[i][j] là số tiền min bỏ ra mua dồ
+sử dụng số coupon < tổng coupon hiện tại
+
+
+f[0][0]=p[0],
+f[i][j] = inf
+
+đáp án min(f[n][j]): j từ 0->n;
+
+công thức hồi quy:
+f[i][j] = ...
+
+tình huống 1: p[i]<=100
+    + mua món thứ i bằng tiền mặt:f[i][j] = f[i-1][j] + p[i] 
+    + mua món thứ i bằng coupon: f[i][j] = f[i-1][j+1]
+    ===> f[i][j] = min(f[i-1][j] + p[i], f[i-1][j+1]);
+tình huống 2: p[i]>=100
+    + mua món thứ i bằng tiền mặt:f[i][j] = f[i-1][j-1] + p[i]
+    + mua món thứ i bằng coupon: f[i][j] = f[i-1][j+1]
+    ===> f[i][j] = min(f[i-1][j-1] + p[i], f[i-1][j+1])
+
+
+--------
+
+giả sử f[i][j] != inf
+
+tình huống 1: p[i+1] <=100
+    + mua món i+1 bằng tiền mặt: f[i+1][j] = min(f[i+1][j], f[i][j]+p[i+1])
+        vd: f[4][2]!= inf thì f[5][2]= min(f[5][2],f[4][2]+p[5])
+    + mua món i+1 bằng thẻ(j>0): f[i+1][j-1] = min(f[i+1][j-1], f[i][j])
+tình huống 2: p[i+1] >100
+    + mua món i+1 bằng tiền mặt: f[i+1][j+1] = min(f[i+1][j+1], f[i][j]+p[i+1])
+    + mua món i+1 bằng coupon: f[i+1][j-1] = min(f[i+1][j-1],  f[i][j])
+
+
+----------------------
+line game
+Cho một dãy số nguyên a gồm N số. Ta chọn ra một vài số bất kỳ trong dãy a và tính giá trị của chúng.
+Giả sử ta chọn ra k số với các chỉ số là i1, i2, ..., ik
+1<= i1 < i2 < i3 .... < ik <= n
+Giá trị của tập các số được chọn là: a[i1] - a[i2] + a[i3] - a[i4] + a[i5] -..........+(-1)^ n k^ a[1k]
+Hỏi tổng giá trị lớn nhất có thể có là bao nhiêu ???????
+Ví dụ:
+a[5, 2, 4, 9, 1, -6, -3]
+Chọn 5, -2, 9, -6
+--> tổng: 5 - (- 2) + 9 - (- 6) -22|
+
+gọi f[i][state] là tổng lớn nhất của dãy tính tới thời điểm i chọn a[2] mang dấu state:
+    state=0: pt mang dấu dương,
+    state=1: phần tử mang dấu âm
+bài toán cơ sở:
+    f[i][state]=-inf, f[i][0]=a[i];
+đáp án bài toán: 
+    max(f[i][state]); với: i: 1->n; state: 0->1
+công thức qhd:
+    max0=f[1][0]
+    max1=f[1][1]
+    f[i][0] = max0+a[i]; cập nhập max0
+    f[i][1] = max1-a[j]; cập nhập max1;
+
+
+------------------------------
+Gọi f[i][state] là tổng giá trị lớn nhất khi có 1 phần tử, phân tử TIẾP THEO mà ta muốn mang dấu sẽ có trạng thái là state
+    state = 0: phần tử TIẾP THEO mang dầu dương
+    state = 1: phần tử TIẾP THEO mang dấu âm
+bài toán cơ sở: 
+    f[0][0] = 0 khởi tạo các f[i] [state] còn lại -inf
+đáp án bài toán: 
+    Max(f[n][0], f[n][1])
+công thức QHD:
+    giả sử ta đang đứng tại bài toán f[i][state] != -inf
+    Xét phần từ thứ i + 1
+        Không chấp nhận phần tử thứ i + 1:
+            f[i + 1] [state]=max(f[i+1][state],f[i][state])
+        Nếu ta chấp nhận phần tử thứu i+1;
+            f[i + 1][1-state] = max(f[i+1][1-state], f[i][state] + (state?-1:1)*a[i+1])
+vd: 5 -2 4 9 1 -6 -3
+
+f[3][0] = 7
+f[3][1] = 11
+-----------------------------------------------------------
+Buy and sell stock
+
+Giá cổ phiếu của 1 công ty sẽ biến động trong 1 năm. Năm thứ 1 có phiếu sẽ có giá là p[i]
+Ta được phép thực hiện không quá k giao dịch, trong đó 1 giao dịch phải gồm theo tác mua và thao tác bán
+Lưu ý: Các giao dịch không được phép phủ lên nhau (phải bán có phiều xong mới được phép mua tiếp)
+
+Nếu ta mua cổ phiếu ở năm thứ 1, số tiên của ta bị giảm là p[i], nhưng nếu bán lại vào năm j (j > 1) thì số tiên ta thu về sẽ tăng thêm một lượng là p[j].
+Hỏi: Tổng lợi nhuận lớn nhất ta có thể đạt được khi thực hiện không quá k giao dịch.
+N = 5, k = 2
+p = [5, 8, 2, 1, 10]
+Giao dịch 1: Mua năm 1 Bán vào năm 2: -5 + 8 = 3
+Giao dịch 2: Mua năm 4 Bản vào năm 5: -1 + 10 = 9
+====> 3 + 9 = 12 đô
+
+Nhận xét:
+mua ở năm 3, bán ở năm số 5
+    p[5] - p[3]
+mua ở năm 3, bán ở năm số 6
+    p[6] - p[3] = (p[5] - p[3]) + (p[6] - p[5])
+Tổng quát:
+Giả sử mua cổ phiếu ở năm x nào đó, và hiện tại ta đang bán ở năm 1
+    p[i] - p[x]
+Nếu ta bán ở năm i + 1
+    Lợi nhuận: p[i + 1] - p[x] = (p[i] - p[x]) + (p[i+1] - p[i]) *quan trọng*
+
+gọi f[i][j][state] là tổng lợi nhuận lớn nhất khi có i năm khi ta đã thực hiện j cuộc giao dịch. trong đó năm thứ i đang trong trạng thái state:
+    state=0: năm thứ i không nằm trong giao dịch
+    state=1; năm thứ i đang nằm trong giao dịch của đoạn l->r nào đó, ta tạm thời chấp nhận bán cổ phiếu vào năm i
+bài toán cơ sở:
+    f[1][0][0] = 0;
+    f[1][1][1] = 0;
+    khởi tạo các f[i][j][state] còn lại = -inf
+đáp án bài toán:
+    Max(f[n][j][0], f[n][j][1]) với j: 0 -> k
+công thức qhd:
+    nếu f[i][j][state] != inf
+    năm i + 1 không nằm trong giao dịch
+        f[i+1][j][0] = max(f[i+1][j][0], f[i][j][state]);
+    năm i+1 nằm trong cuộc giao dịch mới:
+        f[i+1][j+1][1] = max(f[i+1][j+1][1], f[i][j][state]);
+    năm i+1 nằm trong cuộc giao dịch hiện tại:

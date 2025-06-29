@@ -1,0 +1,131 @@
+ternary search
+    parabol
+
+    Ta sẽ sử dung chặt tam phân bằng cách như sau:
+
+    u = (2 * lo + hi) / 3
+    v = (lo + 2 * hi) / 3
+
+    Ta se tinh g(u) va gia trị g(v), va ta xem xet thay đoi lo va hi sao cho van tim ra duoc gia trị thoa man cua bai toan.
+
+binary_search_on float
+
+    mid số thực khi BS thì while 100 vòng lăp
+
+
+
+------------------------------------
+rate
+
+Cho mot day so nguyen duong a gom N so. Xet tat ca nhung day co so luong phan tu toi thieu la K, ta tinh trung binh cong cua cac day.
+
+Hoi trung bình cong lon nhat la bao nhieu ??????
+
+5 2
+2 4 3 4 2
+
+Nhận xét: avg cang lớn --- > càng kho tìm ra được day thoa man.
+
+(a[1] + a[1+1] + ... +a[r]) / (r -1+1)>= avg
+
+<==> (a[l] - avg) + (a[l +1] - avg) + .... + (a[r] - avg) >= 0
+
+đăt B: b[i]=a[i]-avg
+
+== > một đoạn [1 .. r] có tổng >0
+
+đặt sum: sum[i] = sum[i-1] + b[i]
+
+== > tìm sum[r] >= sum[l] 
+
+Ta đặt mini = sum[0]
+
+Với sum[i], ta so sánh sum[i] >= minL hay không
+
+Ta cập nhật mini với sum[i - K + 1]
+
+**chú  ý** : với avg là số thực khi BS thì while 100 vòng lăp
+
+---------------------------------
+
+Martian Programmer
+
+Một ngưoi cong nhan lam viec. Trong mot ngay co H tieng dong ho. Kha nang lam viec cua nguoi cong nhan se được tinh như sau:
+
+Neu người cong nhan ngu 0 tieng: kha nang lam viec la 0%
+Nếu so giờ ngủ là H/3: kha nang làm việc là 100%
+Neu ngu từ 0 -> H/6: Kha nang lam viec tang DEU từ 0% -> A%
+Nếu ngu từ H/6 -> H/3: Kha nang lam viec tang DEU từ A% -> 100%
+
+Độ hiệu qua công việc - tích của kha nang làm việc với so giờ THỨC
+
+Hòi: Độ hiệu qua cao nhất là bao nhiêu ???
+
+Độ hiệu quả công việc tính bằng công thức: f(x) * (H - x) với x là số giờ thức, f(x) là hàm trả về khả năng làm việc của người đó.
+Nhận xét: 
+    Nếu ngủ 0 giờ thì độ hiệu quả công việc - 0 (f(0) - 0)
+
+    Nếu ta ngủ nhiều hơn ---- > độ hiệu quả công việc tăng
+
+    Độ hjệu qua tăng đen 1 mức MAX nao đo thì bat đau sẽ giam xuong 
+
+đặt lo = 0, hi = H
+
+đặt u = (2 * lo + hi) / 3, v = (lo + 2 * hi) / 3
+
+nếu g(u) < g(v) ---- > điểm cực đại sẽ nam trong đoạn từ u -> hi, do đó ta gan lo = u
+
+else --- > điểm cực đại se nam trong đoạn từ lo -> v, do đo ta gan hi = v
+
+--------------------------------------------------------------
+Race time
+
+Ta thay f(T) = max(Pi(T)) - min(Pi(T))
+
+Nếu người chạy nhanh nhat (Si lon nhat) bị xuat phat chậm nhat va ngưoi chay cham nhat (Si be nhat) va xuat phat xa nhat cung chay trong 1 khoang thoi gian T
+
+Ta áp dung Ternary search
+
+Với thời gian u và v, thì ta tính f(u) và f(v), trong đó f(x) tính như sau:
+
+    + ta tạo ra màng P với ý nghĩa Pi(x) - Di + x * Si
+    + Ta duyệt tìm so lon nhat trong P va so nho nhat trong P === > f(x) = so lon nhat - so nho nhat
+
+Ta so sánh f(u) và f(v)
+
+Trường hợp 1: f(u) < f(v) I --- > điểm cực tiểu nâm trong đoạn từ [lo .. v] -- > gần hi = v
+Trường hợp 2: f(u) > f(v) -=- > điểm cực tiểu nam trong đoạn từ [u .. hi] -= > gan lo = u
+
+-------------------------------------------------------------
+
+Weekness And poorness:
+
+có dãy: a1, a2, ..., an.
+tìm x: a1 - x, a2 - x, ..., an - x là weakness
+
+tìm weakness: max poorness = max | sum{i->j} |
+
+
+Nhan xet: Khi x tang tu am vo cuc len dương vo cực
+
+âm vô cực = -10005, dương vô cực = 10005
+
+lo = -10005, hi = 10005
+
+Đặt u = (2 * lo + hi) / 3, v = (lo + 2 * hi) / 3
+
+Ta thiết kế một hàm f(x) với ý nghĩa: với gia trị x thì weakness trong day a1 - x, a2 - x, .... , aN - x là bao nhiêu ????
+
+đặt b[i] = a[i] - x 
+
+đặt: sum[i] = sum[i-1] + b[i]
+
+poorness = | sum[r] - sum[l - 1] |
+
+weakness = max | sum[r] - sum[l - 1] |;
+
+từ i: 1->n: 
+    tìm Lmin và Lmax với l<r
+    ret = max(ret, sum[i]-minL, maxL-sum[i])
+    cập nhập minSum, maxSum
+ban đầu: minminL, maxL = sum0

@@ -1,0 +1,53 @@
+--------------------------------------------------------------
+|     | cow |     |     |     | cow | cow | cow | cow |
+-----------------------------------------------------------------
+|     | cow | cow | cow |     |     |     |     |     |
+-------------------------------------------------------------
+
+bãi cỏ: area: 2*B (B<=15'000'000)
+N con bò, k cái chuồng
+
+cho k chuồng: tính diện tích nhỏ nhất để phủ hết n con bò
+
+-----
+nhận xét: 
+
+gọi f[i][j][state] là tổng số ô tối thiểu để phủ i con bò sử dụng j chuồng và chuồng j ở trạng thái state
+    state = 0: bò i trong chuồng có độ rộng là 1
+    state = 1: bò i trong chuồng có độ rộng là 2
+    state = 2: bò thứ i trong chuồng có độ rộng là 1 và hàng còn lại có chuồng có độ rộng 1  kéo dài đến cột thứ i
+đáp án: 
+    min(f[N][k][state]) với state = 1->3
+bài toán cơ sở: 
+    F[1][1][0]=1; 
+    F[1][1][1] = 2
+    F[1][2][2] = 2
+    f[i][j][state] còn lại bằnh inf;
+
+/// thiếu 1 trường hợp:(dễ thiếu)
+    vd: ở ví dụ trên 5 con bò trên và 3 con bò dưới
+công thức QHD: 
+F[I][J][state] != inf; xét bò thứ i+1
+    tách riêng chuồng mới cho con bò i+1:
+        state = 0: F[i+1][j+1][0] = min(F[i+1][j+1][0], F[i][j][state] + 1) với state: 0->2
+        state =1: F[i+1][j+1][1] = min(F[i+1][j+1][1], F[i][j][state] + 2) với state: 0->2
+    tách riêng chuồng mới cho con bò i+1 và dòng còn lại cũng thêm chuồng mới độ
+        state =2: F[i+1][j+2][2] = min(F[i+1][j+2][2], F[i][j][state] + 2) với state 0->2
+    
+
+    state = 0
+        nếu a[i].x==a[i+1].x:
+            F[i+1][j][0] = min(F[i+1][j][0],  F[i][j][0] + a[i+1].y- a[i].y);
+            F[i+1][j+1][2] = min(F[i+1][j+1][2], F[i][j][0] + a[i+1].y- a[i].y +1)
+        nếu a[i].x != a[i+1].x:
+            F[i+1][j+1][2] = min(F[i+1][j+1][2], F[i][j][0] + (a[i+1].y- a[i].y)+1) (giống cái trên, bỏ 2 cái ngoài if)
+    
+    state = 1
+         F[i+1][j][1] = min(F[i+1][j][1], F[i][j][1] + 2*(a[i+1].y - a[i].y))
+
+    state = 2 
+        F[i+1][j][0] = min(F[i+1][j][0],  F[i][j][2] + a[i+1].y- a[i].y);
+        F[i+1][j][2] = min(F[i+1][j][2],  F[i][j][2] + 2*(a[i+1].y- a[i].y));
+        F[i+1][j+1][2] = min(F[i+1][j+1][2],  F[i][j][2] + a[i+1].y- a[i].y + 1);
+    
+

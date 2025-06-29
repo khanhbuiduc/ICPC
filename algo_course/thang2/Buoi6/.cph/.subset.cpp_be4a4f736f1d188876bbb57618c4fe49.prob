@@ -1,0 +1,1 @@
+{"name":"Local: subset","url":"c:\\Users\\HP PC\\ICPC\\algo_course\\thang2\\Buoi6\\subset.cpp","tests":[{"id":1749631716389,"input":"3\n1 2 3","output":"\n1\n2\n1 2\n3\n1 3\n2 3\n1 2 3"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\HP PC\\ICPC\\algo_course\\thang2\\Buoi6\\subset.cpp","group":"local","local":true}

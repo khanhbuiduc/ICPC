@@ -1,0 +1,48 @@
+5 4
+1 0 0 1
+0 1 1 0
+1 0 0 1
+0 1 1 0
+1 0 0 1
+
+cho n dãy số, mỗi dãy có B phần tử, gồm 0 hoặc 1
+hãy tìm có bao nhiêu đoạn [l,r], sao cho cột j(1->B) có tổng số 1 bằng nhau
+
+tính tổng tiền tố của cột
+for i: 1->N
+	for j: 1->B
+		arr[i,j]+=arr[i,j-1]
+0 0 0 0
+1 0 0 1
+1 1 1 1
+2 1 1 2
+2 2 2 2
+3 2 2 3
+ans=0
+for l:1->n;
+	for r:l->n
+		vector<>compare
+		for c: 1 ->b
+			thêm (arr [r][c]-arr[l-1][c])
+		for c:2->b
+			if(compare[c] != compare[c-1]) break;
+		nếu thỏa mãn ans++
+O(N^2*B)
+
+arr [r][1] -  arr[l-1][1]  = arr [r][2]-arr[l-1][2]
+=> arr [r][1] -  arr[r][2]  = arr [l-1][1]-arr[l-1][2]
+
+tính thêm hiệu từng hàng: nếu hàng i và hàng j có giống nhau thì có tổng số 1 trong cột bằng nhau bằng nhau
+ 0  0  0
+1  0  -1
+0   0  0
+1  0  -1
+0  0   0
+1  0  -1  
+
+thêm 1 set đến sống dòng giống nhau
+map<vector,total>
+xét từng map:
+ans+= total*( total-1)/2
+
+O(n*log(n)*b)

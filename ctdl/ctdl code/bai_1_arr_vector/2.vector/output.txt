@@ -1,0 +1,58 @@
+
+===== KHỞI TẠO VÀ NHẬP VECTOR =====
+Các cách khởi tạo vector và nhập dữ liệu vào vector
+
+===== TRUY CẬP PHẦN TỬ =====
+Các cách để truy cập phần tử trong vector
+First element (front): 1
+Last element (back): 2
+Element at index 2 (at): 3
+Element at index 2 ([]): 3
+Elements using iterators: 1 2 3 2 
+Elements in reverse using reverse iterators: 2 3 2 1 
+
+===== KÍCH THƯỚC VÀ DUNG LƯỢNG =====
+Các hàm kiểm tra kích thước và dung lượng của vector
+Size: 4
+Capacity: 4
+Max size: 2'305'843'009'213'693'951
+Is empty: No
+After reserve(100), capacity: 100
+After shrink_to_fit, capacity: 4
+
+===== THÊM VÀ XÓA PHẦN TỬ =====
+Các hàm thêm và xóa phần tử trong vector
+After clear, size: 0
+
+===== SẮP XẾP VÀ TÌM KIẾM =====
+Các hàm sắp xếp và tìm kiếm trong vector
+After ascending sort: 1 2 2 2 3 ...
+After descending sort: 100 100 100 100 100 ...
+20 exists in vector: Yes
+First element >= 20 is at position: 8
+First element > 20 is at position: 9
+Found 2 at position: 1
+
+===== THUẬT TOÁN KHÁC =====
+Các thuật toán hữu ích khác với vector
+Number of 2s: 3
+Min: 1, Max: 100
+Sum of all elements: 572
+Number of unique elements: 8
+
+===== DUYỆT VECTOR =====
+Các cách duyệt qua các phần tử trong vector
+Using index: 1 5 100 20 4 ...
+Using iterator: 1 5 100 20 4 ...
+Using range-based for: 1 5 100 20 4 ...
+
+===== HOÁN ĐỔI VÀ GÁN =====
+Các thao tác hoán đổi và gán giữa các vector
+Before swap - v5[0]: 100, v[0]: 1
+After swap - v5[0]: 1, v[0]: 100
+After reassign, v size: 5
+After fill with 7: 7 7 7 7 7 
+
+===== KẾT LUẬN =====
+Vector là cấu trúc dữ liệu linh hoạt với nhiều hàm tiện ích.
+Mỗi nhóm hàm có mục đích riêng và cần được sử dụng phù hợp với bài toán.

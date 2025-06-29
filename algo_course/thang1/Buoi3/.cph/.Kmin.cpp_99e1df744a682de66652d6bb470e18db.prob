@@ -1,0 +1,1 @@
+{"name":"Local: Kmin","url":"c:\\Users\\HP PC\\ICPC\\algo_course\\thang1\\Buoi3\\Kmin.cpp","tests":[{"id":1747283090955,"input":"2\n4 2\n3 2 4 1\n3 3\n1 2 3","output":"2 2 1 \n1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\HP PC\\ICPC\\algo_course\\thang1\\Buoi3\\Kmin.cpp","group":"local","local":true}
