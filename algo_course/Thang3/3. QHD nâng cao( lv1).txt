@@ -50,6 +50,7 @@ công thức quy hoạch động:
     state = 0:  f[i][j][0] = f[i-1][j][0], f[i-1][j][1] + cost[i][j]
     state = 2; f[i][j][1] =  f[i][j-1][0] + cost[i][j], f[i][j-1][1]
 --------------------------------------
+
 Khuyến mãi:
 Một cửa hàng siêu thị có N môn đô. Món thứ 1 có giá là a[i].
 Hệ thống sẽ có chương trình khuyến mãi, กลับ mua môn đó có giá là a[i] > 100 thì ta sẽ được tặng 1 thẻ khuyến mãi và có thể dùng thẻ đó để trả cho bất kỳ món có giá tiên là bao nhiêu mà không cần phải mất thêm tiên.
@@ -189,5 +190,15 @@ công thức qhd:
     năm i + 1 không nằm trong giao dịch
         f[i+1][j][0] = max(f[i+1][j][0], f[i][j][state]);
     năm i+1 nằm trong cuộc giao dịch mới:
-        f[i+1][j+1][1] = max(f[i+1][j+1][1], f[i][j][state]);
+        f[i+1][j+1][1] = max(f[i+1][j+1][1], f[i][j][state] + 0);
     năm i+1 nằm trong cuộc giao dịch hiện tại:
+	f[i+1][j][1] = max(f[i+1][j][1], f[i][j][1] + p[i-1] - p[i]);
+
+
+
+
+
+
+
+
+
