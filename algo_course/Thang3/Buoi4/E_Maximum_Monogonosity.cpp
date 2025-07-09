@@ -2,11 +2,11 @@
 using namespace std;
 #define ff first
 #define ss second
-#define lim 300'005 //
-typedef pair<int, int> pii;
 typedef long long ll;
+#define inf 1'000'000'000'000'000 //
+typedef pair<int, int> pii;
 ll f[3005][3005][5]; // xét đến pt thứ i, đã có j phần tử, và 5 state đã đc phân tích bên dưới
-int a[3005], b[3005];
+ll a[3005], b[3005];
 int main()
 {
     int T;
@@ -15,7 +15,44 @@ int main()
     {
         int n, k;
         cin >> n >> k;
-        for(int i=1;i<=n;i++)
+        for (int i = 1; i <= n; i++)
+            cin >> a[i];
+        for (int i = 1; i <= n; i++)
+            cin >> b[i];
+        // bài toán cơ sở:;
+        for (int i = 0; i <= n; i++)
+            for (int j = 0; j <= k; j++)
+                for (int state = 0; state <= 4; state++)
+                    f[i][j][state] = -inf;
+        f[0][0][0] = 0;
+        for (int i = 0; i <= n; i++)
+            for (int j = 0; j <= k; j++)
+                for (int state = 0; state <= 4; state++)
+                {
+                    // không chọn pt thứ i+1
+                    f[i + 1][j][0] = max(f[i + 1][j][0], f[i][j][state]);
+                    // chọn phần tử thứ i+1 cho vào đoạn mới
+                    f[i + 1][j + 1][1] = max(f[i + 1][j + 1][1], f[i][j][state] + ((b[i + 1] - a[i + 1]) + (b[i + 1] - a[i + 1])));
+                    f[i + 1][j + 1][2] = max(f[i + 1][j + 1][2], f[i][j][state] + ((b[i + 1] - a[i + 1]) + (a[i + 1] - b[i + 1])));
+                    f[i + 1][j + 1][3] = max(f[i + 1][j + 1][3], f[i][j][state] + ((a[i + 1] - b[i + 1]) + (b[i + 1] - a[i + 1])));
+                    f[i + 1][j + 1][4] = max(f[i + 1][j + 1][4], f[i][j][state] + ((a[i + 1] - b[i + 1]) + (a[i + 1] - b[i + 1])));
+                    // chọn phần tử thứ i+1 cho vào đoạn cũ
+                    if (state == 1)
+                        f[i + 1][j + 1][1] = max(f[i + 1][j + 1][1], f[i][j][state] - (b[i] - a[i]) + (b[i + 1] - a[i + 1]));
+                    else if (state == 2)
+                        f[i + 1][j + 1][2] = max(f[i + 1][j + 1][2], f[i][j][state] - (-b[i] - a[i]) + (-b[i + 1] - a[i + 1]));
+                    else if (state == 3)
+                        f[i + 1][j + 1][3] = max(f[i + 1][j + 1][3], f[i][j][state] - (b[i] + a[i]) + (b[i + 1] + a[i + 1]));
+                    else if (state == 4)
+                        f[i + 1][j + 1][4] = max(f[i + 1][j + 1][4], f[i][j][state] - (-b[i] + a[i]) + (-b[i + 1] + a[i + 1]));
+                }
+        // kết quả
+        ll result = -inf;
+        for (int state = 0; state <= 4; state++)
+        {
+            result = max(result, f[n][k][state]);
+        }
+        cout << result;
         cout << endl;
     }
 }
@@ -73,7 +110,7 @@ QHD:(f[i][j][state] != inf)
     không chọn pt thứ i+1
         f[i+1][j][0] = max(f[i+1][j][0], f[i][j][state])
     chọn pt thứ i+1 là đoạn mới: l=r=i+1
-        f[i+1][j+1][1] = max(f[i+1][j+1][1], f[i][j][state] + cal(l,r,1))
+        f[i+1][j+1][1] = max(f[i+1][j+1][1], f[i][j][state] + (  (b[i+1] - a[i+1]) + (b[i+1] - a[i+1])   ))
         f[i+1][j+1][2] = ...
         f[i+1][j+1][3] = ...
         f[i+1][j+1][4] = ...
