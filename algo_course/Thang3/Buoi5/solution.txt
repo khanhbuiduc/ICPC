@@ -92,15 +92,23 @@ Công thức QHD:
         f[i+1][j+1][nextA][1] = max(f[i+1][j+1][nextA][1], f[i][j][kA][kB] + score(i+1, nextA>0, true))
     Tình huống 4: ta mở đợt chép bài ở câu thứ i+1 của An và bình
         f[i+1][j+2][1][1] = max(f[i+1][j+2][1][1], f[i][j][kA][kB] + score(i+1, true, true))
-Độ phức tạp: O(N*P*K^2);  n,p<=1000; k<=50
-
+Độ phức tạp: O(N*P*K^2)= 2'500'000'000;  n,p<=1000; k<=50 
 ----------------
-cải tiến:
+cải tiến 1:
 Nhận xét: số đợt chép bài chép để phủ 1 bạn là N/k+1
 ===> 2 bạn: 2* N/k+2
 
 nếu P >= 2* N/k+2  thì điểm tối đa của An và bình
 nếu P >= 2* N/k+2 thì Quy hoạch động
+---------------
+bộ nhớ vượt quá O(2.5tỉ * 4 byte):-> 10 gh
+cải tiến: 
+    vì kết quả: Max(f[n][P][kA][kB]). và ta lấy i để tính i+1:
+    thay vì sử dụng n: ta chỉ cần thể hiện 2 giá trị cur, next
+    f[i][j][kA][kB]
+        cur = i;
+        next = 1-i;
+        reset   f[next][j][kA][kB] = -1: j: 0->P; ka: 0->k; kb: 0->k 
 
 ------------------------------------------------------------------
 Alyona And Strings
@@ -123,7 +131,7 @@ T = [abc]b[b]
 
 f[6][5][2] = 4
 
-gọi f[1][j][groups] là số lượng ký tự tối đa có thể có được khi có i ký tự đầu tiên của chuỗi S, j ký tự đầu tiên của chuỗi T và ta đã tạo được groups nhóm
+gọi f[i][j][groups] là số lượng ký tự tối đa có thể có được khi có i ký tự đầu tiên của chuỗi S, j ký tự đầu tiên của chuỗi T và ta đã tạo được groups nhóm
 bài toán cơ sở:
 
 khoi tạo cac f[i][j][groups] = -1, f[0][0][0] = 0
@@ -169,6 +177,6 @@ Khi ta co f[i][j][groups] != -1
         Ta có thể cho S[i+1] và T[j+1] vào nhóm mới:
             f[i+1][j+1][groups+1][1] = max(f[i+1][j+1][groups+1][1], f[i][j][groups][state] +1)
         Nếu state = 1
-            f[i+1][j+1][groups][1] = max(f[i+1][j][groups+1][1], f[i][j][groups][state] +1);
-
+            f[i+1][j+1][groups][1] = max(f[i+1][j+1][groups+1][1], f[i][j][groups][state] +1);
+chú ý: string index từ 0;
 -------------------------------------------------------

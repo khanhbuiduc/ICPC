@@ -59,8 +59,6 @@
   "files.associations": {
     "*.embeddedhtml": "html",
     ".fantomasignore": "ignore",
-    "chrono": "cpp",
-    "span": "cpp",
-    "type_traits": "cpp"
+    "chrono": "cpp"
   }
 }
