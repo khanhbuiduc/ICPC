@@ -1,0 +1,1 @@
+{"name":"Local: 1","url":"c:\\Users\\HP PC\\ICPC\\algo_course\\Thang4\\Buoi3\\1.necessaryRoad.cpp","tests":[{"id":1753614532488,"input":"5 5\n1 2\n1 4\n2 4\n3 5\n4 5","output":"2\n3 5\n4 5"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\HP PC\\ICPC\\algo_course\\Thang4\\Buoi3\\1.necessaryRoad.cpp","group":"local","local":true}

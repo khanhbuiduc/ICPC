@@ -22,18 +22,17 @@ int main()
     {
         for (int j = 1; j <= n; j++)
         {
-            if (win[i][j])
+            if (win[i][j] == 0)
+                continue;
+            bitset<1005> temp = win[j] & lose[i];
+            if (temp.count() == 0)
+                continue;
+            for (int k = 1; k <= n; k++)
             {
-                bitset<1005> temp = win[j] & lose[i];
-                if (temp.count() == 0)
-                    continue;
-                for (int k = 1; k <= n; k++)
+                if (temp[k])
                 {
-                    if (temp[k])
-                    {
-                        cout << k << " " << i << " " << j;
-                        return 0;
-                    }
+                    cout << k << " " << i << " " << j;
+                    return 0;
                 }
             }
         }

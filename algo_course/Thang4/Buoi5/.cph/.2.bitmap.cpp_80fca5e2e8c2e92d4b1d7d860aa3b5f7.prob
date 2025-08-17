@@ -1,0 +1,1 @@
+{"name":"Local: 2","url":"c:\\Users\\HP PC\\ICPC\\algo_course\\Thang4\\Buoi5\\2.bitmap.cpp","tests":[{"id":1753968961829,"input":"1\n3 4\n0001\n0011\n0110","output":"3 2 1 0\n2 1 0 0\n1 0 0 1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\HP PC\\ICPC\\algo_course\\Thang4\\Buoi5\\2.bitmap.cpp","group":"local","local":true}

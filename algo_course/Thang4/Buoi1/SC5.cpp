@@ -19,12 +19,12 @@ void dfs(int x, int y, int pois)
         int nx = x + dx[i], ny = y + dy[i];
         if (a[nx][ny] == '#')
             continue;
-        int nextpois = pois;
         if (isdigit(a[nx][ny]) && pois + (a[nx][ny] - '0') >= 10)
             continue;
+        int nextpois = pois;
         if (a[nx][ny] == 'S')
             nextpois = 0;
-        if (isdigit(a[nx][ny]))
+        else if (isdigit(a[nx][ny]))
             nextpois += (a[nx][ny] - '0');
         if (visited[nx][ny][nextpois] == false)
             dfs(nx, ny, nextpois);

@@ -1,0 +1,1 @@
+{"name":"Local: RoundTrip","url":"c:\\Users\\HP PC\\ICPC\\algo_course\\Thang4\\Buoi1\\RoundTrip.cpp","tests":[{"id":1753260131777,"input":"4 5\n1 3\n2 1\n2 4\n3 2\n3 4","output":"4\n1 3 2 1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\HP PC\\ICPC\\algo_course\\Thang4\\Buoi1\\RoundTrip.cpp","group":"local","local":true}

@@ -1,0 +1,1 @@
+{"name":"Local: shortestRoutesl","url":"c:\\Users\\HP PC\\ICPC\\algo_course\\Thang4\\Buoi6\\shortestRoutesl.cpp","tests":[{"id":1754217249786,"input":"3 4\n1 2 6\n1 3 2\n3 2 3\n1 3 4","output":"0 5 2"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\HP PC\\ICPC\\algo_course\\Thang4\\Buoi6\\shortestRoutesl.cpp","group":"local","local":true}

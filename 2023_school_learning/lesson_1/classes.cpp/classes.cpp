@@ -6,18 +6,14 @@ ofstream fo(NAME "out");
 int countDivisors(int n)
 {
     int cnt = 0;
-    for (int i = 2; i <= sqrt(n); i++)
-    {
+    for (int i = 2; i * i <= n; i++)
         while (n % i == 0)
         {
             cnt++;
             n /= i;
         }
-    }
     if (n != 1)
-    {
         cnt++;
-    }
     return cnt;
 }
 
@@ -28,13 +24,6 @@ int main()
     for (int i = 0; i < n; i++)
     {
         fi >> a;
-        if (countDivisors(a) % 2 == 0) // vd: 100=2*2*5*5;count=4
-        {
-            fo << "1 ";
-        }
-        else
-        {
-            fo << "2 ";
-        }
+        fo << (countDivisors(a) % 2 ? '1' : '2') << ' ';
     }
 }

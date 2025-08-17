@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define NAME "chase."
-ifstream fi(NAME "inp");
-ofstream fo(NAME "out");
+#define NAME "chase"
+ifstream fi(NAME ".inp");
+ofstream fo(NAME ".out");
 int64_t t, d = 0; // khoảng cách gia tăng do đổ dầu
 double ans = 0;
 int main()
@@ -25,9 +25,9 @@ int main()
         return 0;
     }
     // xe chạy trốn bắt đầu từ điểm s nên không thể đổ dầu trc s.
-    int m = n;
+    int m = 0;
     for (int i = 0; i < n; i++)
-        if (x[i] < s)
+        if (x[i] >= s)
         {
             m = i;
             break;

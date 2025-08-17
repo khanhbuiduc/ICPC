@@ -25,6 +25,7 @@ Yêu cầu:
 
 Hãy tính số tiền lỗ nhỏ nhất có thể.
 
+
 ---
 
 Ví dụ:

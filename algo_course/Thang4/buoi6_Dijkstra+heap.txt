@@ -1,0 +1,26 @@
+Thuật toán Dijkstra
+
+Cho một đồ thị co hướng G = (V, E). Trọng số trên đô thị phải là trọng số không âm.
+
+Cho một đinh xuat phat, hoi đo dai duong di ngan nhat tu dinh nay den moi đinh con lại trong đo thị.
+
+Ý tưởng thuật toán Dijkstra
+
+Gọi dist[i] với ý nghĩa: dist[i] là độ dai đường đi ngan nhat từ đinh start đến đinh i.
+
+Sử dụng mot hang đợi uu tien pq nham luu phan tu. Mot phan tu trong pq co 2 thong so <đo dai, đinh>
+
+Ban đầu: ta khởi tạo dist[i] = inf, dist[start] = 0
+
+Khi có một đinh u được lay ra khỏi hang đợi pq, xet những đinh v ke với u, neu dist[v] > dist[u] + w(u, v):
+
+gán dist[v] = dist[u] + w(u, v), đồng thời đưa <dist[v], v> vào pq |
+------------------------
+traffic
+
+có n thành phố. m đường. tìm đường đi ngắn nhất từ s -> t
+có thể xây thêm 1 đường trong k đường dự định.
+
+minpath =
+    dist[u]+ w(u, v) + rdist[v]
+    dist[v]+ w(u, v) + rdist[u]

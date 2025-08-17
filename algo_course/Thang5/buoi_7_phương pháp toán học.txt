@@ -1,0 +1,232 @@
+Modulo Sum:
+
+Cho một day so nguyên dương a. Cho một so nguyen dương K. Hòi co the chọn ra được vai so trong day a sao cho tổng chia hết cho K hay không ?????
+
+Ví dụ:
+
+N = 5
+
+a = [2, 5, 1, 9, 4]
+K = 14
+
+.-- > YES
+
+--------------------------------------------------------
+
+1 <= N <= 1 triệu
+1 <= K <= 100
+
+2, 5, 1, 9, 4
+14
+
+phân tích các số:  thành  các số %k lấy dư.
+
+1, 2, 4, 5, 9, 
+3, 10,
+
+
+1 +  2 +  4 +  5 = 13
+
+f[3][0][0] = 1;
+f[3][0][1] = 1
+
+Gọi f[i][r][state] là trạng thái có thể / không thể đạt được khi có i phần tử đâu tiên và tổng các số khi chia cho K có số dư là r và ta đã chọn được ít nhất một so.
+bài toán cơ sở: f[0][0][0] =1
+đáp án bài toan: f[n][0][1] -- 1 thì in ra YES, else in ra NO
+
+công thức qhđ:
+    Khi ta co f[i][r][state] == 1
+
+. Tình huống 1: Số thứ i + 1 ta không chọn
+
+f[i + 1][r][state] = 1
+
+. Tình huống 2: Số thứ i + 1 ta chọn
+
+f[i + 1][(r + a[i + 1])] = 1
+
+--------------------
+
+sum[N]=(a[1]+a[2] + ... + a[N]) % K
+
+Tính prefix sum
+
+    sum[0] - 0 % K - 0
+    sum[1] = a[1] % K
+    sum[2]=(a[1]+ a[2]) % K
+    sum[3]=(a[1]+a[2]+a[3]) % 
+
+K - 6, N = 10
+
+VỚi N = 10 thì ta sẽ có 11 giá trị sum
+
+sum[0] % 6, sum[1] % 6, .... , sum[10] % 6
+
+Nguyên lý Dirichclet:
+
+Có 4 con thỏ và muốn nhốt chúng vào 3 cai chuong, chac chan phai co 1 chuong có ít nhất 2 con.
+
+--------------------
+Già sử i < j
+
+sum[i] % K -- sum[j] % K
+
+K= 6,
+
+11 % 6 = 5
+
+29 % 6 = 5
+
+29 - 11 = 18 chia hết cho 6
+
+===========> sum[j] - sum[i] chấc chần chia hết cho K
+
+sum[j] - sum[i] = a[i + 1] + a[i + 2] + ..... + a[j]
+
+Với N > K ==== > luôn luôn tìm được ít nhất 1 cách để chọn ra các số chia hết cho K == > đap án luôn là YES
+
+với N <=K quy hoạch động
+
+---------------------------------------------------------------------------------------------------------------------
+
+AC6 (Autumn Contest 2021)
+
+Cho 3 số nguyên dương a, b, n. Xét các cặp (x, y) không âm thoa man a.x + b.y = n. Hoi x + y nho nhat la bao nhiêu ????????
+
+1 <- a, b, n <- 1 tỷ
+
+Đặt g = gcd(a, b)
+
+nếu n không chia hết cho g ====- > kết qua là -1
+
+trong trường hợp ngược lại, ta a = a / g, b = b / g, n = n / g
+
+ax + by = n
+
+gcd(a, b)=1
+
+Giå sử a <= b
+
+Vì đề yêu cầu x + y phải nhỏ nhat có thể.
+
+Giả sử ta có 2 đáp án (x1, y1) và (x2, y2)
+Trong đó y1 < y2
+
+a.x1 + b.y1 = n
+a.x2+ b.y2 = n
+
+x1= (n -b.y1) /a
+x2=(n-b.y2) /a
+
+Cần chứng minh x1 + y1 >= x2 + y2
+
+x1+y1=(n-b.y1)/a+y1=(n-b.y1+a.y1) /a
+x2+y2=(n-b.y2)/a+y2=(n-b.y2+a.y2) /a
+
+So sánh x1 + y1 >= x2 + y2
+
+(n -b.y1+ a.y1) /a>=(n-b.y2+a.y2) /a
+
+n - b . y1 + a . y1 >= n - b . y2 + a . y2
+<= > (a - b).y1>= (a -b).y2
+=> y1 <= y2 (a-b luôn âm)
+
+
+ax + by = n
+for y: n / b -> 0
+    neu n - b * y chia hết cho a
+        đặt x = (n - b * y) / a
+        xuat x + y, dung thuat toan
+
+
+
+Tình huống 1:
+
+b >- can 1 ty ~ 33000
+
+Tình huống 2:
+
+b < căn 1 tỷ
+
+Bổ đề
+Với 2 so N va M co gcd(N, M) = 1, xet M boi lien tuc cua so N, cac so nay co so du khac nhau khi chia cho M
+
+N = 10, M = 7
+
+0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, .
+
+0, 3, 6, 2, 5, 1, 4, 0, 3, 6, 2,
+Sử dụng phản chứng
+
+Gia sử xet M bội liên tuc, co 2 so co cung so dư, gia sử 2 so đo la i.N và j.N va 2 so nay khi chia cho M co cùng so dư.
+
+Ta có: j.N - i.N sẽ chia hết cho M
+
+<=> N.(i - j) chia hết cho M
+
+Do gcd(N, M) = 1 ======> i - j chia hết cho M
+
+x.N, (x+1).N, .... , (x+M-1).N
+
+Già sử cho i - x+M-1, j - x
+
+i - j = M - 1 ===== > vô lý
+
+-------------------------------------------------------------------------------
+Subsequence Additional:
+
+Cho một dãy so a.
+
+Có nguyên tac tạo dẫy so như sau:
+
+Ban đầu, ta có dãy so b = [1]
+
+Sau đo, ta co thể lay mot vai so trong day b cong lai va them no vao dang sau de co mot so moi.
+
+Hỏi có thể tạo được dãy a từ day b hay không ????
+
+a = [1, 2, 1, 3, 4]
+
+---= > YES
+
+b = [1]    
+b = [1, 1]
+b = [1, 2, 1]
+b = [1, 2, 1, 3] I
+b = [1, 2, 1, 3, 4]
+
+------------------------------------------------------
+
+a = [1, 1, 2, 3, 5]
+
+Dãy số a sẽ thỏa mãn nếu a[i] <= Tổng của a[1] + a[2] + .... + a[i - 1]
+Chứng minh mot điều nao do thoa man voi toan bo so N
+Ta sẽ chứng minh điều này đúng với N - 1
+Giả sử điều này đúng với N = k
+Ta cần chứng minh điều này cũng đúng với N = k + 1
+
+Bài toán đưa về:
+Cho dãy số a, ban đầu a[1] = 1, a[i] sẽ xây dựng được nếu tổng a[1] + a[2] + .... + a[i - 1] >= a[i]
+Với N - 1, a[1] - 1. Điều này đúng.
+
+Giả sử với N = k, điều này cũng đúng (a[k] tạo được khi a[k] <= a[1] +a[2] + .... +a[k -1])
+Ta sẽ chứng minh điều này đúng với N = k + 1 (a[k + 1] tạo được khi a[k + 1] <= a[1] + a[2] + .... +a[k])
+
+Trường hợp 1:
+    Nếu a[k + 1] <= a[1] + a[2] + .... + a[k - 1]
+
+Trường hợp 2:
+    Nếu a[k + 1] > a[1] + a[2] +...... + a[k - 1]
+
+và a[k + 1] <= a[1] + a[2] +..... + a[k]
+
+Tách a[k + 1] thành a[k] +x 
+    ==== >x <= a[1]+a[2] +... + a[k - 1] 
+    
+    ==== > có cách để chọn 1 vài số để tạo ra được x
+
+
+
+
+
+

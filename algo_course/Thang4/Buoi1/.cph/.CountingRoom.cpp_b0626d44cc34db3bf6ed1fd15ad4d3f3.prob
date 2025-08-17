@@ -1,0 +1,1 @@
+{"name":"Local: CountingRoom","url":"c:\\Users\\HP PC\\ICPC\\algo_course\\Thang4\\Buoi1\\CountingRoom.cpp","tests":[{"id":1753180718404,"input":"5 8\n########\n#..#...#\n####.#.#\n#..#...#\n########","output":"3"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\HP PC\\ICPC\\algo_course\\Thang4\\Buoi1\\CountingRoom.cpp","group":"local","local":true}

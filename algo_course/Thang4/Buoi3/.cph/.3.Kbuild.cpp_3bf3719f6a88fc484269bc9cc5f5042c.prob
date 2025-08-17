@@ -1,0 +1,1 @@
+{"name":"Local: 3","url":"c:\\Users\\HP PC\\ICPC\\algo_course\\Thang4\\Buoi3\\3.Kbuild.cpp","tests":[{"id":1753635224788,"input":"6\n1 2\n2 3\n2 4\n4 5\n4 6\n2\n3 6\n4 5\n","output":"1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\HP PC\\ICPC\\algo_course\\Thang4\\Buoi3\\3.Kbuild.cpp","group":"local","local":true}

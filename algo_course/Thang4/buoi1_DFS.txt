@@ -8,7 +8,7 @@ một số khái niệm căn bản trong đồ thị
 2. cạnh: biểu thị mối liên quan giữa 2 đỉnh với nhau, cạnh có hướng và cạnh vô hướng
 3. trọng số của 1 cạnh: 1 giá trị đc gán trên 1 cạnh biểu thị cho 1 giá trị nào đó trong bài toán
 4. đường đi: một danh sách các đỉnh x1,x2,x3,..xk trong đố 2 đỉnh xi, xi+1 sẽ kề nhau (có 1 cạnh nôí từ xi -> xi +1)
-
+----------------------------------------------------------
 thuật toán DFS:
 
 cho 1 đồ thị G(V,E) cho 1 đỉnh xuất phát bất kì hỏi có bảo nhiêu đỉnh có thể đến đc nếu ta xuất phát từ đỉnh  start  
@@ -63,8 +63,11 @@ hỏi mê cung có thỏa mãn hay không
 ##.##
 ------------------------------------------------------------------
 Round trip II
+
 Đồ thị DAG:
+
 Đồ thị DAG là đồ thị có hướng và không tồn tại 1 chu trình đơn
+
 1 chu trình là 1 danh sách các điểm s->s1->s2->...sn->s
 
 gọi bảng trace[u] với ý nghĩa:
@@ -80,7 +83,7 @@ dfs(u)
     for mọi v kề u
         nếu state[v]=0;
             trace[v]=u
-            dfs[v]
+            dfs(v)
         nếu state[v]==1
             truy vết đường đi và dừng chương trình
     state[u]=2
@@ -103,7 +106,7 @@ dfs(u)
         dfs(v)
 
 cài đặt adj[u] và adj[v] alf 2 sét
-đọc cạnh u,V
+đọc cạnh u-v
 gọi adj[u].inset(v) và adj(v).inset(u)
 
 ------------------------------------------------------

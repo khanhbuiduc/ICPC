@@ -1,0 +1,36 @@
+DSU (Disjoint Set Union)
+
+Tạo mot mang root[u] với ý nghĩa: root[u] la đinh đại diện "tạm thoi" cua thanh phan lien thông co chứa u.
+
+Khởi tạo root[i] = i
+
+int findRoot(u):
+    neu u == root[u]: 
+        return u
+    else: 
+        root[u] = findRoot(root[u])
+        return root[u]
+
+Duyệt mọi truy van:
+    Yêu cầu noi canh u - V
+    đặt rootu = findRoot(u)
+    đặt rootv = findRoot(v)
+    neu rootu != rootv:
+        root[rootu] = roofv
+
+Yêu cầu hoi u va v co chung tplt:
+    đặt rootu = findRoot(u)
+    đặt rootv = findRoot(v)
+    neu rootu != rootv:
+        xuat ra NO
+    else:
+        xuat ra YES
+-------------------------------------
+
+------------------------------------
+WC3 (Winter Contest 2020)
+
+Gọi state[u] với ý nghĩa:
+
+state[u] = 1: đinh u đa o trong thanh phan lien thong ma co 1 may tinh đa co du liệu.
+state[u] = 0: thành phần liên thông của u chưa có dữ liệu.
