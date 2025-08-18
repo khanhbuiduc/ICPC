@@ -27,13 +27,9 @@ void buildTree()
     a.assign(4 * p + 5, 0);
     // buildTree
     for (int i = 0; i < k; i++)
-    {
         fi >> a[p + i];
-    }
     for (int i = p - 1; i > 0; i--)
-    {
         a[i] = __gcd(a[i * 2], a[i * 2 + 1]);
-    }
 }
 int main()
 {

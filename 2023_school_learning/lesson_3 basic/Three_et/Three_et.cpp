@@ -39,10 +39,5 @@ int main()
         cout << t3 + 1 + 4 * n;
 }
 /*
-    - ở bài này ta dùng cách dễ hiểu hơn nhưng độ phức tạp cao hơn
-    - vì sản suất
-
-
-
 
  */

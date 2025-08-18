@@ -6,33 +6,29 @@ ifstream fi(NAME "inp");
 ofstream fo(NAME "out");
 
 typedef tuple<int, bool, int> tibi;
-// tọa độ, loại(đầu đoạn,cuối đoạn), vị trí
-int c, t, si;
 
 int n, a, b;
-int pv = 0, ans = 0;
+int ans = 0;
 void covering(vector<tibi> &x)
 {
     vector<bool> flg(n, 0);
+    vector<int> v(n);
+    int pos_v = 0;
+    //
     sort(x.begin(), x.end());
-    vector<int> v(n); // đoạn đang được sử dụng
-
     for (int i = 0; i < 2 * n; i++)
     {
         auto [c, t, si] = x[i];
-        // nếu là đầu đoạn thêm vào v
         if (t == 0)
-            v[pv++] = si;
-        else // nếu là cuối đoạn
+            v[pos_v++] = si;
+        else
         {
-            if (flg[si] == 0) // nếu chưa được phủ
+            if (flg[si] == 0)
             {
-                // đánh dấu đã được phủ ở tất cả các đoạn trong v và cả điểm hiện tại
-                for (int j = 0; j < pv; ++j)
+                for (int j = 0; j < pos_v; ++j)
                     flg[v[j]] = true;
-                // flg[si] = true; thừa
                 ++ans;
-                pv = 0; // Reset active segment pointer
+                pos_v = 0;
             }
         }
     }

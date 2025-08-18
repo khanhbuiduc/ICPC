@@ -3,21 +3,12 @@ using namespace std;
 typedef pair<int, int> pii;
 #define ff first
 #define ss second
-void printArr(const vector<pii> &arr)
-{
-    for (const pii &i : arr)
-        cout << "{" << i.ff << "," << i.ss << "} ";
-    cout << "\n";
-}
+int n, m, r1 = 0, r2 = 0, t, k = 1, p, q;
 int main()
 {
     freopen("competition.inp", "r", stdin);
     freopen("competition.out", "w", stdout);
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
-    cout.tie(0);
 
-    int n, m, r1 = 0, r2 = 0, t, k = 1, p, q;
     cin >> n >> m;
 
     // xây dựng cây phân đoạn lưu giá trị max max của đoạn đó
@@ -117,5 +108,4 @@ int main()
     }
 
     cout << r1 << ' ' << r2;
-    cout << "\nTime: " << clock() / (double)1000 << " sec";
 }

@@ -16,13 +16,9 @@ void buildTree()
     a.assign(4 * p, 0);
     // buildTree
     for (int i = 0; i < n; i++)
-    {
         fi >> a[p + i];
-    }
     for (int i = p - 1; i > 0; i--)
-    {
         a[i] = a[2 * i] + a[2 * i + 1];
-    }
 }
 
 void update(int i, int64_t val)

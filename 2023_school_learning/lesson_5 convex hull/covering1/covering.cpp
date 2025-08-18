@@ -23,9 +23,7 @@ int main()
         {
             seg.first = cur.first;
             if (cur.second < seg.second)
-            {
                 seg.second = cur.second;
-            }
         }
         else
         {

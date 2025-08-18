@@ -16,7 +16,7 @@ void covering(vector<tibi> &x, vector<int> &ans)
     int c, t, si;
     for (int i = 0; i < 2 * n; i++)
     {
-        tie(c, t, si) = x[i]; // Unpack the tuple (coordinate, type,segment index)
+        tie(c, t, si) = x[i]; // (coordinate, type,segment index)
         if (m == 0)
         {
             ans.push_back(c);

@@ -22,24 +22,21 @@ int main()
 
     for (int i = 0; i < 2 * n; i++)
     {
-        tie(a, c, m) = x[i]; // Unpack the tuple (coordinate, type, index)
+        tie(a, c, m) = x[i];
 
         if (c == 0)
-        {                // Start of a segment
-            v[pv++] = m; // Add to active segments
-        }
+            v[pv++] = m;
         else
-        { // End of a segment
+        {
             if (flg[m] == 0)
-            { // If this segment is not covered yet
-                // Mark all active segments as covered
+            {
                 for (int j = 0; j < pv; ++j)
                 {
                     flg[v[j]] = true;
                 }
-                flg[m] = true; // Mark the current segment as covered
-                ++ans;         // Increase the answer (new cover needed)
-                pv = 0;        // Reset active segment pointer
+                flg[m] = true;
+                ++ans;
+                pv = 0;
             }
         }
     }
