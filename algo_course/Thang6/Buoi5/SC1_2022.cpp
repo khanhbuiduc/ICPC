@@ -37,11 +37,35 @@ T Abs(const T &x)
     return (x < 0 ? -x : x);
 }
 /// template
+string names[4];
+int own[4];
+
 void initial()
 {
+    for (auto &name : names)
+        cin >> name;
+    for (auto &n : own)
+        n = 0;
 }
 void solve()
 {
+    string card, symble;
+    FOR(i, 0, 51)
+    {
+        cin >> card >> symble;
+        if (card == "2")
+            own[i % 4]++;
+    }
+    //
+    FOR(i, 0, 3)
+    {
+        if (own[i] == 4)
+        {
+            cout << names[i] << " is absolute winner" << endl;
+            return;
+        }
+    }
+    cout << "The game has started" << endl;
 }
 int main()
 {
@@ -50,4 +74,11 @@ int main()
 
     // freopen("input.txt", "r", stdin);
     // freopen("output.txt", "w", stdout);
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        initial();
+        solve();
+    }
 }

@@ -37,11 +37,25 @@ T Abs(const T &x)
     return (x < 0 ? -x : x);
 }
 /// template
+typedef long long ll;
+string s;
+ll p;
+int n;
 void initial()
 {
+    cin >> s;
+    cin >> p;
+    n = s.length();
 }
 void solve()
 {
+    ll seg = (p + n - 1) / n;
+    int index = p % n;
+    if (index == 0)
+        index = n;
+    if ((seg & 1) == 0)
+        index = n + 1 - index;
+    cout << s[index - 1] << endl;
 }
 int main()
 {
@@ -50,4 +64,11 @@ int main()
 
     // freopen("input.txt", "r", stdin);
     // freopen("output.txt", "w", stdout);
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        initial();
+        solve();
+    }
 }

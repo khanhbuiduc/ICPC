@@ -37,17 +37,43 @@ T Abs(const T &x)
     return (x < 0 ? -x : x);
 }
 /// template
+const int mod = 998'244'353;
+typedef long long ll;
+int n, a[20];
+ll f[20][20];
 void initial()
 {
+    cin >> n;
+    FOR(i, 1, n)
+    cin >> a[i];
+    f[1][0] = 1;
 }
 void solve()
 {
+    FOR(i, 1, n - 1)
+    FOR(h, 0, i - 1)
+    {
+        if (f[i][h] == 0)
+            continue;
+        FOR(hh, 1, h + 1)
+        {
+            // đỉnh i+1 có thể có độ cao hh: 1 -> h+1; mỗi độ cao, đỉnh i+1 có thể chọn kết nối với đỉnh trc đó  1->hh-1
+            (f[i + 1][hh] += f[i][h] * (1 << (hh - 1))) %= mod;
+        }
+    }
+    ll ans = 0;
+    FOR(h, 0, n)
+    {
+        (ans += f[n][h]) %= mod;
+    }
+    cout << ans;
 }
 int main()
 {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    initial();
+    solve();
     // freopen("input.txt", "r", stdin);
     // freopen("output.txt", "w", stdout);
 }

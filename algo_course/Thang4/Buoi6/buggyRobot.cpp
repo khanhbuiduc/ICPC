@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-
+#define FOR(i, a, b) for (int i = (a), _b = (b); i <= _b; i++)
 typedef tuple<int, int, int> tiii;
 const int inf = 1'000'000'007;
 int dist[55][55][55];
@@ -17,14 +17,34 @@ bool checkInOfBound(int x, int y)
 {
     return 1 <= x && x <= n && 1 <= y && y <= m;
 }
-
+void initial()
+{
+    cin >> n >> m;
+    FOR(j, 0, m + 1) { a[0][j] = '#'; }
+    for (int i = 1; i <= n; i++)
+    {
+        string temp;
+        cin >> temp;
+        a[i][0] = a[i][m + 1] = '#';
+        for (int j = 1; j <= m; j++)
+        {
+            a[i][j] = temp[j - 1];
+            if (temp[j - 1] == 'R')
+                s = {i, j};
+        }
+    }
+    FOR(j, 0, m + 1) { a[n + 1][j] = '#'; }
+    cin >> command;
+}
 void dijkstra()
 {
     // Khởi tạo khoảng cách
-    for (int i = 1; i <= n; i++)
-        for (int j = 1; j <= m; j++)
-            for (int k = 0; k <= (int)command.length(); k++)
-                dist[i][j][k] = inf;
+    FOR(i, 1, n)
+    FOR(j, 1, m)
+    FOR(k, 0, command.length())
+    {
+        dist[i][j][k] = inf;
+    }
 
     dist[s.first][s.second][0] = 0;
     pq.push({0, {s.first, s.second, 0}});
@@ -36,7 +56,7 @@ void dijkstra()
         auto [x, y, p] = u;
 
         // Kiểm tra đến đích
-        if (x == e.first && y == e.second)
+        if (a[x][y] == 'E')
         {
             cout << d << endl;
             return;
@@ -57,12 +77,12 @@ void dijkstra()
         {
             int nx = x + dx[dir];
             int ny = y + dy[dir];
-            if (!checkInOfBound(nx, ny) || a[nx][ny] == '#')
+            if (a[nx][ny] == '#') // đâm tường
             {
                 nx = x;
                 ny = y;
             }
-            if (checkInOfBound(nx, ny) && a[nx][ny] == '.' && dist[nx][ny][p] > dist[x][y][p] + 1)
+            if (dist[nx][ny][p] > dist[x][y][p] + 1)
             {
                 dist[nx][ny][p] = dist[x][y][p] + 1;
                 pq.push({dist[nx][ny][p], {nx, ny, p}});
@@ -77,7 +97,7 @@ void dijkstra()
             int ny = y + dy[dir];
 
             // Xử lý va chạm: nếu gặp tường hoặc ra ngoài thì đứng yên
-            if (!checkInOfBound(nx, ny) || a[nx][ny] == '#')
+            if (a[nx][ny] == '#')
             {
                 nx = x;
                 ny = y;
@@ -96,22 +116,7 @@ int main()
 {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
-
-    cin >> n >> m;
-    for (int i = 1; i <= n; i++)
-    {
-        string temp;
-        cin >> temp;
-        for (int j = 1; j <= m; j++)
-        {
-            a[i][j] = temp[j - 1];
-            if (temp[j - 1] == 'R')
-                s = {i, j};
-            if (temp[j - 1] == 'E')
-                e = {i, j};
-        }
-    }
-    cin >> command;
+    initial();
     dijkstra();
     return 0;
 }

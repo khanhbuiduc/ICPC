@@ -36,18 +36,33 @@ T Abs(const T &x)
 {
     return (x < 0 ? -x : x);
 }
-/// template
+/// template ///////////
+int a, b, c;
 void initial()
 {
-}
+    cin >> a >> b >> c;
+};
 void solve()
 {
-}
+    if (c == 0)
+        cout << "NO CURVE";
+    else if (c > 0)
+        cout << "CURVE UP";
+    else
+        cout << "CURVE DOWN";
+    cout << endl;
+};
 int main()
 {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
-
     // freopen("input.txt", "r", stdin);
     // freopen("output.txt", "w", stdout);
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        initial();
+        solve();
+    }
 }

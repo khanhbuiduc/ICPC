@@ -1,0 +1,1 @@
+{"name":"Local: 3","url":"c:\\Users\\HP PC\\ICPC\\algo_course\\Thang6\\Buoi3\\3.findingRPS.cpp","tests":[{"id":1756110990474,"input":"3\nRRRPPS\nRRSRRPRRS\nRPSRPSRPS","output":"3\n8\n4"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\HP PC\\ICPC\\algo_course\\Thang6\\Buoi3\\3.findingRPS.cpp","group":"local","local":true}

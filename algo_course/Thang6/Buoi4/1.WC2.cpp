@@ -37,11 +37,32 @@ T Abs(const T &x)
     return (x < 0 ? -x : x);
 }
 /// template
+int n;
+vector<int> broad;
 void initial()
 {
+    broad.clear();
+    cin >> n;
+    broad.push_back(0);
+    FOR(i, 1, n)
+    {
+        int m;
+        cin >> m;
+        broad.push_back(m);
+    }
+    broad.push_back(90);
 }
 void solve()
 {
+    FOR(i, 0, n + 1)
+    {
+        if (broad[i] + 15 < broad[i + 1])
+        {
+            cout << broad[i] + 15 << endl;
+            return;
+        }
+    }
+    cout << 90 << endl;
 }
 int main()
 {
@@ -50,4 +71,11 @@ int main()
 
     // freopen("input.txt", "r", stdin);
     // freopen("output.txt", "w", stdout);
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        initial();
+        solve();
+    }
 }

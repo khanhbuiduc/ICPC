@@ -40,8 +40,13 @@ T Abs(const T &x)
 void initial()
 {
 }
+bool have_cicle = false;
+void DAG(int u)
+{
+}
 void solve()
 {
+    // kiểm tra đồ thị DAG
 }
 int main()
 {

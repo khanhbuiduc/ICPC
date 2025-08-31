@@ -24,3 +24,5 @@ có thể xây thêm 1 đường trong k đường dự định.
 minpath =
     dist[u]+ w(u, v) + rdist[v]
     dist[v]+ w(u, v) + rdist[u]
+
+--------------------------

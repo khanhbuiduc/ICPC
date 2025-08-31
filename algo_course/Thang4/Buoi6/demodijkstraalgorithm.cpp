@@ -3,14 +3,14 @@ using namespace std;
 typedef pair<int, int> pii;
 typedef tuple<int, int, int> tiii;
 const int inf = 1'000'000'007;
-int dist[100'005];
 vector<pii> adj[100'005];
+int dist[100'005];
 #define ff first
 #define ss second
 priority_queue<pii, vector<pii>, greater<pii>> pq;
 int V, E, start;
 
-int main()
+void initial()
 {
   cin >> V >> E >> start;
   for (int i = 1; i <= E; i++)
@@ -21,8 +21,10 @@ int main()
   }
   for (int i = 1; i <= V; i++)
     dist[i] = inf;
-  //----
   dist[start] = 0;
+}
+void dijkstra()
+{
   pq.emplace(0, start);
   while (!pq.empty())
   {
@@ -37,7 +39,13 @@ int main()
         pq.emplace(dist[v], v);
       }
   }
+}
+int main()
+{
 
+  //----
+  initial();
+  dijkstra();
   for (int i = 1; i <= V; i++)
     cout << dist[i] << " ";
   return 0;

@@ -4,7 +4,8 @@ int root[10005];
 
 int findRoot(int u)
 {
-    return (root[u] == u ? u : findRoot(root[u]));
+    root[u] = (root[u] == u ? u : findRoot(root[u]));
+    return root[u];
 }
 
 void unionSet(int u, int v)

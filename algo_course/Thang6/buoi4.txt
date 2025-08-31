@@ -1,0 +1,178 @@
+
+Ta se bat tran đau bat dau từ phut thu 1, neu sau 15 phut khong co mot phut hao hung nao thì ta se tat ti vi.
+
+Hòi ta sẽ tát ti vi ở phút bao nhiêu ??????
+
+N = 3
+
+13 50 80
+
+-==- > 28
+
+N = 3
+20 50 80
+
+==== > 15
+
+N = 8
+
+10 20 30 40 50 60 70 80
+
+==== > 90
+
+t = [0 10 20 30 40 50 60 70 80 90]
+
+Xét 2 thời điểm ti và ti+1, nếu ti+1 - ti > 15 ---- > xuất tỉ + 15, dừng thuật toán.
+
+Neu xét hết toan bộ và không dừng thuat toan thì xuat ra 90. |
+
+--------------------------
+
+WC6 (Winter Contest 2020)
+
+Cho một chuỗi s
+
+Tạo một chuỗi rev s là chuỗi s nhưng đào ngược thứ tự
+
+Tạo chuỗi st bằng cách ghép chuỗi s nối vào chuỗi st
+
+Ta gán s = st
+
+Thực hiện thao tác này vô hạn lần
+
+Cho một vị trí p, hãy cho biết vị trí p này là chữ cái nào ????
+
+Ví dụ:
+
+S = bbac
+
+s - bbaccabb
+
+s = bbaccabbbbaccabb
+
+s = bbaccabbbbaccabbbbaccabbbbaccabb
+
+s = bbaccabbbbaccabbbbaccabbbbaccabbbbaccabbbbaccabbbbaccabbbbaccabb
+
+p = 10
+
+---- > xuất ra chữ b
+
+Ta có độ dài 16 là độ dài nhỏ nhất >- 10
+
+độ dài 16 bẻ thành 2 phần s1 gồm 8 ký tự và s2 gồm 8 ký tự
+
+Ký tự thứ 10 nằm ở vị trí số 2 của s2 ---- > ký tự thứ 7 của s1
+
+Tổng quát: Nếu ta biết ký tự này nằm ở vị trí thứ p của chuỗi s2 thì ký tự này sẽ nằm ở vị trí n - p + 1 ở chuỗi s1
+
+ký tự thứ 7 nằm ở vị trí số 3 của s2 ---- > vị trí thứ 2 của chuỗi s1
+
+------------------------
+Buying
+
+Nhận xét:
+
+Mua món 2, 4, 5, 9 ở siêu thị B
+
+y[2]-0+y[4]-1+y[5]-2+y[9]-3-y[2]+y[4]+y[5] +y[9] - 1 - 2-3
+
+Mua món 4, 5, 2, 9 ở siêu thị B
+
+y[4]-0+y[5]-1+y[2] -2+y[9]-3=y[4]+y[5]+y[2] +y[9] - 1 -2-3
+
+Nhận xét 2:
+
+Nếu y[i] < z[i]
+Ta hay sap xep các mặt hang tang dan theo gia trị y[i] - z[i]
+
+-----------
+Già sử ta có 20 món
+
+9 món đầu tiên, gồm 5 mon mua o B va 4 mon mua o A
+
+11 món còn lại chỉ mua ở C và A
+
+Gọi f_AB[i][j]: tổng tiền nho nhat phải tra khi co i san phẩm dau tiên và ta đã mua j sản phẩm ở siêu thị B
+
+bài toán cơ sở: f_AB[0][0] = 0, khởi tạo cac f_AB[i][j] = inf
+
+công thức: Khi ta co f_AB[i][j] !- inf
+
+Xét món i + 1 nếu được mua ở siêu thị A: f_AB[i + 1][j] = min(f_AB[i + 1][j], f_AB[i][j] + x[i + 1])
+
+Nếu món i + 1 được mua ở siêu thị B: f_AB[i + 1][j + 1] - min(f_AB[i + 1][j + 1], f_AB[i][j] + y[i + 1] - j)
+
+Gọi f_AC[i][j]: tổng tiền nho nhat phai tra khi có i san phẩm cuoi cung va ta đã mua j sản phẩm ở siêu thị C
+
+bài toán cơ sở: f_AC[n + 1][0] - 0, khởi tạo các f_AC[i][j] - inf
+
+công thức: khi ta co f_AC[i][j] != inf
+
+Xét món i - 1 nếu được mua ở siêu thị A: f_AC[i - 1][j] = min(f_AC[i - 1][j], f_AC[i][j] + x[i - 1])
+
+Nếu món i - 1 được mua ở siêu thị C: f_AC[i - 1][j + 1] = min(f_AC[i - 1][j + 1], f_AC[i][j] + z[i - 1] - j)
+
+Giả sử tại vị trí i, tất cả các món từ 1 -> i được mua ở siêu thị A hoặc B --- > các món còn lại (từ i + 1 -- > n) sẽ mua ở siêu thị A hoặc C
+Tổng tiền: Min(f_AB[i][j|] + f_AC[i + 1][j'])
+Đặt min_AB[i][j] = min(f_AB[i][0], f_AB[i][1], .... , f_AB[i][j])
+Đặt min_AC[i][j] = min(f_AC[i][0], f_AC[i][1], .... , f_Ac[i][j])
+
+Tổng tiền: Min(min_AB[i][j] + min_AC[i + 1][n - i])
+
+for i: 1 -> n
+for j: 0 -> i
+for j
+
+----------------------------------------------------
+AC2
+Thang6/Buoi4/img/AC2.png 
+f[i][j][k][n]
+    - vị trí i;
+    - j vị trí người gần nhất hát
+    - k vị trí người gần nhất múa
+    - n vị trí người gần nhất chơi.
+
+--------------
+
+AC2 (Autumn Contest 2021)
+
+Goi f[i][dSing][friendSing][dDance][friendDance][dRemain][friendRemain] là số cách khi có i bạn đầu tiên, khoảng cách từ bạn i đến bạn gần nhất trong đội hát, đội múa
+
+và ăn ở không lần lượt là dSing, dDance và dRemain.
+
+Trạng thái của 3 bạn cuối cùng trong 3 đội lần lượt
+
+Nếu friendSing - 0: đội hát chưa có bạn nào
+
+Nếu friendSing = 1: Bạn cuối cùng trong đội hát chưa được ghép đôi
+
+Nếu friendSing = 2: Bạn cuối cùng trong đội hát đã được ghép đôi
+
+Bài toán cơ sở: [0][0][0][0][0][0] [0] -1
+đáp an bai toan: Tổng cua cac f[n][dSing][2][dDance][2][dRemain][0] +f[n][dSing][2][dDance][2][dRemain][2]
+công thức qha: Khi ta co f[i][pSing][friendSing][dDance][friendDance][dRemain][friendRemain] > 0
+Chuyển trạng thái
+
+Chuyển trạng thái
+
+Xét bạn thứ i + 1 có kỹ năng hát
+
+Neu friendSing == 2:
+Nếu dSing !- 0:
+f[i +1][1][2][(dDance + 1 == d ? 0 : dDance + 1)][friendDance][dRemain + 1][friendRemain] += f[i][dSing][friendSing][dDance][friendDance][dRemain][friendRemain]
+
+Nếu dSing == 0:
+f[i+ 1][1][1][dDance + 1][friendDance][dRemain + 1][friendRemain] += f[i][dSing][friendSing][dDance][friendDance][dRemain][friendRemain]
+--
+Neu friendSing == 1 và dSing != 0:
+f[i + 1][1][2][ ...... ]
+
+Nếu friendSing == 0
+f[i+1][1][1][ ........ ] +=f[i][dSing][friendSing][dDance][friendDance][dRemain][friendRemain]
+
+----
+cập nhập khoảng cách bị sai i+1 là 0 chứ không phải 1;
+
+---------
+

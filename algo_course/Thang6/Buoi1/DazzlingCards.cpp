@@ -31,6 +31,7 @@ bool maximize(X &x, const Y &y)
     else
         return false;
 }
+typedef long long ll;
 template <class T>
 T Abs(const T &x)
 {

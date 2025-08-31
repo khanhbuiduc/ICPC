@@ -37,5 +37,5 @@ int main()
             2  nếu deque không rỗng thì maxVal=max(maxVal,(yi-xi)+ (yj + xj))
                 -  khi yj-xj> cuối của deque bỏ phần tử cuối đi
             3 thêm  {(yj-xj),xj} vào cuối deque
-    dùng mảng ưu tiên sẽ tối ưu hơn vì không cần làm bước 2 vì  max luôn ở cuối
+    dùng mảng ưu tiên sẽ dễ hơn vì không cần làm bước 2 vì  max luôn ở cuối nhưng độ phức tạp cao hơn
 */

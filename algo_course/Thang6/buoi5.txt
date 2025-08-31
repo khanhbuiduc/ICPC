@@ -1,0 +1,123 @@
+SC1 (Summer Contest 2022)
+
+0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, .
+
+Khi tới một lá thứ i, lá này sẽ được chia cho bạn i % 4
+
+Gọi count[i] với ý nghĩa: số lượng lá heo mà bạn thứ i sở hữu.
+
+Khi ta chia lá thứ i, nếu đây là một lá heo, ta sẽ tăng count[i % 4]++
+
+Bạn x sẽ ăn trắng nếu count[x] == 4
+
+..
+
+VOI 06 - Mạng máy tính
+
+Ta có N máy tính và M cọng dây noi, một cọng dây noi sẽ noi dữ liệu từ may u -> may v (đây là dữ liệu 1 chiều)
+
+Một hệ thống máy tính được gọi là "thông suốt" nếu tất cả các cặp máy tính (u, v) đều có thể truyền dữ liệu đến với nhau (trực tiếp hoặc thông qua một số may tính
+
+trung gian). Va v co thể nhan được du liệu từ u va u cung co the nhan dược du liệu từ v
+
+Hỏi: Có thể thêm đúng duy nhất 1 cọng dây noi sao cho mạng may tính trở nên thông suot hay không ? Neu có, hay in ra cạnh u v cần noi
+
+Thang6/Buoi5/img/bai2(1).png 
+
+. . .
+
+1: đồ thị không liên thông thì không thông suốt 
+2: đồ thị chỉ có 1 đỉnh bắt đầu và chỉ có 1 đỉnh kết thúc thì thông xuốt
+
+. . . 
+
+-----------------------------------
+Nâng cap tuyến đường.
+
+Cho một đồ thị có hướng và có N đình. Ta có M cạnh, cạnh thứ i nối ui -> vi với trọng số wi
+
+Ta có Q truy van, mỗi truy van gồm một đinh s và một gia trị t0 với ý nghĩa:
+
+Già sử ta được phép thay đổi TỐI ĐA 1 cạnh trở thẳnh trọng sõ t
+Hòi: độ dài đường đi ngan nhất từ 1 -> s là bao nhiêu
+
+
+----------------------------------
+Nhận xét: 1 <= n <= 2000
+
+Với mỗi truy van, vì ta chi tìm độ dài đường đi từ 1 -> s
+
+Gọi dijkstra xuất phát từ đình 1, đặt dist[u] là độ dài đường đi ngắn nhất từ 1 -> u
+Với các đình u từ 2 -> n, gọi dijkstra xuất phát từ u (trên đo thị ngược), ta co bang rev_dist[u][v] với ý nghĩa: rev_dist[u][v] la độ dai đuong đi ngan nhat từ u -> v
+(trên đô thị ngược)
+
+Với mỗi truy vấn s, t0
+
+----- > độ dài đường đi ngần nhất từ 1 -> s sẽ chính là dist[s] (nếu không sửa)
+Nếu ta sửa một cạnh (u, v) từ trọng số w --- > t0
+Cạnh (u, v) ta chỉ nên sửa nếu w > t0
+Việc sửa chỉ có ý nghĩa nếu đường đi từ 1 -> s có băng qua cạnh (u, v)
+-===- > độ dài đường đi ngắn nhất từ 1 -> s (CÓ BĂNG QUA CẠNH (u, v)):
+dist[u] + t0 + rev_dist[s][v]
+Bài toán đưa về: Trong tat cả các cạnh (u, v) có w > t0, hay thm gia trị dist[u] + t0 + rev_dist[s][v] nho nhat có thể.
+
+-----
+
+Gọi minDist[s][w] là giá trị dist[u] + rev_dist[s][v] nhỏ nhất có thể với w(u, v) >- w
+
+Xét đinh s = 5
+
+Có các cạnh (2, 3, 4: 15), (1, 2, 10:19), (2, 6, 3: 17)
+
+minDist[5][3] = 15
+
+minDist[5][9] = 19
+
+minDist[5][1] = 15
+
+Duyệt ngược w: 9 -> 1
+minDist[s][w] = max(minDist[s][w], minDist[s][w + 1])
+
+Khi ta có truy vẫn s, t0, xét tất cả các cạnh (u, v) có w > t0 và xác định dist[u] + rev_dist[s][v] nhỏ nhất có thể:
+
+Giá trį dist[u] + rev_dist[s][v] = minDist[s][t0 + 1]
+-=-==== > độ dài ngắn nhất từ 1 -> s = min(dist[s], minDist[s][t0 +1] + t0)|
+
+------------------------
+cho bàn cờ n*n: '.' là ô trống, 'R' là quân xe
+hãy đặt chính xác k quân xe vào bàn cờ 
+liệu có thể có chính xác p cặp quân xe ăn nhau không in "YES, "NO"
+
+
+/////////////////////////////////////////////////////////////////
+
+Guard Rooks: 
+
+Thang6/Buoi5/img/bai4.png
+
+Với một hàng i, nếu hàng i có x con xe -- > có x - 1 cặp ăn nhau
+
+Với một cột j, nếu hàng j có y con xe ===== > có y - 1 cặp ăn nhau
+
+Tổng số cap an nhau = Tổng (row[i] - 1) + Tổng (col[j] - 1)
+
+= Tổng row[i] - Số lượng hàng có số xe > 0 + Tổng col[j] - Số lượng cột có số xe > 0
+
+- Số lượng xe có sẵn - Số lượng hàng có số xe > 0 + Số lượng xe có sẵn - Số lượng cột có số xe > 0
+
+= 2 * placed - x0 - y0 (placed: số lượng xe có sẵn, x0 là sõ lượng hàng có số xe dương, y0 là số lượng cột có số xe dương)
+
+Giả sử sau khi đặt thêm k xe, ta có số lượng hàng có xe > 0 là x, số lượng cột có xe > 0 là y
+
+Số lượng cap xe an nhau - 2 * (placed + k) - x - y - P
+
+Bài toán đưa về: Hãy tìm 1 bộ (x, y) thỏa mẫn những điều kiện sau đây:
+
+2 * (placed + k) - x - y = p
+x > x0
+y >= y0
+k >= max(x - x0, y - y0)|
+Nếu x = 0 thì y = 0, nếu x > 0 thì y > 0
+placed + k <= x * y
+
+(Trong đó row[i] > 0, col[j] > 0)
