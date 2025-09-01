@@ -22,7 +22,7 @@ trung gian). Va v co thể nhan được du liệu từ u va u cung co the nhan 
 
 Hỏi: Có thể thêm đúng duy nhất 1 cọng dây noi sao cho mạng may tính trở nên thông suot hay không ? Neu có, hay in ra cạnh u v cần noi
 
-Thang6/Buoi5/img/bai2(1).png 
+Thang6/Buoi5/img/bai2.png 
 
 . . .
 

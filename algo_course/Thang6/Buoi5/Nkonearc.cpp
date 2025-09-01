@@ -37,12 +37,49 @@ T Abs(const T &x)
     return (x < 0 ? -x : x);
 }
 /// template
+vector<int> adj[100];
+// initial tplt
+bool deleted[2005];
+int numb[2005], low[2005];
+int root[2005];
+int timeDfs = 0;
+stack<int> st;
+int ans;
+//------
 void initial()
 {
 }
-bool have_cicle = false;
-void DAG(int u)
+// tplt mạnh
+void dfs(int u)
 {
+    numb[u] = low[u] = timeDfs;
+    st.push(u);
+    root[u] = u;
+    for (auto v : adj[u])
+    {
+        if (deleted[v] = true)
+            continue;
+        if (numb[v] > 0)
+            minimize(low[u], numb[v]);
+        else
+        {
+            dfs(v);
+            minimize(low[u], low[v]);
+        }
+    }
+    if (low[u] == numb[u])
+    {
+        ans++;
+        while (true)
+        {
+            int v = st.top();
+            st.pop();
+            deleted[v] == true;
+            root[v] = u;
+            if (v == u)
+                break;
+        }
+    }
 }
 void solve()
 {
