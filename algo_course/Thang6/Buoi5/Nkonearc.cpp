@@ -37,27 +37,32 @@ T Abs(const T &x)
     return (x < 0 ? -x : x);
 }
 /// template
-vector<int> adj[100];
+int n, m, timeDfs = 0, num_root = 0;
+vector<int> adj[2005], topo;
 // initial tplt
-bool deleted[2005];
-int numb[2005], low[2005];
-int root[2005];
-int timeDfs = 0;
+bool deleted[2005], visited[2005];
+int numb[2005], low[2005], root[2005];
+set<int> in, out;
 stack<int> st;
-int ans;
 //------
 void initial()
 {
+    cin >> n >> m;
+    int u, v;
+    FOR(i, 1, m)
+    {
+        cin >> u >> v;
+        adj[u].push_back(v);
+    }
 }
 // tplt mạnh
 void dfs(int u)
 {
-    numb[u] = low[u] = timeDfs;
+    numb[u] = low[u] = ++timeDfs;
     st.push(u);
-    root[u] = u;
     for (auto v : adj[u])
     {
-        if (deleted[v] = true)
+        if (deleted[v])
             continue;
         if (numb[v] > 0)
             minimize(low[u], numb[v]);
@@ -69,13 +74,13 @@ void dfs(int u)
     }
     if (low[u] == numb[u])
     {
-        ans++;
+        num_root++;
         while (true)
         {
             int v = st.top();
             st.pop();
-            deleted[v] == true;
-            root[v] = u;
+            deleted[v] = true;
+            root[v] = num_root;
             if (v == u)
                 break;
         }
@@ -83,7 +88,59 @@ void dfs(int u)
 }
 void solve()
 {
-    // kiểm tra đồ thị DAG
+    FOR(i, 1, n)
+    {
+        if (numb[i] == 0)
+            dfs(i);
+    }
+    // đang có num_root đỉnh. kiểm tra có 1 đỉnh bắt đầu. 1 đỉnh kết thúc
+    if (num_root == 1)
+    {
+        cout << "NO";
+        exit(0);
+    }
+    FOR(u, 1, n)
+    for (int v : adj[u])
+    {
+        int rootu = root[u];
+        int rootv = root[v];
+        if (rootu != rootv)
+        {
+            in.insert(rootv);
+            out.insert(rootu);
+        }
+    }
+    // có đúng 1 đỉnh vào và 1 đỉnh ra => in:root-1 đỉnh, out: root-1 đỉnh
+    if ((int)in.size() != num_root - 1 || (int)out.size() != num_root - 1)
+    {
+        cout << "NO";
+        exit(0);
+    }
+    int ans_in = 0, ans_out = 0;
+    FOR(i, 1, num_root)
+    {
+        ans_in ^= i, ans_out ^= i;
+    }
+    for (auto i : in)
+        ans_in ^= i;
+    for (auto i : out)
+        ans_out ^= i;
+    FOR(u, 1, n)
+    {
+        if (root[u] != ans_in)
+            continue;
+        ans_in = u;
+        break;
+    }
+    FOR(u, 1, n)
+    {
+        if (root[u] != ans_out)
+            continue;
+        ans_out = u;
+        break;
+    }
+    cout << "YES\n"
+         << ans_out << ' ' << ans_in;
 }
 int main()
 {
@@ -92,4 +149,6 @@ int main()
 
     // freopen("input.txt", "r", stdin);
     // freopen("output.txt", "w", stdout);
+    initial();
+    solve();
 }

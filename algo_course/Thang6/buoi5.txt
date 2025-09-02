@@ -26,8 +26,8 @@ Thang6/Buoi5/img/bai2.png
 
 . . .
 
-1: đồ thị không liên thông thì không thông suốt 
-2: đồ thị chỉ có 1 đỉnh bắt đầu và chỉ có 1 đỉnh kết thúc thì thông xuốt
+1: dùng scc chuyển đồ thị thành đồ thị DAG;
+2: đồ thị chỉ có 1 đỉnh bắt đầu và chỉ có 1 đỉnh kết thúc thì thông xuốt.
 
 . . . 
 
@@ -63,7 +63,7 @@ Bài toán đưa về: Trong tat cả các cạnh (u, v) có w > t0, hay thm gia
 
 -----
 
-Gọi minDist[s][w] là giá trị dist[u] + rev_dist[s][v] nhỏ nhất có thể với w(u, v) >- w
+Gọi minDist[s][w] là giá trị dist[u] + rev_dist[s][v] nhỏ nhất có thể với w(u, v) >= w
 
 Xét đinh s = 5
 
