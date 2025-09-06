@@ -82,14 +82,24 @@ Khi ta có truy vẫn s, t0, xét tất cả các cạnh (u, v) có w > t0 và x
 
 Giá trį dist[u] + rev_dist[s][v] = minDist[s][t0 + 1]
 -=-==== > độ dài ngắn nhất từ 1 -> s = min(dist[s], minDist[s][t0 +1] + t0)|
+--------------------------------------------------------------------------------------------------------
+tự phân tích:
+ans là min(dist[s] and dist[u] + rev_dist[s][v] + t0)
 
+xét: min(dist[u] + rev_dist[s][v] + t0):
+min_dist = min(dist[u] + rev_dist[s][v]) //chỉ quan tâm cạnh lớn hơn w>t0
+gọi min_dist[s][w] là  dist[u] + rev_dist[s][v] với w(u,v) = w;
+
+tính subfix_min[s][w]:  w(u,v) >= w
+
+subfix_min[s][w] = min(subfix_min[s][w], subfix_min[s][w+1])
+
+vậy kết quả là: min(dist[s], subfix_min[s][t0 + 1] + t0)
 ------------------------
 cho bàn cờ n*n: '.' là ô trống, 'R' là quân xe
 hãy đặt chính xác k quân xe vào bàn cờ 
 liệu có thể có chính xác p cặp quân xe ăn nhau không in "YES, "NO"
 
-
-/////////////////////////////////////////////////////////////////
 
 Guard Rooks: 
 
@@ -103,7 +113,7 @@ Tổng số cap an nhau = Tổng (row[i] - 1) + Tổng (col[j] - 1)
 
 = Tổng row[i] - Số lượng hàng có số xe > 0 + Tổng col[j] - Số lượng cột có số xe > 0
 
-- Số lượng xe có sẵn - Số lượng hàng có số xe > 0 + Số lượng xe có sẵn - Số lượng cột có số xe > 0
+= Số lượng xe có sẵn - Số lượng hàng có số xe > 0 + Số lượng xe có sẵn - Số lượng cột có số xe > 0
 
 = 2 * placed - x0 - y0 (placed: số lượng xe có sẵn, x0 là sõ lượng hàng có số xe dương, y0 là số lượng cột có số xe dương)
 
@@ -121,3 +131,30 @@ Nếu x = 0 thì y = 0, nếu x > 0 thì y > 0
 placed + k <= x * y
 
 (Trong đó row[i] > 0, col[j] > 0)
+
+-----------------------------------
+
+tự phân tích:
+hàng i có x xe: x-1 cặp ăn nhau
+cột j có y xe: y-1 cặp ăn nhau 
+
+tổng số cặp: sum(row[i] + col[i] - 2)
+
+= sum(row[i] + col[i]) - sum(số lượng hàng và cột có xe)
+= 2* xe có sẵn - sum (hàng và cột có xe);
+= 2 * placed -  (x0 + y0)
+
+-------------
+đặt đúng k xe để có đúng p cặp;
+
+=> 2 * (placed + k) - (x + y) = p;
+
+x + y = 2 * (placed + k) - P
+tìm x,y: x >= x0; y>= x0;
+
+for: x: x0 -> n: tìm y0
+
+
+
+
+
