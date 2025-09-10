@@ -1,0 +1,97 @@
+lý thuyết
+Stack:  cấu trúc LI-FO
+
+hàm stack: 
+	- push
+	- top();  (lỗi khi stack rỗng)
+	- pop
+	- empty
+	- size
+-----------------------------------------
+ONP:
+	- Biểu thức chính quy: (a o b)
+Chuyển biểu thức chính quy thành biểu thức balan ngược
+ký pháp ba lan ngược (a o b) --> a b o
+
+vd: (1 + 2) * (3 +4) ->1 2 + 3 4 + *
+
+ban lan ngược a = 50 75 + 25 10 20 * 30 2 * + + *
+dùng stack để lưu trữ số: 
+	duyệt từng phần trong a: 
+	gặp số: cho vào stack
+	gặp phép tính: 
+		lấy 2 số ở top ra 
+		thực hiển: a o b
+		bỏ lại vào stack
+--------------------------------------------
+
+Valid Parentheness
+
+Cho một chuỗi s gồm những dấu ngoặc (, ), [, ], {, }, kiểm tra chuỗi này có hợp lệ hay không.
+
+Quy tắc:
+- Chuỗi rỗng là chuỗi hợp lệ.
+- Nếu A là chuỗi hợp lệ thì (A), [A], {A} là những chuỗi hợp lệ.
+- Nếu A và B là 2 chuỗi hợp lệ thì AB sẽ là chuỗi hợp lệ.
+
+Ví dụ:
+- ()()(): hợp lệ
+- )()()()(: không hợp lệ
+
+st lưu trữ danh sách ngoặc mở tự do
+
+------------------------------------------------
+Nearest Smaller Value
+
+Cho một dãy số nguyên dương a gồm N phần tử.  
+Với mỗi số a[i], tìm vị trí gần nhất ở bên trái của nó mà giá trị < a[i].  
+Nếu không tồn tại, xuất số 0.
+
+Ví dụ:  
+a = [0, 5, 9, 2, 2, 4, 1, 6, 7, 8, 3, 5, 10, 2, 4]
+Nhận xét:
+- Nếu có một số ở sau mà còn nhỏ hơn số đằng trước, thì số đằng trước "không còn quan trọng".
+- Nghĩa là ta có thể bỏ qua các phần tử không còn là ứng viên tiềm năng.
+st: lưu giá trị của ứng viên tiềm năng
+
+Input: a = [5, 9, 2, 2, 4, 1, 6, 7]
+Index:     1  2  3  4  5  6  7  8
+
+Output:    0  1  0  0  4  0  6  7
+---------------------------------------------------
+Advertisement
+
+Đề bài:
+Bạn được cho một hàng rào gồm N cái cọc. Cọc thứ i có chiều cao là h[i].
+
+Bạn muốn cắt ra một biển quảng cáo hình chữ nhật sao cho:
+- Biển nằm hoàn toàn trong phạm vi các cọc liên tiếp.
+- Chiều cao của biển không vượt quá chiều cao thấp nhất trong đoạn được chọn.
+- Biển nằm dựa trên mặt đất (đáy nằm ngang dưới đáy các cọc), hai cạnh dọc dựa trên cọc.
+
+Yêu cầu:
+Tính diện tích lớn nhất của một biển quảng cáo hình chữ nhật có thể cắt được.
+
+xây dựng 2 mảng L và R:  Nearest Smaller Value
+
+area = hi * (Ri - Li -1) 
+
+
+-------------------------------------------------
+SPC6 (Spring Contest 2020)
+
+Đề bài:
+
+Cho một công thức phân tử hóa học hữu cơ chỉ gồm 3 nguyên tố: C (Carbon), H (Hydrogen), và O (Oxygen).
+
+Hãy tính **phân tử khối** (molecular mass) của phân tử này.
+
+Ví dụ:
+
+C6H12O6----->180
+
+st: 
+	- gặp C,H,O,( thì cho vào st
+	- gặp số thì nhân với st.top
+	- gặp ) thì cộng tổng đến khi gặp (
+	- kết thúc thì tính tổng các phần tử còn lại

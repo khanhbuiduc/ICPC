@@ -1,0 +1,79 @@
+Spring Contest 2020 (SPC1)
+
+Cho 2 day so a va b, day a gom N so nguyen duơng, day b gom M so nguyen dương.
+
+Hãy tìm day c là day con chung co độ dai dai nhat của 2 day a va b
+
+Giới hạn dữ liệu: 1 <= N <= 2 triệu, 1 <= M <= 2000
+
+-----------------
+
+5 2 4 2 6 - 1 2 4 6 5 3 2 1 3 4 2
+1 4 3 5 6 - 8
+
+
+
+maxlength là độ dài trùng max đến hiện tại; length < M
+
+f[5][1] = 6;
+f[5][2] = 8;
+
+gọi f[i][j]  là chỉ số tối thiểu cần thiết trong dãy a khi ta có i phần tử của dãy b có độ dài con chung là j;
+
+bài toán cơ sở:
+    f[0][0] = 0; f[i][j] = inf;
+đáp án bài toán: j lớn nhất sao cho f[M][j] <= N;
+
+công thức quy hoạch động:
+    khi f[i][j] != inf
+    nếu B[i+1] không xét vào dãy con chung: 
+        f[i+1][j] = min(f[i+1][j], f[i][j])
+    nếu B[i+1] xét vào dãy con chung:
+        tìm p: p > f[i][j] sao cho a[p] = b[i+1];
+        f[i+1][j+1] =  min(f[i+1][j+1], p);
+        ta dùng map<int,vector<>>: giá trị, và vị trí của 1 số:
+            tìm: up_bound(f[i][j]) ;
+
+-----------------------------------------------------------------
+AC6 2020
+ta có nền gạch gồm n ô, có m ô bị hỏng
+
+ta có 3 loại gạch
+
+loại 1: có k viên. mỗi viên che phủ đc 1 ô có dộ đẹp là G1
+loại 2: không giới hạn gạch. viên loại 2 che đc 2 ô bình thường liên tục có độ đẹp là G2
+loại 3: không giới hạn số lượng, mỗi viên che đc 3 ô
+    bình thường - hỏng - bình thường, độ đẹp G3
+ta sẽ lát để k có viên nào thừa ra ngoài và độ đẹp lớp nhất có thể. ô hỏng k đc che có độ sấu: D
+
+1<=M<=50
+    => dùng đc tối đa M viên loại 3.
+giả sử số viên loại 3 là j
+    => f[j] là số viên gạch loại 2 tối đa
+        khi có j viên gạch loại 3
+
+những ô buộc phải lát viên loại 1:
+    min(K , N - M - 2*(f[j]) - 2 * j)
+
+giả sử thay x viên loại 2 thàng 2 * x viên loại 1
+    số viên loại 1: v1= min(K, N - M - 2*(f[j]) - 2 * j + 2 * x);
+    số viên loại 2: f[j] - x
+    số viên loại 3: j
+
+độ đẹp: v1 * g1 + v2 * g2 + v3 * g3 + (M - j) * D
+
+--------------------------------
+gọi f[i][j] là số viên loại 2 tối đa khi có i viên đầu tiên, và đã có j viên loại 3
+
+btcs: f[0][0] = 0; f[i][j] = -1
+
+QHD:
+    nếu ô i+1 không nát gạch:
+        f[i+1][j] = min(f[i+1][j], f[i][j]);
+    nếu ô i+2<n: ô i+1 và i+2 là '.'
+        f[i+2][j] = min(f[i+2][j], f[i][j] + 1)
+    nếu i+3 <= N, ô i+1, i+3 là '.', ô i+2 là '#'
+        f[i+3][j+1] = min(f[i+3][j+1], f[i][j]);
+số viên gạch loại 2 tối đa khi có j viên gạch loại 3:
+    f[N][j]
+O(M*N);

@@ -1,0 +1,169 @@
+Binary Search
+
+Bai toan tìm kiem la mot bai toan co dien trong thuat toan.
+
+Cho mot day so a gom N so nguyen duong. Cho mot so x, hay tim vi tri cua so x trong day a
+
+a = [5, 1, 2, 9, 9, 4, 6, 3, 7], x - 4
+
+Duyệt i: 1 -> N
+    nếu a[i] == x
+    báo cáo vị trí - x là vị trí i
+dừng thuat toán.
+
+Độ phức tạp thuật toán: O(N)
+
+Nếu dãy số a là dãy đã được sắp xếp tăng dần thì ???????
+
+a = [1, 2, 2, 2, 3, 3, 3, 4, 5, 5, 6, 8, 7, 9, 9] , x - 9
+Độ phức tạp: 0(log(N))
+
+2^10 = 1024 === > log2(1024) = 10
+
+N ~ 1 triệu === > log2(1 triệu) ~ 18
+
+mã giả của bs:
+
+find(a, x):
+    lo = 1
+    hi = n
+    while lo <= hi:
+        đặt mid = (lo + hi) / 2
+        neu a[mid] == x:
+            return mid
+        else if a[mid] < x
+            lo = mid + 1
+        else
+            hi = mid - 1
+    return -1
+
+lưu ý: dãy số a phải đc xắp xếp trc khi sử dụng binary search
+
+-----------------------------------------------
+
+OPCPIZZA
+
+Cho mot day so nguyen a va mot gia trị x.
+
+Dếm co bao nhieu cap chi so (i, j) sao cho a[i] + a[j] =  x
+
+Lưu ý: (i, j) hay (j, i) được xem như nhau. Các số trong dãy a hoan toan khác nhau.
+
+a = [-2, 1, 9, 5, 12], x = 10
+
+--- > 2
+
+Thuật chuẩn.
+
+Ta sắp xếp dãy số a tăng dân
+
+a = [-2, 1, 5, 9, 12]
+
+x = 10
+
+Ta có a[i] + a[j] = x
+
+Gia sử đa co a[j] -- > a[i] = x - a[j]
+
+Duyệt j: 1 -> n
+
+Bài toán đưa về: Hòi co x - a[j] trong dãy [1 .. j - 1] hay không ?????
+
+----------------------------------------------------
+
+Subarray Sums
+
+Cho mot day so nguyen duong a gom N so. Cho so x, dem co bao nhieu day con co tong - x
+
+Một day con gom cac phan tu tu [1 .. r] la mot day gom cac so lien tuc a[1], a[1 + 1], a[1 + 2], .... , a[r]
+
+sum[1]+sum[2] + .... +sum[n]
+
+tìm sum[l] - sum[r] = x  => cho sum[r] tìm sum[l] = sum[r] +  x
+
+O(NlogN)
+
+
+----------------------------------------------------------
+
+Guess the number
+
+Hệ thong co một con so x va ta khong biet x la bao nhieu. Nhiệm vụ của thi sinh la phai hoi hệ thong
+
+Với mỗi cau hoi, ta se xuat ra mot con so u.
+
+Hệ thong se tra ve cho ta ket qua la dau '<" hoac dau '>='
+
+Neu ket qua la dau < co nghĩa: Số x nho hon so u
+Neu ket qua la dau >" co nghĩa: Số x >= số u
+
+Hỏi: x là số nào ? Và ta chỉ được hỏi không qua 25 câu
+
+100 --- > <
+2 ----- > >=
+50 ---- > >=
+94 ---- > <
+55 ---- > >=
+56 ---- > <
+! 55
+
+
+cout << u << endl;
+fflush(stdout);
+string oper;
+cin >> oper;
+
+lo = 1, hi = 1 triệu
+lấy mid = (lo + hi) / 2
+
+Hỏi mid
+
+Neu tra ve < => hi = mid - 1
+
+Neu tra ve >- -> ta ghi nhan ans = mid, lo = mid + 1
+--------------------------------------------------------------
+
+New Scanning Device
+
+Cho mot bang hình chu nhat kich thuoc 10^9 x 10^9. Co mot anh chu nhat nam o vi tri nao do va dang duợc ẩn đi.
+Một hình chữ nhật được quy định - 4 thông số (x1, y1, x2, y2) với ý nghĩa (x1, y1) là tọa độ góc trái trên, (x2, y2) là toa độ góc phải dưới.
+Một truy van sẽ hoi "so lượng ô được giao giữa hình chữ nhật ẩn và hình chữ nhật (X1, Y1, X2, Y2)"
+Hỏi: Tọa độ góc trai trên và góc phải dưới của hình chữ nhật được ẩn la bao nhiêu sau không qua 66 câu hỏi.
+
+x1, y1, x2, y2
+-> x1,x2, y1,y2
+
+tìm x1: tìm min để {1,min,1,10^9} giao vs hcn ẩn > 0 
+
+binary_search:
+    lo = 1; hi=10^9
+    while 100 vòng
+        mid = (lo + high) / 2
+        check(mid)
+            nếu số ô nhận  đc > 0
+                ans=mid
+                hi=mid
+            else lo=mid  
+
+O(log(10^9))=  O(log(1000^3))= O(log(2^30))= 30
+
+tìm y1: tìm min để {1, 10^9, 1, min} giao vs hcn ẩn >0
+
+O(log(10^9))=  O(log(1000^3))= O(log(2^30))= 30
+
+CÒN 6 CÂU HỎI:
+    hỏi hàng x1 có bao nhiêu cột: {x1, x1, 1, 10^9} => y2-y1 +1 = ans 
+
+    ===> y2
+
+    hỏi hàng 1 có bao nhiêu dòng: {1, 10^9, y1, y1} => x2- x1 + 1 = ans
+
+    ===> x2
+
+
+---------------------------------------------------------------------------
+
+
+
+
+

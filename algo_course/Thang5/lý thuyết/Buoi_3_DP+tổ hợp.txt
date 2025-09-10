@@ -1,0 +1,192 @@
+Candies:
+
+Co N đứa tre va co M vien keo. Dua tre thu i se muon nhan toi da a[i] vien keo
+
+Hoi co bao nhieu cach chia M vien keo cho N dua tre sao cho phai chia het toan bo M vien keo va so keo moi dua tre khong qua a[i] vien.
+
+Ví dụ:
+
+3 4
+1 2 3
+--- > 5
+
+1 <- N <= 100
+1 <= M <= 100'000
+
+Gọi f[i][j] là số cách để chia j viên kẹo cho i đứa trẻ đầu tiên
+
+bài toán cơ sở: f[0][0] = 1
+
+QHD: Tính f[i][j]
+
+Khi ta chia x viên kẹo cho bạn thứ i (0 <= x <= a[i], x <= j)
+    f[i][j] =   f[i - 1][j] + f[i - 1][j - 1] + f[i - 1][j - 2] + ..... + f[i - 1][j - min(j, a[i])]
+
+=>Đặt sum[i][j] = tổng f[i][0] + f[i][1] + f[i][2] + ..... + f[i][j]
+
+
+khởi tạo:
+f[0][0]=1,
+xây dựng sum[0][j] = sum[0][j - 1] + f[0][j]
+
+Đặt r = j, đặt 1 - j - min(j, a[i])
+    f[i][j]= (sum[i - 1][r] - sum[i - 1][1 - 1])
+    sum[i][j] = sum[i][j - 1] + f[i][j]
+
+Độ phức tập: 0(N * M)
+//-----------------------------------------------------------------
+cnt bull
+
+Có bao nhiêu cách xếp N con bò, mỗi con có thể chọn là đực hoặc cái và căn thoa măn điều kiện: Giữa 2 con đực phải có ít nhất K con cái.
+N - 5, K - 3
+
+ccccc
+DCCCC
+CDCCC
+CCDCC
+CCCDC
+CCCCD
+DCCCD
+
+gọi f[i] là số cách đặt bò khi có i bò
+bài toán cơ sở: f[i] = i + 1 nếu i <= K + 1
+
+đáp án bài toán: f[n]
+
+DHD:
+    f[i] là bò cái f[i] = f[i - 1]
+    f[i] là bò đực f[i] = f[i - k - 1];
+    f[i] = f[i - 1] + f[i - k - 1];
+
+-------------------------------------------------------------------------
+
+PERMUTATION
+
+cho chuỗi s gồm 2 dấu '>' và '<'; 
+
+Đếm có bao nhiêu hoán vị gồm N + 1 số sao cho xét 2 số liền kề a[i] và a[i + 1], mối quan hệ giữa a[i] và a[i + 1] sẽ tương ứng với s[i]
+
+Ví dụ:
+
+s = "<><"
+
+[1, 3, 2, 4]
+[1, 4, 2, 3]
+[2, 3, 1, 4]
+[2, 4, 1, 3]
+[3, 4, 1, 2]
+
+==== > 5
+
+gọi f[i][j] là số lượng hoán vị có i phần tử đầu tiên và phần tử cuối cùng là j
+
+f[1][1] = 1
+
+kết quả: tổng f[n][x] với 
+trong hoán vị:
+(1000,40,4)  => tương đương (3,2,1)
+--------------
+<: ? ? ? ? 5
+nếu s[i-1] = '<'
+    f[5][5] = f[4][1->4]
+tuong tự >
+--------------
+nếu s[i-1] là '<'
+    f[i][j] =tổng f[i-1][x] với x: 1->j-1;
+Nếu s[i-1] là '>'
+    f[i][j] = tổng f[i-1][x] với x: j -> i - 1
+
+-------------------------------------------------------------------------------------
+WC4 (Winter Contest 2019)
+
+Cho số nguyên dương N, xét tập hợp gồm N số tự nhiên đầu tiên. Hãy đếm có bao nhiêu cách chia tập hợp sao cho mỗi phần tử phải ở trong đúng 1 tập hợp
+N- 3
+
+{1,2,3}
+{1,2}, {3}
+{1,3}, {2}
+{2, 3}, {1}
+{1}, {2}, {3}
+-------------------
+f[i]: là số tập hợp xét i số đầu tiên
+f[1] = 1; {1}
+f[2] = 2; {1}, {2}; f[2] = f[1]*  + 1
+f[3] = 5; f[1] + số tập hợp f[2] 
+------------------------------------------
+giả sử nhóm cuối có j phần tử. 
+f[i] = f[i] + C(j,i) * f[i - j] với j: 1->i
+    vd: {1,2}, {3}
+        {1},{2},{3} 
+cách này đếm bị trùng
+    vd: {1, 3}, {2}
+        {1}, {3}, {2}
+----------------------------------------
+pp chuẩn: 
+
+gọi  f[i] là số tập hợp khi xét i số đầu tiên
+
+khi xét f[i]: giả sử nhóm cuối cùng có j phần tử. nhóm cuối chứa i
+
+NHÓM J PHẦN TỬ:  {i,?,?,?} => C(j-1, i-1);
+
+f[i] += C(j-1,i-1) * f[i-j]; 
+
+------------------------------------------------------------------------------------------------
+SPC1 (Spring Contest 2021)
+
+Có N ba mẹ, ba mẹ thứ i co a[i] đứa con. N ba mẹ cung vao một nha hang. Nha hang co K ban.
+
+Biết những bà mẹ có thể ngồi bất kỳ bàn nào
+
+Những đứa con được lựa bàn như sau:
+
+Chung co thể ngoi ban không co nguoi lon hoac neu ban đo co nguoi lon, ban đo phai co mẹ của chung.
+
+Hỏi có bao nhiêu cách để xếp chỗ cho toàn bộ các thành viên ???? 
+
+2
+1 2
+
+các cách có thể:
+m1 c1
+m2 c1 c2
+
+1: MỖI NGƯỜI NGÔI 
+
+
+giả sử có k bàn. N người mẹ đã ngồi vào j bàn.
+
+xét mỗi người con =>  K - j + 1 bàn có thể ngồi.
+
+có tổng sumA[n] người con.
+
+=> số trường hợp: = (K - j + 1) ^ sumA[n];
+
+gọi f[i][j] là số cách xếp i người mẹ vào j bạn.  
+
+kết quả f[N][j] * (K - j + 1) ^ sumA[n]; 
+
+///////////////////////////////////////////
+cách xếp N người mẹ vào j bàn.
+gọi f[i][j] là số cách xếp i người vào j bàn.
+    f[0][0] = 1;
+    f[i][0] = 0;
+K = 4;
+    f[2][1]: C(1,4) * 1
+    f[2][2]: C(2,4) * i!
+
+
+QDH: 
+    f[2][2] = 2^2
+    f[2][3] = 3 ^2
+------------------
+f[i][j] > 0
+    xét bà mẹ i + 1:
+        +> ngồi bàn mới: f[i+1][j+1] += f[i][j] * (K - j);
+        +> nguồi cùng bàn với mẹ cũ: f[i+1][j] += f[i][j] * (j)
+
+
+
+
+
+

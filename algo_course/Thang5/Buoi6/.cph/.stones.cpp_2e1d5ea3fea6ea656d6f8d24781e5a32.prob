@@ -1,1 +1,0 @@
-{"name":"Local: stones","url":"c:\\Users\\HP PC\\ICPC\\algo_course\\Thang5\\Buoi6\\stones.cpp","tests":[{"id":1755249714910,"input":"2 4\n2 3","output":"First"},{"id":1755251746458,"input":"2 5\n2 3","output":"Second"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\HP PC\\ICPC\\algo_course\\Thang5\\Buoi6\\stones.cpp","group":"local","local":true}

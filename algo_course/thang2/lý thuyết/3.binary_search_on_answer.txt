@@ -1,0 +1,208 @@
+Array Division
+
+Cho mot day so a gom N so nguyen duong. Cho mot so nguyen duơng k.
+
+Hay chia day a thanh k day con LIEN TUC sao cho moi phan tu trong day a deu phai thuoc 1 day con.
+
+Với mỗi dãy con, hãy tính tổng của dãy con đó.
+
+Hay chia de tong lon nhat la nho nhat co the.
+
+N = 10, k = 3
+
+a = [ 5, 3, 3, 1, 9, 2, 4, 4, 6, 3 ]
+
+1 <= N <= 100000
+
+Tổng cac phan tử trong cung một nhom khong duợc vượt qua 30
+Tổng cac phan tu trong cung một nhom khong duợc vuợt qua 35
+Tổng cac phan tu trong cung mot nhom khong duợc vuợt qua 10
+Tổng cac phan tu trong cung mot nhom khong đuợc vuợt qua 6
+Tổng cac phan tu trong cung một nhom khong duợc vuợt qua 16
+Tổng cac phan tu trong cung một nhom khong duợc vuợt qua 12
+Tổng cac phan tu trong cung một nhom khong duợc vuợt qua 14
+Tong cac phan tu trong cung mot nhom khong duoc vuot qua 5
+
+Ta sẽ đặt giới hạn để tổng mỗi nhóm <= giới hạn đó.
+
+Nhận xét:
+
+Neu gioi hạn L đa thoa man chia duoc thi nhung gioi han L' > L cung se chia được.
+
+Neu gioi hạn L đa khong chia duợc thì nhung gioi han L' < L cung se khong chia dược.
+
+Giới hạn L là một con số nào đó nam [1 .. 200000000000000]
+
+ta đặt lo = 1, hi = 200000000000000
+
+Ta đặt mid = (lo + hi) / 2
+
+Ta hoi với giới hạn mid, co thể chia duợc day thanh k day con sao cho moi day co tong <= mid hay khong ?????
+
+Neu chia được, ta TAM THOI ghi nhan đap an la mid, va tìm ket qua nho hơn
+
+Ngược lại, ta sẽ tìm kết quả lớn hơn.
+
+a = [ 5, 3, 3, 1, 9, 2, 4, 4, 6, 3 ]
+
+[1 .. 50]
+
+25: Chia được: ans = 25 , [1 .. 24]
+
+12: Không chia được: [13 .. 24]
+
+18: Chia được: ans = 18 , [13 .. 17]
+15: Chia được: ans = 15, [13 .. 14]
+13: Không chia được: [14 .. 14]
+
+14: Không chia được: [15 .. 14] =--- > dừng
+
+O(log(10^15))=15*10/3=50 
+
+------------------------------------------
+Agressive Cows:
+
+Co N cai chuong, cai chuong thu i se co vị tri la x[i]. Co C con bo, ta se phan bo C con bo nay vao C chuong.
+
+Tuy nhiên, nhung con bò nay rat ghet nhau, do do ta can phan bo vao chuong sao cho 2 con gan nhau nhat cang xa cang tot
+
+Hỏi khoảng cách xa nhat của 2 con gần nhau nhất là bao nhiêu ?????
+
+N-8,C=3
+
+--c--u---u-u-u--u-u-u-u-c-------u------u-----u----u---c
+
+
+Gia sử ta có giới hạn L là khoang cách toi thiểu mà 2 con bò liên tục phải cách nhau.
+
+Nhận xet: L cang lon > cang kho de đat bo, L cang nho thi cang de de dat bo
+
+L là một con so nam trong đoạn [1 .. 10^9]
+
+Khi ta co L, ta can kiểm tra voi khoang cach L, co the dat duợc C con bo ma 2 con lien tuc cach nhau 1 đoan >= L hay không
+
+Neu đuợc, ta ghi nhan ans - L, va tìm L lớn hơn
+
+neu không được, ta tìm L nhỏ hơn.
+
+L = 15
+
+Đặt lastPosition là vị trí của chuồng cuối cùng mà ta đặt được bò
+Gọi numCows là số con bò đã được đặt.
+
+numCows = 1, lastPosition = x[1]
+
+O(log(28*N))
+
+
+------------------------------
+
+
+
+Move12:
+
+Nhan xet: Thời gian de nhung ong canh sat di chuyển cang it thì cang kho de nhung ong canh sat co the thong tri toan bo N cot.
+
+----- > Tìm kiếm nhị phân kết quả
+
+Ta chặt nhị phan dựa trên thoi gian di chuyển cua nhung ông canh sat.
+
+Thời gian di chuyển của những ông canh sat sẽ nam trong đoạn [0 .. 10^9]
+
+t[i] <= 10000, 1 <= N <= 10000
+
+Nhan xet: Thoi gian de nhung ong canh sat di chuyen cang it thi cang kho de nhung ong canh sat co the thong tri toan bo N cot.
+
+----- > Tìm kiếm nhị phân kết quả
+
+Ta chặt nhị phan dựa trên thời gian di chuyển của những ông canh sat.
+
+Thời gian di chuyển cua những ong canh sat se nam trong đoạn [0 .. 10^8]
+
+int lo = 0, hi = 100000000
+
+đặt mid = (lo + hi) / 2
+
+Ta sẽ kiểm tra với giới hạn thời gian là mid,
+
+1 <- N <= 10000
+lưu trữ 
+    cảnh sát: [index,time/ô] 
+
+check xem vói thời gian time có thỏa mãn
+    move = time / ô
+
+    cảnh sát:  directions = [index - move, index + move ]
+
+    liệu directions có thể chứa 1->n?????
+
+    for i: 1->n
+        thêm mọi dir.ff <= i vào kho (kho lưu dir.ss)
+        lấy upper_bound(x) trong kho ra:
+            nếu k có: return sai
+            nếu có bỏ x khỏi kho
+    return đúng;
+    queue: lưu trữ giá trị xa nhất có thể tới
+
+    
+
+Độ phức tạp: 0(25 * N.logN)
+
+----------------------------------------
+
+Max Median:
+
+Cho mot day so nguyen duơng a gom N so.
+
+Ta hay liệt kê tat ca cac day con co độ dai toi thieu la k, va tim median lon nhat co the trong tat ca cac day con đó.
+Median (trung vị) của 1 dãy gồm M số là số ở vị trí M/2 sau khi dãy đã được sắp xếp tăng dần.
+
+a = [4, 1, 1, 2, 9, 3]
+a = [1, 1, 2, 3, 4, 9] === > 2
+
+a = [4, 4, 1, 9, 1]
+a = [1, 1, 4, 4, 9] ==== > 4
+
+---------------------------------------
+
+1 <= K <= N <= 100000
+
+Gia sử ta co trung vị ít nhat là M, hoi co ton tại day nao co so lượng phan từ >= K ma co trung vị >= M hay không ???
+
+M = 4
+M= 6
+M = 7
+
+Nhận xet: M cang lớn thì cang kho tìm ra được day thoa, M cang nho thì cang de tìm được !!!!
+
+Sử dụng binary search trên kết quả.
+
+Nhận xét: M là một con số nam trong đoạn [1 .. N]
+Khi ta chặt nhị phan co so M, ta xem xet hoi co ton tại day co trung vị >= M hay khong.
+
+Ta sẽ tạo ra một day b với ý nghĩa:
+    b[i] = 1 neu a[i] >= M, b[i] = 0 neu a[i] < M
+    a = [1, 9, 2, 2, 6, 7, 10, 3, 3, 4]
+    M = 6
+    b = [0, 1, 0, 0, 1, 1, 1, 0, 0, 0]
+
+bài toán đưa về: có đoạn r - l + 1 >= k mà số lượng 1 > sống lượng 0
+
+đặt sum: sum[i]=sum[i-1] + b[i]
+bài toán đưa về:
+
+sum[r] - sum[l - 1] > (r - 1 + 1) - (sum[r] - sum[l - 1])
+
+=> 2 * sum[r] - r > 2 * sum[l - 1] - (r -l)
+
+đặt D: D[i] - 2 * sum[i] - i
+
+bài toán đưa về: tìm đoạn D[r] > D[l - l]
+
+Đặt mini - D[0]
+
+Duyệt i: K -> N
+    Hòi nếu D[i] > mini: thỏa
+    nếu mini > D[i - K + 1]:
+        mini = D[i - K + 1]
+-----------------------------------------

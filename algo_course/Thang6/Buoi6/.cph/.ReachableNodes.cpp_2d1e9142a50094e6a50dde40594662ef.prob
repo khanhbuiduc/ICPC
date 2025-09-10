@@ -1,0 +1,1 @@
+{"name":"Local: ReachableNodes","url":"c:\\Users\\HP PC\\ICPC\\algo_course\\Thang6\\Buoi6\\ReachableNodes.cpp","tests":[{"id":1757159104486,"input":"5 6\n1 2\n1 3\n1 4\n2 3\n3 5\n4 5","output":"5 3 2 2 1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\HP PC\\ICPC\\algo_course\\Thang6\\Buoi6\\ReachableNodes.cpp","group":"local","local":true}

@@ -1,0 +1,1 @@
+{"name":"Local: comnet","url":"c:\\Users\\HP PC\\ICPC\\algo_course\\Thang6\\Buoi6\\comnet.cpp","tests":[{"id":1757196178887,"input":"1\n3 3 2\n1 2 1\n1 3 2\n2 3 3\n3 2 2 4 3 4\n1 1 1 4","output":"NO\nYES"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\HP PC\\ICPC\\algo_course\\Thang6\\Buoi6\\comnet.cpp","group":"local","local":true}

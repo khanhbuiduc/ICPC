@@ -1,0 +1,129 @@
+ternary search
+    parabol
+
+    Ta sẽ sử dụng chặt tam phân bằng cách như sau:
+
+    u = (2 * lo + hi) / 3
+    v = (lo + 2 * hi) / 3
+
+    Ta sẽ tính g(u) và giá trị g(v), và ta xem xét thay đổi lo và hi sao cho vẫn tìm ra được giá trị thỏa mãn của bài toán.
+
+binary_search_on float
+
+    mid số thực khi BS thì while 100 vòng lặp
+
+
+
+------------------------------------
+rate
+
+Cho một dãy số nguyên dương a gồm N số. Xét tất cả những dãy có số lượng phần tử tối thiểu là K, ta tính trung bình cộng của các dãy.
+
+Hỏi trung bình cộng lớn nhất là bao nhiêu ??????
+
+5 2
+2 4 3 4 2
+
+Nhận xét: avg càng lớn --- > càng khó tìm ra được dãy thỏa mãn.
+
+(a[1] + a[1+1] + ... +a[r]) / (r -1+1)>= avg
+
+<==> (a[l] - avg) + (a[l +1] - avg) + .... + (a[r] - avg) >= 0
+
+đặt B: b[i]=a[i]-avg
+
+== > một đoạn [1 .. r] có tổng >0
+
+đặt sum: sum[i] = sum[i-1] + b[i]
+
+== > tìm sum[r] >= sum[l] 
+
+Ta đặt mini = sum[0]
+
+Với sum[i], ta so sánh sum[i] >= minL hay không
+
+Ta cập nhật mini với sum[i - K + 1]
+
+**chú ý** : với avg là số thực khi BS thì while 100 vòng lặp
+
+---------------------------------
+
+Martian Programmer
+
+Một người công nhân làm việc. Trong một ngày có H tiếng đồng hồ. Khả năng làm việc của người công nhân sẽ được tính như sau:
+
+Nếu người công nhân ngủ 0 tiếng: khả năng làm việc là 0%
+Nếu số giờ ngủ là H/3: khả năng làm việc là 100%
+Nếu ngủ từ 0 -> H/6: Khả năng làm việc tăng ĐỀU từ 0% -> A%
+Nếu ngủ từ H/6 -> H/3: Khả năng làm việc tăng ĐỀU từ A% -> 100%
+
+Độ hiệu quả công việc - tích của khả năng làm việc với số giờ THỨC
+
+Hỏi: Độ hiệu quả cao nhất là bao nhiêu ???
+
+Độ hiệu quả công việc tính bằng công thức: f(x) * (H - x) với x là số giờ ngủ, f(x) là hàm trả về khả năng làm việc của người đó.
+Nhận xét: 
+    Nếu ngủ 0 giờ thì độ hiệu quả công việc = 0 (f(0) = 0)
+
+    Nếu ta ngủ nhiều hơn ---- > độ hiệu quả công việc tăng
+
+    Độ hiệu quả tăng đến 1 mức MAX nào đó thì bắt đầu sẽ giảm xuống 
+
+đặt lo = 0, hi = H
+
+đặt u = (2 * lo + hi) / 3, v = (lo + 2 * hi) / 3
+
+nếu g(u) < g(v) ---- > điểm cực đại sẽ nằm trong đoạn từ u -> hi, do đó ta gán lo = u
+
+else --- > điểm cực đại sẽ nằm trong đoạn từ lo -> v, do đó ta gán hi = v
+
+--------------------------------------------------------------
+Race time
+
+Ta thấy f(T) = max(Pi(T)) - min(Pi(T))
+
+Nếu người chạy nhanh nhất (Si lớn nhất) bị xuất phát chậm nhất và người chạy chậm nhất (Si bé nhất) và xuất phát xa nhất cùng chạy trong 1 khoảng thời gian T
+
+Ta áp dụng Ternary search
+
+Với thời gian u và v, thì ta tính f(u) và f(v), trong đó f(x) tính như sau:
+
+    + ta tạo ra mảng P với ý nghĩa Pi(x) = Di + x * Si
+    + Ta duyệt tìm số lớn nhất trong P và số nhỏ nhất trong P === > f(x) = số lớn nhất - số nhỏ nhất
+
+Ta so sánh f(u) và f(v)
+
+Trường hợp 1: f(u) < f(v) --- > điểm cực tiểu nằm trong đoạn từ [lo .. v] -- > gán hi = v
+Trường hợp 2: f(u) > f(v) --- > điểm cực tiểu nằm trong đoạn từ [u .. hi] -- > gán lo = u
+
+-------------------------------------------------------------
+
+Weakness And Poorness:
+
+có dãy: a1, a2, ..., an.
+tìm x: a1 - x, a2 - x, ..., an - x là weakness
+
+tìm weakness: max poorness = max | sum{i->j} |
+
+
+Nhận xét: Khi x tăng từ âm vô cực lên dương vô cực
+
+lo = -10005, hi = 10005
+
+Đặt u = (2 * lo + hi) / 3, v = (lo + 2 * hi) / 3
+
+Ta thiết kế một hàm f(x) với ý nghĩa: với giá trị x thì weakness trong dãy a1 - x, a2 - x, .... , aN - x là bao nhiêu ????
+
+đặt b[i] = a[i] - x 
+
+đặt: sum[i] = sum[i-1] + b[i]
+
+poorness = | sum[r] - sum[l - 1] |
+
+weakness = max | sum[r] - sum[l - 1] |;
+
+từ i: 1->n: 
+    tìm minL và maxL với l<i
+    ret = max(ret, sum[i]-minL, maxL-sum[i])
+    cập nhật minSum, maxSum
+ban đầu: minL, maxL = sum[0]

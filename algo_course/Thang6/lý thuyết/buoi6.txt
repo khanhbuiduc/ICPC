@@ -1,0 +1,75 @@
+1. PalindromeReorder
+
+cho dãy s: AFFFBCACBZZTFUU 
+
+sắp xếp lại thành dãy đối xứng:
+    - cnt[i] đến số lượng từng chữ cái
+    - nếu có 2 chữ cái cnt lẻ thì in "NO"
+    oddChar: là chữ cái có lẻ số
+    tempS = cnt[i]/2 chữ i: với cnt[i]%2==0
+kết quả res = tempS + oddChar + re_tempS
+
+-----------
+
+bài 2: 2. ReachableNodes 
+
+n đỉnh, m cạnh có hướng.
+đếm xem mỗi cạnh có bao nhiêu đỉnh 
+
+- dfs:
+    ban đầu go_to[u].set(U,1);
+    v kề u thì go_to[u] |= go_to[v]
+Thang6/Buoi6/img/bai2_1.png 
+----------------------
+
+bai3: comnet
+Thang6/Buoi6/img/bai3_1.png
+/*
+n đỉnh, m cạnh(ui,vi,wi) 2 chiều
+thông suốt:từ 1 đỉnh có thể đi đến các đỉnh còn lại (có thể qua trung gian)
+cạnh không tiềm năng:không thuộc cây khung nhỏ nhất không
+
+cạnh ki có tiềm năng không?
+query: cạnh ki, sj: cạnh tp có chi phí mới cp;
+
+k=3: dùng thuật toán kruskal tìm cây khung nhỏ nhất với w < k:
+
+nếu nếu cạnh k(u,v) chưa được kết nối: yes ngược lại no
+
+bài gốc cin/cout bị tle : sử dụng scan, print
+
+*/
+
+-----------
+SPC5 (Spring Contest 2021)
+
+"T_T_T_____________________T_________T_______T"
+
+Mot mặt buồn đuợc xay dựng nhu the nao ?
+
+Gọi f[i][oneEye][eyeAndMouth] là số cách có thể xây dựng được khi có i ký tự đầu tiên, tập có 1 con mắt có số phần tử là oneEye, tập có mắt và miệng có số lượng phần
+
+tử là eyeAndMouth
+
+bài toán cơ so: f[0][0][0] = 1
+
+đáp án bài toán: f[n][0][0]
+
+khi ta co f[i][oneEye][eyeAndMouth] > 0
+
+Xét ký tự thứ i + 1
+
+. Tình huong 1: s[i + 1] - 'T'
+
+    + Bổ sung vào tập oneEye thêm 1 phần tử: 
+        f[i + 1][oneEye+1][eyeAndMouth] +=f[i][oneEye][eyeAndMouth]
+
+    + Ta gần 'T' vào 1 phần tử của tập eyeAndMouth (eyeAndMouth > 0): 
+        f[i + 1][oneEye][eyeAndMouth - 1] +=eyeAndMouth *f[i][oneEye][eyeAndMouth]
+
+. Tình huống 2: s[i + 1] = '_'
+
+    + Ta thêm dấu '_' vào 1 con mắt tự do (oneEye > 0): 
+        f[i + 1][oneEye -1][eyeAndMouth+1] += oneEye*f[i][oneEye][eyeAndMouth]
+    + Ta thêm dấu '_' vào 1 phần tử trong tập eyeAndMouth (eyeAndMouth > 0): 
+        f[i+1][oneEye][eyeAndMouth]+= ey@AndMouth*f[i][oneEye][eyeAndMouth]

@@ -1,0 +1,1 @@
+{"name":"Local: roadimpro","url":"c:\\Users\\HP PC\\ICPC\\algo_course\\Thang6\\Buoi5\\roadimpro.cpp","tests":[{"id":1756952485848,"input":"4 4 3\n1 2 6\n2 4 10\n1 3 16\n3 4 4\n3 14\n4 14\n4 11","output":"14\n16\n15"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\HP PC\\ICPC\\algo_course\\Thang6\\Buoi5\\roadimpro.cpp","group":"local","local":true}

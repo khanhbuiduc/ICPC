@@ -1,1 +1,0 @@
-{"name":"Local: SC4","url":"c:\\Users\\HP PC\\ICPC\\algo_course\\Thang5\\Buoi6\\SC4.cpp","tests":[{"id":1755331324894,"input":"7\n1 1\n4 1\n4 2\n5 2\n13 7\n50 14\n48 23","output":"1\n1\n2\n3\n7\n28\n23"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\HP PC\\ICPC\\algo_course\\Thang5\\Buoi6\\SC4.cpp","group":"local","local":true}

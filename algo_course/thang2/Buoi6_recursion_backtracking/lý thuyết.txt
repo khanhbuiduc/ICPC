@@ -1,0 +1,284 @@
+// n=4,k=1
+/* 1 0 4 3
+T(i, L) = (ai +ai+1 + ... + ai+L-1)/L (1 ≤ i < N - L)
+L>=K
+output: 3.666667 (fix>>...)
+
+----------------------
+tìm xem có trung bình cộng >= avg không
+            a[l]+a[l+1]+a[l+1]+...+ a[r]/(r+l+1)>=avg
+            (a[l]-avg)+...+(a[r]-avg)>=0
+    tính b[i]=a[i]-avg
+
+    tính tổng tiền tố: 1 1 5 8
+        sum[i]=sum[i-1] + b[i]
+
+    vậy tìm xem có sum[r]-sum[l-1]>=0 không
+    minL=sum[0];
+    for i:k->n
+        if sum[i]>= minL return true
+        minL=min(minL,min(i-K+1))
+----------------------------
+avg là số thực
+    lo=0;hi=10^6
+    test=100
+    while(test--){
+        mid = (lo+hi)/2
+        if(mid thỏa mãn)
+            ans=mid;
+            lo=mid+1;
+        else
+            hi=mid-1;
+    }
+
+6 số thập phân sau dấu ':  cout<<fix<<setprecsion(6)<<ans;
+ */
+
+
+ -----------------------------------------------------
+ binary search:
+--------------------
+kỹ thuật chặt tam phân ternary search
+giải sử có miền [lo,hi] và giá trị tương ứng đi theo đường hình parabol
+ta sẽ sử dụng chặt tam phân bằng cách:
+	u=(2*lo+hi)/3
+	v=(lo+2*hi)/3
+ta sẽ tính giá trị g(u) và g(v), và ta xem xét thay đổi lo và hi sao cho vẫn tìm ra được giá trị thỏa mãn của bài toán
+----------------------
+martian programer(tháng 2 buổi 4 bài 2)
+--
+nhật xét: thời gian ngủ =0 thì độ hiệu quả bằng 0; ngủ nhiều hơn thì độ hiệu quả tăng, ngủ đến 1 mức thì độ hiệu quả giảm
+đặt lo=0;hi=H
+đặt u=(2*lo+hi)/3,  v=(lo+2*hi)/3
+nếu g(u)<g(v) điểm cực đại nằm trong khoảng u->hi do đó gán lo=u
+else =======điểm cực đại nằm trong khoảng lo->v do đó gán hi=v
+sau 50 lần chặt thì lo~hi ==> kết quả f(lo)*(H-lo)
+
+x: 0->H/6; y: 0->A%
+y=ax+b
+=>y=ax
+x=H/6=>y=A%; 
+x=(6A/H)%
+-------
+y=ax+b
+H/6->H/3; y:A%->100%
+A%=a*H/6+b
+1=a*H/3+b
+a*H/6=1-A%
+b/2=(A-50)%
+b=(2A-100)%
+
+---
+0->H/6  : y=0.06*(A/H)*x  ;x là thời gian; y là hiệu xuất
+H/6->H/3 y= 0.06*(100-A)*x/H + (2A-100)%
+H/3->H: y=0
+--------------------------------
+C. Weakness and Poorness
+--
+3
+1 2 3
+tìm weakness   là số max(  |poorness tất cả đoạn|  )
+ poorness = |a[l]+a[l+1]+...a[r]|
+output:minimum weakness of a1 - x, a2 - x, ..., an - x
+
+1 2 3: x=1=> 0 1 2=> poorness 0,1,2,1,3=> weakness=3
+1 2 3: x=2=> -1 0 1=>poorness 1 0 1 1 1 2=> weakness=2
+1 2 3: x=3=> -2 -1 0=>pooorness 2 1 0 3 1 3=>weakness = 3
+
+ai<10^3;n<2*10^5
+=> weakness [0,10^9]
+
+nhận xét: x chạy từ âm vô cùng đến dương vô cùng
+chỉ cần xét x =[-100'005,100005] vì ngoài khoảng này x liên tục tăng
+
+lo=-100'005; hi=100'005
+u=(2*lo+hi)/3, v=(lo+2*hi)/3
+for i:1->100
+    f(u)>f(v) thì min thuộc đoạn u->hi do đó cập nhập li=u
+    nếu không thì cập nhập hi=0
+in ra fu 
+
+tạo hàm f(x) với x thì giá trị weakness a[1]-x,a[2]-x,...a[n]-x là bao nhiêu
+đặt dãy b: b[i]=a[i]-x
+đặt dãy sum: sum[i]=sum[i-1]+b[i]
+tìm max của đoạn từ l->r: max|sum[r]-sum[l-1]|
+minL=0
+maxL=0
+maxSum=0
+for i: 1->n
+    maxSum=max(maxSum,sum[i]-minL, maxL-sum[i])
+    minL=min(minL,sum[i]);
+    maxL=max(maxL,sum[i]);
+-----------------------
+Race Time!
+N=2 K=10
+S1=20 d1=0
+s2=10 d2=10
+
+Pi(T) = Si * T + Di
+
+nhận xét:   nếu S1=S2 thì khoảng cách 2 người k đổi
+            nếu S1>S2 mà D1>D2 thì khoảng cách giữa 2 người ngày càng xa
+            nếu S1>S2 mà D1<D2 thì khoảng cách 2 người từ (D2-D1)->0->tăng dần
+đặt lo=0, hi=K
+đặt u=(2*lo+hi)/3 
+    v=v(lo+2*hi)/3
+if f(u)>f(v) thì min sẽ ở vị trí u->hi lo=u else hi=v
+in ra 
+
+tìm max(Pi(T)) - min(Pj(T))
+a[i]={speed,distance},
+đặt dãy b: bi= ai.speed*t+ai.distance
+minmax= minmax_element(b.begin(),b.end)
+return *minmax.second-*minmax.first
+------------------------------------------------------
+
+
+
+recursion
+1. phải định nghĩa đc hàm đệ quy đó có mục đích gì
+2. xét kết quả đệ quy trong trường hợp biên("điểm dừng")
+3. tìm ra bài toán đệ quy hiện tại bằng bài toán đệ quy mà ta gọi đến( giả sử bài toán đệ quy mà ta gọi đến chính sác rồi)
+
+---------
+lũy thừa:
+n-> tính 2^N;
+ta gọi hàm power2(N) với ý nghĩa tính giá trị 2^N
+nếu n=0 return 1
+else
+    return power2(N-1)*2;
+---------
+tìm max
+a=[5,1,2,3,4,5,3,5]
+
+thiết kế hàm tìm Findmax với ý nghĩa: findMax(n) là số có giá trị lớn nhất trong N số đầu tiên.
+findMax(N)
+    Nếu N=1 return a[i]
+    else
+        return max(findmax(N-1),N)
+---------------
+in sao
+cho số N, hãy in ra N dòng sao, dòng thứ i in ra i ngôi sao
+N=5;
+*
+**
+***
+****
+*****
+thiết kế hàm printStar với ý nghĩa:printStar(N) in ra N-1 dòng sao trc, sau đó in ra N ngôi sao
+printStar(N)
+    nếu N=0 return ;
+    printStar(N-1)
+    for i:0->n 
+        in "* "
+    in xuống dòng
+-----------------
+create string
+
+aabac: dãy count[]: đếm số lượng từng chữ cái
+
+tạo hàm CreateString với ý nghía:CreateString(position) xét vị trí position
+for char in count
+    nếu count[char]>0; st[position]=char; count[char]--;
+    nếu position=n-1 thì cin ra st, reset string
+    nếu không xét vị trí tiếp theo
+    count[c]++;
+------------------
+liệt kê hoán vị
+1,2,3 => 1,2,3; 1,3,2;...
+tạo hàm permutaion với ý nghĩa: permutaion(position) xét vị trí position
+đặt used[]: per[i] đã đc sử dụng: true ngược lại thì false
+for i: 0->n-1// các lựa chọn
+    nếu used[i]==false
+        per[pos]=a[i]
+        used[i]=true;
+        nếu pos=n-1 thì in đáp án
+        else
+            backtrack(pos+1)
+        used[i]=false
+O(n*n)
+-----------------
+tập hợp:
+1,2,3=> [],[1],[2],[3],...[1,2,3]
+gọi dãy choose[]:choose[i]=0 nếu vị trí i đc chọn;
+ tạo hàm backtrack với ý nghĩa: backtrack(position) xét vị trí position
+for i: 0->1
+    nếu i=1
+        sub.pushback(số ở vị trí i)
+    nếu pos=n-1 in ra
+    else
+        backtrack(pos+1)
+--------------------
+chia để trị: divide and conquer
+
+chia để trị là một lớp bài toán được giải bằng cách sử dụng đệ quy( lớp bài toán chia để trị là lớp bài toán con của những bài toán đệ quy)
+những bài toán chia để trị là những bài toán mà ta cần giải bài toán hiện tại dựa vào lời giải của bài toán con nhỏ hơn có cùng tính chất với bài toán hiện tại
+
+để giải bài toán chia để trị ta cần định nghĩa bài toán dựa trên 4 bước:
+    bước 1: định nghĩa bài toán hiện tại
+    bước 2: giải bài toán với trường hợp nhỏ nhất
+    bước 3: xác định đáp án bài toán
+    bước 4: tìm cách giải bài toán hiện tại dựa trên bài toán con của bài toán đó
+
+ví dụ: tính tổng 1->N
+    b1: sum(N) là bài toán nhằm mục đích tính tổng 1->n
+    b2: n=0 trả về 0;
+    b3: đáp án sum(N)
+    b4: sum(N)=sum(N-1)+N
+
+thuật toán sử dụng chia để trị:
+    thuật toán merge sort
+    ctdl: heap,binary_search_tree
+    binary search
+
+
+------------------
+exponation: tính a^b mod 10^9 + 7
+phép cộng: (a + b) % M=(a % M + b % M) % M 
+phép trừ: (a - M) % M = (a % M - b % M + M) % M
+phép nhân: (a * b) % M = ((a % M) * (B % M)) % M 
+phép chia: sai a / b mod M = a * (b ^ (M-2)) mod M
+
+B1: gọi hàm pow(x, n) là hàm tính x^n mod M
+B2: n=0=> pow(x, n)=1
+B3: ans=power(x, n)
+B4: n lẻ power(x, n) = (power(x, n-1) * x) % M
+    n là chẵn 
+        ret= power(x, n) 
+    return = (power(x, n/2) * power(x, n/2)) % M
+---------------------------
+WC1:cho n và dãy a; tính a[1]+...a[n-1]/a[i]
+    ý tưởng ngây thơ
+        for i: 1->n
+            ans=1
+            for j: 1->n
+                nếu i!=j thì ans=mulMod(ans,a[j])
+    ý tưởng đúng
+        đặt prefix i : 1 -> n  prefix[ i ]=prefix[i - 1] * a[ i ]
+        đặt suffix i : n -> 1  suffix[ i ]=suffix[i + 1] * a[ i ]
+        a[i] tính prefix[i - 1] *  suffix[i + 1]
+        prefix[i - 1]<=68 tỉ
+        prefix[i - 1]*prefix[i - 1]> long long
+------------------------
+SC4
+cho 3 số nguyên x,N,M: tính (1 + x + x^2 + x^3 + ... x^N) mod M
+ta có x * S - S = x^(n + 1) - 1;
+// thử xem dùng nghịch đảo modul có được không
+
+cách khác:
+N lẻ
+S= 1 + x +.. x^9
+S=(1 + x + x^2 + x^3 + x^4) + x^5*((1 + x + x^2 + x^3 + x^4))
+S(9) = S(4) * (x^5 + 1)
+N chẵn
+S(10) = S(9) * x^10;
+
+B1: gọi hàm cal(x,N) tính ...
+B2: N=0 cal(x,0)=1
+B3: calc(x,N)
+B4: 
+    N chẵn
+        cal(x,N)=cal(x, N - 1) + power( x, N )
+    N lẻ
+        ret = calc(x,N/2)
+        ret = ret * (1 + power(x, N / 2 + 1) % M) % M 

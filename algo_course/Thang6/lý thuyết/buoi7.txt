@@ -1,0 +1,118 @@
+SC1 (Summer Contest 2020)
+Có 1 tờ vé số gồm 6 chữ so.
+
+Dể trung giai đặc biet, can 6 chu so phai khop het voi 6 chu so cua giai đặc biệt
+De trung giai nhat, can 5 chu so cuoi phai khop voi 5 chu so cua giai nhat
+
+Hỏi ta sẽ trúng giải mấy ????? Hoặc thông báo là ta không trung giải.
+
+Xet từng giai từ giai đac biet den giai 8, tien hanh kiem tra theo dung yeu cau của đe bai.
+
+--------------------------
+SC5 (Summer Contest 2020)
+
+Thang6/Buoi7/img/bai2.png
+Cho một so nguyên dương N.
+
+Sẽ có 2 loại thao tác
+
+. Thao tác 1: Tăng một so x lên thanh so x + 1 và chi phí là A
+
+. Thao tac 2: Gap đoi một so x va chi phí la B
+
+Hòi để biến từ số 0 --- > thành số N, tổng chi phí toi thiểu là bao nhiêu ??????? |
+
+
+--------------------------
+
+Book Shop II
+
+Có N loại đõ vật, đõ vật thứ i sẽ được định nghĩa bởi 3 giá trị {cost[i], weight[i], cnt[i] } : giá tiền của loại thứ i, cân nặng của loại thứ i và số lượng đô vật
+có loại là i
+
+Có 1 cai tui co tai trọng là W, hoi can mang những do vat nao sao cho tổng gia trị la lon nhat va tong khoi lượng <- W
+
+Gọi f[i][j] la tổng gia trị lon nhat khi co i loại do vat dau tien va tong tai trong la j
+bài toán cơ sở: f[0][j] = 0, f[i][0] = 0, khoi tạo cac f[i][j] = -1
+
+đáp án bài toán: f[n][W]
+
+khi ta co f[i][j] !- -1
+. Xét loại đõ vật thứ i + 1: Nếu ta lãy x đõ vật (0 <= x <= cnt[i + 1] và j + x * weight[i + 1] <= W)
+f[i + 1][j +x* weight[i+ 1]] - max(f[i + 1][j + x * weight[i + 1]], f[i][j] + x * cost[i + 1])
+
+Vấn đề: Độ phức tạp O(N * W * 1000)
+----------------------------
+
+Xét tính chất khá thủ vị !!!!!!
+
+Một s N bat kỳ, neu ta co thể tach được so N thanh 2^0 + 2^1 + ..
+
+Đõ vật i có giá tiền là 5 đồng, cân nặng 4 ký và số lượng là 19 cái
+
+19= 1 + 2 + 4 + 8 + 4
+
+Ta hay "gom cục" cac sản phẩm lại:
+
+Đõ vật (5 đồng, 4 ký)
+
+Đõ vật (10 đồng, 8 ký)
+
+Đõ vật (20 đồng, 16 ký)
+
+Đõ vật (40 đồng, 32 ký)
+
+Đõ vật (20 đồng, 16 ký)
+
+Chọn 11 đô vật =
+
+------ > đưa về bài toán cái túi cổ điển
+
+Số lượng đồ vật <= 1000 mỗi loại =]" == > gom được tõi đa 11 cục
+N loại ---- > tách thành 11N đô vật |
+
+.. + 2^k + R thì bất kỳ số nào từ số 1 -> số N cũng có thể biểu diễn được thành tổng của các so này
+
+
+-------------------
+
+
+SC6 (Summer Contest 2020)
+
+Gọi f[i][ew][ow][eb] là số lượng cách tạo ra đô thị khi có i đinh đầu tiên, tập EW có số lượng đinh là ew, tập OW có số lượng đinh là ow, tập EB có số lượng đinh là
+
+eb ------ > số lượng đinh trong tap OB ---- > ob - i - ew - ow - eb
+
+bài toán cơ so: f[0][0][0][0] - 1
+
+đap an bai toan: Tong cac f[n][ew][ow][eb] sao cho (ow + ob) % 2 == p
+
+công thức qhd: Khi ta co f[i][ew][ow][eb] > 0
+
+nếu i + 1 là đinh màu trang:
++ Ta muốn kết nạp i + 1 vào tập EW:
+        
+        Ta nối đinh từ tập EW, OW vào đinh i + 1 thì tính chẵn lẻ của số lượng đường đi đen trắng kết thúc tại i + 1 cũng không thay đổi ===== > có 2^(ow + ew) sự lựa chọn
+        
+        Ta noi đinh từ tập EB vao i + 1 thì tinh chan le của đưong di cung khong thay đoi -==- > so cach: 2^eb
+        
+        ------ > các đỉnh trong 3 tập EW, OW và EB nõi vào i + 1 thì tính chẵn - lẻ của số đường đi cũng không thay đổi -=== > số cách: 2^(ow + ew + eb)
+
+        Xét các đỉnh trong tập OB, ta cần chọn 0, 2, 4, 6, 8, ...... đinh để noi vào i + 1: Số cách chọn: C[0][ob] + 
+        C[2][ob] + C[4][ob] + ...... + 
+        
+        f[i + 1][ew + 1][ow][eb] += 2^(ew + ow+eb) * (C[0][ob] + C[2][ob] + ..... ) * f[i][ew][ow][eb]
+
++ Ta muốn kết nạp i + 1 vào tập OW:
+        
+        f[i + 1][ew][ow + 1][eb] +=2^(ew+ow+ eb) * (C[1][ob] + c[3][ob] + ....)*f[i][ew][ow][eb]
+
+Nếu i + 1 là màu đen
+
+        + Nếu i + 1 vào tập EB: 
+                f[i + 1][ew][ow][eb+1] +=2^(eb+ob+ew)*(C[0][ow]+C[2][ow] + ...... )*f[i][ew][ow][eb]
+
+        + Nẽu i + 1 vào tập OB: 
+                f[i + 1][ew][ow][eb] += 2^(eb +ob +ew)*(C[1][ow]+C[3][ow] +.......) * f[i][ew][ow][eb]
+
+Độ phức tạp: 0(N^4)

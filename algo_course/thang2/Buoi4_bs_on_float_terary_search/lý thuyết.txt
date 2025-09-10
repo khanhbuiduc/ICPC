@@ -1,0 +1,133 @@
+// n=4,k=1
+/* 1 0 4 3
+T(i, L) = (ai +ai+1 + ... + ai+L-1)/L (1 ≤ i < N - L)
+L>=K
+output: 3.666667 (fix>>...)
+
+----------------------
+tìm xem có trung bình cộng >= avg không
+            a[l]+a[l+1]+a[l+1]+...+ a[r]/(r+l+1)>=avg
+            (a[l]-avg)+...+(a[r]-avg)>=0
+    tính b[i]=a[i]-avg
+
+    tính tổng tiền tố: 1 1 5 8
+        sum[i]=sum[i-1] + b[i]
+
+    vậy tìm xem có sum[r]-sum[l-1]>=0 không
+    minL=sum[0];
+    for i:k->n
+        if sum[i]>= minL return true
+        minL=min(minL,min(i-K+1))
+----------------------------
+avg là số thực
+    lo=0;hi=10^6
+    test=100
+    while(test--){
+        mid = (lo+hi)/2
+        if(mid thỏa mãn)
+            ans=mid;
+            lo=mid+1;
+        else
+            hi=mid-1;
+    }
+
+6 số thập phân sau dấu ':  cout<<fix<<setprecsion(6)<<ans;
+ */
+
+
+ -----------------------------------------------------
+ binary search:
+--------------------
+kỹ thuật chặt tam phân ternary search
+giải sử có miền [lo,hi] và giá trị tương ứng đi theo đường hình parabol
+ta sẽ sử dụng chặt tam phân bằng cách:
+	u=(2*lo+hi)/3
+	v=(lo+2*hi)/3
+ta sẽ tính giá trị g(u) và g(v), và ta xem xét thay đổi lo và hi sao cho vẫn tìm ra được giá trị thỏa mãn của bài toán
+----------------------
+martian programer(tháng 2 buổi 4 bài 2)
+--
+nhật xét: thời gian ngủ =0 thì độ hiệu quả bằng 0; ngủ nhiều hơn thì độ hiệu quả tăng, ngủ đến 1 mức thì độ hiệu quả giảm
+đặt lo=0;hi=H
+đặt u=(2*lo+hi)/3,  v=(lo+2*hi)/3
+nếu g(u)<g(v) điểm cực đại nằm trong khoảng u->hi do đó gán lo=u
+else =======điểm cực đại nằm trong khoảng lo->v do đó gán hi=v
+sau 50 lần chặt thì lo~hi ==> kết quả f(lo)*(H-lo)
+
+x: 0->H/6; y: 0->A%
+y=ax+b
+=>y=ax
+x=H/6=>y=A%; 
+x=(6A/H)%
+-------
+y=ax+b
+H/6->H/3; y:A%->100%
+A%=a*H/6+b
+1=a*H/3+b
+a*H/6=1-A%
+b/2=(A-50)%
+b=(2A-100)%
+
+---
+0->H/6  : y=0.06*(A/H)*x  ;x là thời gian; y là hiệu xuất
+H/6->H/3 y= 0.06*(100-A)*x/H + (2A-100)%
+H/3->H: y=0
+--------------------------------
+C. Weakness and Poorness
+--
+3
+1 2 3
+tìm weakness   là số max(  |poorness tất cả đoạn|  )
+ poorness = |a[l]+a[l+1]+...a[r]|
+output:minimum weakness of a1 - x, a2 - x, ..., an - x
+
+1 2 3: x=1=> 0 1 2=> poorness 0,1,2,1,3=> weakness=3
+1 2 3: x=2=> -1 0 1=>poorness 1 0 1 1 1 2=> weakness=2
+1 2 3: x=3=> -2 -1 0=>pooorness 2 1 0 3 1 3=>weakness = 3
+
+ai<10^3;n<2*10^5
+=> weakness [0,10^9]
+
+nhận xét: x chạy từ âm vô cùng đến dương vô cùng
+chỉ cần xét x =[-100'005,100005] vì ngoài khoảng này x liên tục tăng
+
+lo=-100'005; hi=100'005
+u=(2*lo+hi)/3, v=(lo+2*hi)/3
+for i:1->100
+    f(u)>f(v) thì min thuộc đoạn u->hi do đó cập nhập li=u
+    nếu không thì cập nhập hi=0
+in ra fu 
+
+tạo hàm f(x) với x thì giá trị weakness a[1]-x,a[2]-x,...a[n]-x là bao nhiêu
+đặt dãy b: b[i]=a[i]-x
+đặt dãy sum: sum[i]=sum[i-1]+b[i]
+tìm max của đoạn từ l->r: max|sum[r]-sum[l-1]|
+minL=0
+maxL=0
+maxSum=0
+for i: 1->n
+    maxSum=max(maxSum,sum[i]-minL, maxL-sum[i])
+    minL=min(minL,sum[i]);
+    maxL=max(maxL,sum[i]);
+-----------------------
+Race Time!
+N=2 K=10
+S1=20 d1=0
+s2=10 d2=10
+
+Pi(T) = Si * T + Di
+
+nhận xét:   nếu S1=S2 thì khoảng cách 2 người k đổi
+            nếu S1>S2 mà D1>D2 thì khoảng cách giữa 2 người ngày càng xa
+            nếu S1>S2 mà D1<D2 thì khoảng cách 2 người từ (D2-D1)->0->tăng dần
+đặt lo=0, hi=K
+đặt u=(2*lo+hi)/3 
+    v=v(lo+2*hi)/3
+if f(u)>f(v) thì min sẽ ở vị trí u->hi lo=u else hi=v
+in ra 
+
+tìm max(Pi(T)) - min(Pj(T))
+a[i]={speed,distance},
+đặt dãy b: bi= ai.speed*t+ai.distance
+minmax= minmax_element(b.begin(),b.end)
+return *minmax.second-*minmax.first

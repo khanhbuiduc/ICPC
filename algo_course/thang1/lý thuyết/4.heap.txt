@@ -1,0 +1,167 @@
+
+buổi 4
+------------------------------------------------------------------------------------------------
+HEAP
+
+min heap : nhỏ nhất ở top <dùng greate<type>>
+max heap :lớn nhất ở top
+	
+Add All
+
+Cho một dãy số nguyên dương a gồm N số.  
+Thực hiện các thao tác cho đến khi dãy a chỉ còn 1 số.
+
+Một thao tác như sau:
+- Chọn 2 số a[i] và a[j] bất kỳ trong dãy a và xóa chúng.
+- Tính tổng: a[i] + a[j] và đưa tổng này trở lại dãy a.
+- Chi phí cho thao tác này là: a[i] + a[j]
+
+Hỏi: Tổng chi phí **tối thiểu** để dãy a còn lại 1 số là bao nhiêu?
+
+Ví dụ:
+
+N = 4  
+a = [1, 2, 3, 4]
+
+kho: lấy đc số nhỏ nhất ra
+
+---------------------------------------------------------------------------------------
+
+QHEAP1
+
+Cho Q thao tác, mỗi thao tác là một trong 3 loại.
+
+Ban đầu, ta có dãy a là dãy rỗng.
+
+Các loại thao tác:
+- Loại 1: Thêm một số x vào dãy a
+- Loại 2: Xóa số x khỏi dãy a (nếu tồn tại)
+- Loại 3: In ra số nhỏ nhất hiện tại trong dãy a
+
+Ví dụ:
+Q = 12
+
+1 5  
+1 4  
+1 4  
+3  
+2 5  
+1 7  
+2 4  
+1 9  
+3  
+2 4  
+2 7  
+3  
+
+Thuật toán ngây thơ:
+	Các loại thao tác:
+		- Loại 1: Thêm một số x vào heap
+		- Loại 2: Xóa số x khỏi dãy heap (nếu tồn tại):  lấy min đưa vào heap 2 đến khi thấy x xóa đi, lại cho heap 2 vào heap chính
+		- Loại 3: In ra số nhỏ nhất hiện tại trong dãy a
+ý tưởng thuật toán chính:
+	tạo Q2 với ý nghĩa lưu chữ phần tử yêu cầu xóa nhưng chưa đc xóa:
+		nếu Q2 min = Q1 min thì xóa ở cả 2;
+		nếu không thêm x vao Q2;
+
+độ phức tạp: Q(log(Q))
+-----------------------------------------------------------------------------------------
+Kmin
+
+Đề bài:
+
+Cho 2 dãy số nguyên dương a và b:  
+- Dãy a gồm Na số  
+- Dãy b gồm Nb số
+
+Xét thuật toán sau:
+
+vector<int> c;
+
+for i = 1 → Na:  
+    for j = 1 → Nb:  
+        c.push_back(a[i] + b[j]);
+
+Sau đó, sắp xếp dãy c theo thứ tự tăng dần.
+
+Yêu cầu:  
+Tìm K phần tử đầu tiên của dãy c sau khi sắp xếp.
+
+---
+
+Ví dụ:
+
+a = [5, 1, 9]  
+b = [7, 1, 2, 8]  
+→ c = {12, 6, 7, 13, 8, 2, 3, 9, 16, 10, 11, 17}
+
+Sau khi sắp xếp:  
+c = {2, 3, 6, 7, 8, 9, 10, 11, 12, 13, 16, 17}
+
+K = 5  
+→ K phần tử đầu tiên là: **2, 3, 6, 7, 8**
+
+kho: <ai+bj, i, j>
+ban đầu i=1; j: 1-> sizeB
+
+lấy min từ kho ra đồng thời in ra
+tằng i lên 1; rồi cho <a[i+1]+bj, a[i+1], bj>  vào
+
+kho phải ưu tiên đc phần tử có giá trị nhỏ nhất
+
+----------------------------------------------------------------------------------------
+WC3 (Winter Contest 2019)
+
+Đề bài:
+
+Cho N đoạn thẳng.  
+Đoạn thẳng thứ i phủ các điểm nguyên có tọa độ thuộc đoạn [li .. ri].
+
+Yêu cầu:
+- Chọn ra K đoạn bất kỳ.
+- Xét tất cả các điểm được **cả K đoạn này cùng phủ lên**.
+- Tìm cách chọn K đoạn sao cho **số lượng điểm được tất cả K đoạn cùng phủ là lớn nhất có thể**.
+
+---
+
+Ví dụ:
+
+N = 8, K = 4
+
+Danh sách các đoạn:
+
+1. [1, 10]  
+2. [5, 8]  
+3. [3, 9]  
+4. [1, 15]  
+5. [2, 3]  
+6. [6, 12]  
+7. [4, 9]  
+8. [5, 11] 
+
+---
+
+Một số cách chọn:
+
+- Chọn {1, 2, 3, 4} → các điểm chung: 5, 6, 7, 8 → tổng: **4 điểm**  
+- Chọn {1, 2, 4, 6} → các điểm chung: 6, 7, 8 → tổng: **3 điểm**  
+- Chọn {1, 4, 6, 8} → các điểm chung: 6, 7, 8, 9, 10 → tổng: **5 điểm**
+
+→ Đáp án tốt nhất là: chọn {1, 4, 6, 8} với **5 điểm chung**
+
+1. [1, 10]  
+4. [1, 15] 
+5. [2, 3]   
+3. [3, 9]     maxL = 3, minR = 3 ===== > so lượng điểm = 1, ans = 1
+7. [4, 9]      maxL = 4, minR =9  ======> số lượng điểm  6, ans  6
+8. [5, 8]axL = 5, minR = 8 ==--= > so lượng điem = 5, ans = 6
+2. [5, 11]  maxL = 5, minR = 9 ===== > số lượng điểm = 5, ans = 6
+6. [6, 12]     maxL = 6, minR = 10 ==== > số lượng điểm = 5, ans = 6
+
+
+
+maxL = max[Li];    minR= min [Ri]
+số điểm phủ = minR - maxL +1
+
+tạo 1 kho với ý nghĩa lưu trữ r giá trị đc chọn
+

@@ -1,0 +1,136 @@
+Vacation:
+
+Mot kỳ nghi he co N ngay nghi. Ngay thu i ta co the choi 1 trong 3 tro choi la tro A, tro B hoac tro C.
+
+Nếu ngày i chơi trò A, ta sẽ có độ hạnh phúc là a[i]
+Nếu ngày i chơi trò B, ta sẽ có độ hạnh phúc là b[i]
+Nếu ngày i chơi trò C, ta sẽ có độ hạnh phúc là c[i]
+
+Để đa dạng, 2 ngày lien tuc ta không được phep choi cung mot tro giong nhau.
+
+Cho biet tong đo hạnh phuc lon nhat la bao nhieu neu ta choi N ngay va khong co 2 ngay lien tuc choi tro choi giong nhau.
+
+gọi f[i] là hạnh phúc lớn nhất ngày thứ i
+
+bài toán cơ sở: f[1] = max( a[1], b[1], c[1])
+
+đáp án bài toán f[n]
+
+công thức quy hoạch động: f[i] = f[i-1] + a[i] ..................
+
+cách trên phá sản vì k biết ngày thứ i-1 có chơi trò a không.
+cách đúng: ta thêm 1 chiều game
+
+gọi f[i][game] là hạnh phúc lớn nhất ở ngày thứ i khi ta chơi trò chơi là game
+0,1,2 lần lượt là game A,B,C
+
+bài toán cơ sở:
+f[1][0] = a[1];
+f[1][1] = b[1];
+f[1][2] = c[1];
+
+đáp án bài toán:
+max (f[n][0], f[n][1], f[n][2]);
+
+công thức quy hoạch động:
+f[i][1] = max (f[i - 1][2], f[i - 1][3]);
+f[i][2] = max (f[i - 1][1], f[i - 1][3]);
+f[i][3] = max (f[i - 1][1], f[i - 1][2]);
+
+----------------------------------
+
+IOIPALIN
+
+cho một chuỗi s gồm các kí tự. hỏi thêm bao nhiêu kí tự vào chuỗi s để thành chuỗi đối xứng
+
+5
+Ab3bd
+
+gọi f[i][j] là số lượng ký tự tối thiểu cần thêm vào chuỗi s[i...j] trở thành chuỗi đối xứng
+
+bài toán cơ sở: f[i][i] = 0;
+đáp án bài toán: f[1][n];
+
+công thức quy hoạch động: 
+	- case1: s[i] = s[j] <==> f[i][j] = f[i+1][j-1] 
+	- case2: s[i] != s[j] <==> f[i][j] = min (f[i+1][j], f[i][j-1]) + 1  
+
+ vd: abbca f[2][5] = f[2][4] +1 || f[3][5]+1
+
+    for i:n->1
+        for j:i+1->n;
+            case1...
+            case2....
+------------------------------
+
+Rectangle Cutting:
+
+Cho một hình chữ nhật kích thước N x M. Hòi cần tối thiểu bao nhiêu nhát cất, mỗi nhát chi được cất theo chieu dọc hoặc chieu ngang và chi cất chia thành độ dài số
+
+nguyen dưong sao cho hình chu nhat sau khi cat tro thanh cac hinh vuong.
+
+gọi f[i][j] là số nhát cắt tối thiểu để cắt hình chữ nhật kích thước i\*j thành những hình vuông
+
+bài toán cơ sở: f[i][i] = 0
+
+đáp án bài toán: f[n][m]
+
+công thức quy hoạch động:
+	cắt ngang: cạnh i-> u và i - u;  u*j và (i-u)*j
+		f[i][j] = min(f[u][j] + f[i - u][j] + 1); với u: 1-> i -1
+	cắt dọc: j-> v và j-v; i *v và i * (j - v)
+		f[i][j] = min(f[i][v] + f[i][j - v] + 1); với v: 1-> j -1
+
+---------------------------------
+
+Nktick
+
+Co N người xep hang mua ve. Họ se mua ve từ ngưoi 1 -> người N.
+
+Thời gian để người thứ i mua ve la t[i]
+
+Người thứ i + 1 có thể nhờ người thứ i mua giup về cho cả 2 và thời gian để mua vé cho ca 2 là r[i]
+
+Hoi: Tổng thoi gian toi thieu de toan bo N nguoi co ve la bao nhieu ?????
+
+--------------------------
+
+gọi f[i] là tổng thời gian tối thiểu để i người đầu tiên có vé.
+
+bài toán cơ sở: f[1] = t[1], f[2] = f[1] + t[2], f[0] + r[2]
+
+case1: người 1 mua vé và k có ai nhờ mua: f[i] = f[i - 1] + t[i]
+case2: người thứ i nhờ người thứ i - 1 mua dùm: f[i] = f[i - 2] + r[i-1]
+																														
+f[i]= min( f[i-1]+ t[i], f[i-2] + r[i - 1] )
+---	--------------------------------------------								
+Blast:
+									
+có 2 chuỗi s1 và s2, chuỗi s gồm n kí tự in thường, chuỗi s2 gồm m kí tự in thường.
+
+ta có thể chèn dấu \_ vào 2 chuỗi sao cho độ dài 2 chuỗi bằng nhau:
+
+s1 = [ab]f
+s2 = [b]e
+
+f[3][2]=f[2][2] + k
+f[0][2]
+
+Gọi f[i][j] là tổng chi phí toi thiểu khi ta có i ký tự đầu tiên của chuỗi s1 và j ký tự đau tiên của chuỗi s2
+
+bài toan cơ sở:
+
+f[0][j] = j *k
+f[i][0] = i *k
+
+đap an bài toan: f[n][m]
+
+công thức qhđ:
+
+f[i][j] =...
+
+. Tình hung 1: Ghép s1[i] và dấu _, ta có: f[i][j] = f[i - 1][j] + k
+. Tình huống 2: Ghép s2[j] và dấu _, ta có: f[i][j] = f[i][j - 1] + k
+. Tình huống 3: Ghép s1[i] và s2[j], ta co: f[i][j] = f[i - 1][j - 1] + abs(s1[i] - s2[j])
+
+f[i][j] = min(f[i - 1][j] + k, f[i][j - 1] +k, f[i - 1][j-1]+ abs(s1[i] - s2[j])) |

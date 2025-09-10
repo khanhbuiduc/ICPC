@@ -1,0 +1,109 @@
+Lý thuyết
+--------------------------------------------------------------------
+Thuật toán là gì?  
+
+Thuật toán là tập hợp những bước giúp giải quyết một vấn đề, chuyển từ dữ liệu đầu vào (input) thành kết quả đầu ra (output).
+-------------
+Độ phức tạp thuật toán
+
+Độ phức tạp thuật toán là đại lượng dùng để so sánh hiệu quả giữa các thuật toán.
+--------------
+Đại lượng Big O
+
+Là thời gian xử lý tối đa của thuật toán trên một bộ dữ liệu đầu vào, dùng để đánh giá độ hiệu quả của thuật toán.
+--------------
+Cấu trúc Vector trong C++
+
+Các hàm cơ bản:
+- pop_back(): xóa phần tử cuối
+- push_back(): thêm phần tử vào cuối
+- empty(): kiểm tra rỗng
+- size(): kích thước vector
+- resize(): thay đổi kích thước
+- clear(): xóa toàn bộ
+
+Sắp xếp mảng
+
+// Tăng dần từ index 3->7
+sort(a+3, a+8);
+// Giảm dần từ index 3->7
+sort(a+3, a+8, greater<int>());
+// Độ phức tạp: O(nlog(n))
+
+Các bài tập
+
+Vanya And Fence
+
+- Có N người bạn, người thứ i có chiều cao a[i]
+- Hàng rào cao h
+- Tìm tổng diện tích để N người không bị phát hiện
+- Mỗi người chiếm diện tích:
+  - 1 nếu cao ≤ h (đứng thẳng)
+  - 2 nếu cao > h (cúi người)
+
+N=8 h=6
+5 9 1 2 6 3 8 7
+
+1+2+1+1+1+1+2+2=11
+
+====>11
+--------------------------------------------------------------
+Fashion In Berland
+
+Áo hợp thời trang nếu:
+- Áo nhiều nút: tất cả được cài, chỉ 1 nút hở
+- Áo 1 nút: phải được cài
+
+n=5
+1 0 1 1 1
+
+====>yes
+---------------------------------------
+Watermelon
+
+Chia dưa hấu nặng W kg thành 2 phần có trọng lượng chẵn?
+Nếu có thì "Yes" nếu không thì "No"
+
+ví dụ:
+
+w = 6
+===>Yes
+
+2 4 hoặc 4 2
+
+w = 11
+===>No 
+
+Nếu w là số lẻ || w ==2
+  in ra No
+in ra yes
+---------------------------------------
+New year tranportation:
+
+đặt p: vị trí mà ta đang đứng
+
+ta khởi tạo p = 1
+while p < k
+	p= p +a[k]
+hỏi nếu p == k: in ra yes
+else: in ra No
+
+-------------------------------------------
+Threate square
+
+cho hình chữ nhật có area = m*n. gạch có area: a*a. đặt gạch
+	- gạch // với cạnh hcn
+	- có thể đè cạnh hcn
+	- số viên min
+Hỏi: cần sử dụng bao nhiêu viên hình vuông
+
+Gọi width là số gạch ít nhất lát chiều rộng: w= [n/a]
+gọi hight là số s=gạch ít nhất lát chiều dài H = [m/a]
+
+đáp án: h*w
+
+
+------------------------------------------------
+
+
+
