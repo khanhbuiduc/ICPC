@@ -1,0 +1,353 @@
+ZeroSeq 
+
+Cho một dãy số nguyên a gồm N số. Cho Q truy vấn, mỗi truy vấn gồm 1 đoạn [L .. R]
+
+
+Hỏi có thể chia các số trong đoạn [L .. R] thành nhiều nhất bao nhiêu đoạn, mỗi đoạn có tổng = 0 
+
+
+
+a = [-1, 1, 4, -5, -2, 6, 1]
+
+1 7 
+
+Gọi f[i][j] là chỉ số p gần i nhất có thể về phía bên trái sao cho từ p -> i, ta có thể chia được thành 2^j đoạn rời rạc có tổng = 0 
+
+
+f[3][0] = 1 
+
+
+f[7][0] = f[6][0] hoặc vị trí j gần i nhất sao cho tổng a[j] + a[j + 1] + .... + a[i] = 0 
+
+
+f[i][0] = f[i - 1][0] 
+
+
+nếu tồn tại j gần i nhất sao cho a[j] + a[j + 1] + ..... + a[i] = 0 =====> f[i][0] = max(f[i][0], j)
+
+đặt sum[i] = a[1] + a[2] + ..... + a[i] 
+
+====> a[j] + a[j + 1] + .... + a[i] = sum[i] - sum[j - 1] = 0 
+
+<=> sum[i] = sum[j - 1] 
+
+Gọi lastPosition[S] là vị trí p cuối cùng mà có sum[p] = S 
+
+lastPosition[sum[0]] = 0 
+
+
+Duyệt i: 1 -> n  
+  f[i][0] = f[i - 1][0]
+  nếu lastPosition[sum[i]] có tồn tại 
+    đặt j = lastPosition[sum[i]]
+    f[i][0] = max(f[i][0], j + 1)
+  lastPosition[sum[i]] = i 
+
+
+f[i][j] = ????? 
+
+Đặt p = f[i][j - 1]
+
+[k ..   p - 1  p  ...  i]
+
+nếu p != -1 
+
+p-- 
+
+f[i][j] = f[p][j - 1] 
+
+
+Khi ta có đoạn [L .. R] 
+
+Đặt pos = R 
+ans = 0 
+Duyệt k: 18 -> 0 
+  nếu f[pos][k] != -1 && f[pos][k] >= L 
+    ans += 2^k 
+    pos = f[pos][k] 
+    pos-- 
+    nếu pos < L: 
+      break 
+
+-----------------------------------------------------------------------------------------------------------------------
+
+Divseqq 
+
+Cho một dãy số nguyên a, cho Q truy vấn, mỗi truy vấn gồm 2 giá trị (i, k): 
+
+Tìm vị trí j nhỏ nhất có thể sao cho từ j -> i có thể chia được thành x (x <= k) đoạn, mỗi đoạn có tổng <= M 
+
+
+Gọi f[i][j] là vị trí p XA i nhất có thể sao cho khi ta có đoạn [ap, ap+1, ......, ai], có thể chia được thành 2^j đoạn 
+
+f[i][0] là vị trí j xa i nhất sao cho tổng a[j] + a[j + 1] + ...... + a[i] <= M 
+
+f[i][j] = ???
+
+đặt p = f[i][j - 1] 
+
+nếu p != -1 && f[p - 1][j - 1] != -1 
+  f[i][j] = f[p - 1][j - 1] 
+
+------------------------------------------------------------------------------------------------------------------------
+
+GCD Query (ICPC National 2021)
+
+Cho một dãy số nguyên dương a gồm N số. 
+
+Cho Q truy vấn, mỗi truy vấn gồm 3 giá trị l, r, d 
+
+Xét các số a[l], a[l + 1], ....., a[r] 
+
+Đếm có bao nhiêu đoạn [x .. y]  (l <= x <= y <= r) sao cho: 
+
+gcd(a[x], a[x + 1], ...., a[y]) <= d 
+
+
+Nhận xét 1: Càng nhiều số thì ước chung lớn nhất càng giảm 
+
+
+[12, 6, 5]
+
+
+Nhận xét 2: Nếu ước chung lớn nhất bị thay đổi, sau một lần thay đổi, ước chung lớn nhất mới cùng lắm = 1/2 so với ước chung lớn nhất cũ 
+
+======> ta chỉ mất tối đa log2(D) lần thay đổi để biến số D thành số 1 
+
+a =   [3, 6, 2, 4, 4, 8, 3, 16, 9, 2, 6]
+
+fP =  [1, 3, 3, 4, 5, 7, 7, 9, 10, 10, inf]
+
+listPosition: map <int, vector <int> > 
+
+listPosition[v]: danh sách các vị trí i mà gcd(i .. firstPosition[i]) = v 
+
+lP[1] = {8, 9, 6}
+lP[2] = {3, 10, 2}
+lP[3] = {1, 7}
+
+
+1:  (4, 6, 12)   x
+3:  (2, 9, 12)   x 
+4:  (1, 5, 10)   x 
+5:  (5, 8, 8)    x
+7:  (3, 10, 3) 
+2:  (4, 6, 2)
+6:  (1, 9, 1)
+
+
+Giả sử hiện tại ta đang xét truy vấn (l, r, d)
+
+firstPosition[i]: vị trí j gần i nhất về phía bên phải sao cho gcd(a[i], a[i + 1], ...., a[j]) <= d 
+
+
+Sử dụng sparse table: 
+
+Gọi f[i][j] là gcd của các số từ vị trí i và xét liên tục 2^j số từ i 
+
+f[i][0] = a[i] 
+
+f[i][j] = gcd(f[i][j - 1], f[i + (1 << (j - 1))][j - 1])
+
+
+Để xây dựng được firstPosition, ta có thể sử dụng chặt nhị phân 
+
+for i: 1 -> n 
+  đặt lo = i, hi = n 
+  while lo <= hi 
+    đặt mid = (lo + hi) / 2 
+    nếu gcd(i, mid) <= d:
+      firstPosition[i] = mid 
+      hi = mid - 1 
+    else: 
+      lo = mid + 1 
+
+
+
+Khi ta truy vấn (l, r, d) 
+
+for i: l -> r 
+  nếu p = firstPosition[i] <= r 
+    ans += r - p + 1 
+
+
+(i .. p), (i .. p + 1), (i .. p + 2), ..... , (i .. r) 
+
+Ta quy ước firstPosition[i] = inf: không tồn tại j để gcd(i .. j) <= d 
+
+Để ý: firstPosition[i] <= firstPosition[i + 1] 
+
+Giả sử firstPosition[i] = j > firstPosition[i + 1]  = j'
+
+firstPosition[i]: vị trí j gần i nhất để gcd(i .. j) <= d 
+
+
+
+fP[l] <= fP[l + 1] <= .... <= fP[r] 
+
+
+Nếu ta có thể tìm được vị trí p lớn nhất mà p thuộc đoạn [l .. r] và fP[p] <= r 
+
+
+l .. fP[l]
+l+1 .. fP[l + 1]
+...
+p .. fP[p] 
+
+
+Kết quả: (r - fP[l] + 1) + (r - fP[l + 1] + 1) + ...... + (r - fP[p] + 1) 
+
+= (r + 1) * (p - l + 1) - (fP[l] + fP[l + 1] + ..... + fP[p]) 
+
+
+Gọi fw[i] = fP[1] + fP[2] + ..... + fP[i] ====> get(p) - get(l - 1)
+
+
+--------------------------------------------------------------------------------------------------------------------
+
+Suffix Array 
+
+Xét bài toán: 
+
+Cho một chuỗi ký tự s 
+
+Xét danh sách các hậu tố của s, hãy đưa ra mảng các vị trí sau khi được sắp xếp theo thứ tự từ điển 
+
+Ví dụ: 
+
+s = "aabccab" 
+
+1: aabccab 
+2: abccab
+6: ab 
+7: b
+3: bccab 
+5: cab 
+4: ccab
+
+
+[1, 2, 6, 7, 3, 5, 4]
+ 
+
+2 thuật toán sắp xếp: 
+
+Counting Sort 
+
+a = [9, 12, 4, 4, 6, 1, 8, 1, 4]
+
+cnt[1] = 0
+cnt[2] = 2
+cnt[3] = 2
+cnt[4] = 3
+cnt[5] = 5
+cnt[6] = 5
+cnt[7] = 6
+cnt[8] = 6
+cnt[9] = 7
+cnt[10] = 8
+cnt[11] = 8
+cnt[12] = 8
+
+
+b = [1, 1, 4, 4, 4, 6, 8, 9, 12]
+
+for i: 1 -> n 
+  b[cnt[a[i]]] = a[i] 
+  cnt[a[i]]-- 
+
+
+Radix sort 
+
+a = [123, 5, 90, 6, 60, 88, 259, 42]
+
+a = [2, 6, 42, 60, 88, 90, 123, 259]
+
+
+0: [2, 6, 42, 60, 88, 90]
+1: [123]
+2: [259]
+3: 
+4: 
+5: 
+6: 
+7:
+8: 
+9: 
+
+
+
+s = "aabccab$" 
+
+
+1: aabccab
+6: ab  
+2: abccab
+7: b
+3: bccab
+5: cab 
+4: ccab
+
+
+
+ab 
+
+l = 2, r = 3 
+
+
+
+p = [1, 6, 2, 7, 3, 5, 4]
+
+
+Gọi l là vị trí nhỏ nhất mà có bao gồm tiền tố tính tới thời điểm hiện tại, r là vị trí xa nhất có bao gồm tiền tố tính đến thời điểm hiện tại 
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+LCS (Longest Common Substring) 
+
+Cho 2 chuỗi a và b, hãy tìm một chuỗi con chung liên tục có độ dài dài nhất
+
+|a|, |b| <= 300000 
+
+Thuật toán Kasai 
+
+Sau khi ta có suffix array 
+
+Ta gọi lcp[i] là độ dài của tiền tố dài nhất khi xét 2 chuỗi hậu tố p[i] và p[i + 1] 
+
+s = "aabccab$" 
+
+
+1: aabccab
+6: ab  
+2: abccab
+7: b
+3: bccab
+5: cab 
+4: ccab
+
+lcp = [1, 2, 0, 1, 0, 1]
+
+
+s = "competitiveprogramming" 
+
+t = "pythonprogrammer" 
+
+
+
+competi_tiveprogrammingpythonprogrammer
+
+
+programming_pythonprogrammer
+programmer
+
+
+
+
+
+
+
+
+
+
+
+

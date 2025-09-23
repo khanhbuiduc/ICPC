@@ -1,0 +1,153 @@
+Cây tiền tố (Trie) 
+
+Cho N chuỗi ADN, mỗi chuỗi được tạo nên từ 4 nucleotit: A, C, G, T 
+
+Cho Q truy vấn, mỗi truy vấn có 1 chuỗi ADN, hỏi chuỗi này có xuất hiện trong N chuỗi trên hay không ????? 
+
+
+N = 6
+
+AACG
+GCATT
+TTA
+AAGT
+GCAT
+AAGTC
+
+
+Q = 3 
+
+GCAT  ---> Y 
+AT    ---> N 
+ACG   ---> N 
+
+Sử dụng set <string> S,  với mỗi truy vấn Q, hỏi chuỗi đó có trong S hay không ??? 
+
+So sánh a < b ====> độ phức tạp để so sánh chuỗi: O(min(|a|, |b|) )
+
+Trie là một cấu trúc dữ liệu nhằm mục đích lưu trữ các chuỗi theo phép so sánh tiền tố với nhau. 
+
+
+Ta sử dụng con trỏ để lưu trữ các node của trie 
+
+id['A'] = 0;
+id['C'] = 1;
+id['G'] = 2;
+id['T'] = 3;
+
+struct node {
+  node *child[4];  
+  bool isEnd; 
+};
+
+node *createNode() {
+  node *ret = new node(); 
+  ret->isEnd = false; 
+  for (int c = 0; c <= 3; c++) {
+    ret->child[c] = NULL;
+  }
+  return ret; 
+}
+
+void addString(const string &s, node *&root) {
+  node *p = root; 
+  for (int i = 0; i < (int) s.size(); i++) {
+    int idChar = id[s[i]]; 
+    if (p->child[idChar] == NULL) {
+      p->child[idChar] = createNode(); 
+    }
+    p = p->child[idChar]; 
+  }
+  p->isEnd = true; 
+}
+
+bool check(const string &s, node *root) {
+  node *p = root; 
+  for (int i = 0; i < (int) s.size(); i++) {
+    int idChar = id[s[i]]; 
+    if (p->child[idChar] == NULL) {
+      return false; 
+    }
+    p = p->child[idChar]; 
+  }
+  if (p->isEnd == true) {
+    return true; 
+  }
+  return false; 
+} 
+
+main () {
+  node *root = createNode(); 
+
+}
+
+------------------------------------------------------------------------------------------------------------------
+
+Search Engine 
+
+Cho N chuỗi, chuỗi thứ i có 1 giá trị sức mạnh là p[i] 
+
+Cho Q truy vấn, mỗi truy vấn gồm một chuỗi st, hỏi trong các chuỗi mà nhận st làm tiền tố, chuỗi nào có sức mạnh lớn nhất ???? 
+
+
+hackerrank 10
+hackerearth 9 
+
+hacker   ====> 10 
+hackere  ====> 9 
+
+---------------------------------------------------------------------------------------------------------------------
+
+Word Combination: 
+
+Gọi f[i] là số cách để xây dựng ra chuỗi s gồm i ký tự đầu tiên 
+
+bài toán cơ sở: f[0] = 1 
+
+khi ta có f[i] > 0 
+
+Nếu s[i + 1 .. j] mà có tồn tại trong danh sách từ điển ======> f[j] += f[i] 
+
+đáp án bài toán: f[n]
+
+Ban đầu ta lưu trữ danh sách từ điển vào cây trie 
+
+
+
+ababc 
+
+
+i , j: i + 1 -> n 
+
+
+
+
+i = 2 
+
+j = 3, a 
+j = 4, ab 
+j = 5, abc
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

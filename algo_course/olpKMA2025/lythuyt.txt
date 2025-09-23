@@ -1,0 +1,106 @@
+bài 2:
+
+đề bài:
+f(0) = 0
+f(1) = 1
+f(2) = 2
+f(3k) = f(2k)
+f(3k+1) = f(2k) + f(2k+1)
+f(3k+2) = f(2k) +f(2k+1) + f(2k+2)
+
+-----------
+ngây thơ:
+
+dùng quy hoạch động:
+btcs: 
+    f(0) = 0
+    f(1) = 1
+    f(2) = 2
+đáp án
+    f(n)
+qhd:
+    f(3k) = f(2k)
+    f(3k+1) = f(2k) + f(2k+1)
+    f(3k+2) = f(2k) +f(2k+1) + f(2k+2)
+
+n lên tới 1 tỉ nên MTL
+--------------------
+100 lần n* (1/100) ~= 10^ -18
+
+đệ quy:
+
+store[i] =  f(i)
+
+btcs: 
+    f(0) = 0
+    f(1) = 1
+    f(2) = 2
+    f(i) =  store[i]
+đáp án
+    f(n)
+qhd:
+    n%3:        f(n) = f(2k)
+    n%3=1  :    f(n) = f(2k) + f(2k+1)
+    n%3=2k      f(n) = f(2k) +f(2k+1) + f(2k+2)
+    lưu trữ  f(n);
+
+map:  lưu trữ {i,f(i)}
+
+---
+
+bài 3:
+x  = {3, 5, 7}
+(a[i] - 1)/a[j] = x
+
+a[i]  = x * a[j] + 1 với  i>j
+v =  3*u +1;
+v = 5*u +1;
+v = 7*u + 1
+-------------
+sum = 0
+dfs(u, &visited){
+    visited[u] = true;
+    for x: {3,5,7}
+        v = u*x + 1
+        nếu v chưa thăm | v < n
+            dfs(v)
+    sum += u;
+------------
+bool visited[1'000'000'000]: bool trong arr là 1 byte
+vector<bool> visited[tỉ]: 1 bít.
+
+}
+
+----------------------------
+bài 4: g(x) = x^2 + 2x + 1
+tính f(n) = g(g(...g(g(x))))
+
+---
+tính
+    g(x) = x^2 + 2x + 1 = t^2 + 1
+----
+lưu trữ: g(x), timeDfs;
+
+timeDfs = 0;
+khi store chưa có g(x)
+    timeDfs++;
+    store lưu g(x), timeDfs
+    arr lưu g(x) ở vị trí timeDfs.
+
+---
+//những lần tiếp theo chỉ chạy quanh circle
+
+lần duyệt còn lại  
+    
+    remain = n - timeDfs 
+
+chiều dài 
+    
+    circle: lng = timeDfs - store[g(x)]
+
+ans  = arr[remainT % lng]
+
+
+-------------------------------
+store là unordermap
+

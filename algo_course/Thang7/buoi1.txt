@@ -1,0 +1,159 @@
+Tháng 7 (Advanced Data Structure):
++ Buổi 1: Segment Tree
++ Buổi 2: Lazy Update on segment tree 
++ Buổi 3: Persistent Segment tree
++ Buổi 4: Fenwick Tree 
++ Buổi 5: Trie
++ Buổi 6: Sparse Table
++ Buổi 7: Suffix Array
++ Buổi 8: Contest 
+
+
+Segment Tree 
+
+Static Minimum Range Queries: 
+
+Cho một dãy số nguyên dương a gồm N số. Cho Q truy vấn, mỗi truy vấn gồm 2 giá trị L và R 
+
+Hãy cho biết giá trị nhỏ nhất trong các giá trị a[L], a[L + 1], ....., a[R]
+
+
+Ví dụ: 
+
+a = [9, 6, 6, 4, 8, 2, 1, 7] 
+
+Q = 2 
+1 3   : 6
+3 6   : 2 
+
+
+Segment tree là một cây phân đoạn 
+
+Cây phân đoạn là một cây nhị phân, trong đó nếu nút u quản lý thông tin của 1 đoạn [L .. R] nào đó thì 2 nút con uleft và uright sẽ quản lý thông tin trên đoạn [L .. mid] và [mid + 1 .. R]
+
+Ta gọi hàm build(index, L, R): là hàm xây dựng cây segment tree với nút index là nút gốc, cây segment tree này sẽ quản lý các phần tử từ vị trí L .. R 
+
+it[index]: giá trị mà nút index đang sở hữu (giá trị nhỏ nhất trong các số trên đoạn [L .. R])
+
+build(index, L, R):
+  nếu L == R: 
+    it[index] = a[L]
+    return
+  đặt mid = (L + R) / 2 
+  build(2 * index, L, mid)
+  build(2 * index + 1, mid + 1, R)
+  it[index] = min(it[2 * index], it[2 * index + 1])
+
+
+Người ta đã chứng minh: Tổng số nút trên cây segment tree sẽ không vượt quá 4 * N 
+
+Hàm build sẽ xây dựng cây Segment tree trong không quá N*logN phép tính 
+
+get(index, L, R, l, r):
+  nếu l > R || L > r:
+    return inf 
+  nếu l <= L && R <= r:
+    return it[index]
+  đặt mid = (L + R) / 2 
+  đặt valueLeft = get(2 * index, L, mid, l, r)
+  đặt valueRight = get(2 * index + 1, mid + 1, R, l, r)
+  return min(valueLeft, valueRight)
+
+Người ta đã chứng minh được số đoạn con mà chia 1 đoạn [l .. r] bất kỳ không quá logN đoạn con 
+
+=====> với mỗi truy vấn của 1 đoạn [l .. r] bất kỳ, số thao tác <= O(logN) 
+
+----------------------------------------------------------------------------------------------------------------
+
+Sereja and brackets 
+
+Cho một chuỗi gồm các ngoặc '(' và ')' 
+
+Định nghĩa một chuỗi ngoặc đúng là khi ta đặt các biểu thức chính quy vào các cặp ngoặc thì chúng là những biểu thức có nghĩa 
+
+Ví dụ một số chuỗi ngoặc đúng: 
+
+()(), (()), (()())(), ...... 
+
+Cho Q truy vấn, mỗi truy vấn gồm 2 giá trị L và R. 
+
+Xét các ngoặc từ vị trí L đến vị trí R, hãy cho biết độ dài dãy ngoặc đúng dài nhất có thể tạo được là bao nhiêu (không nhất thiết phải liên tục)
+
+
+Một nút trên cây segment tree sẽ lưu các thông tin sau: 
+
+{
+    maxLength: độ dài của dãy ngoặc đúng dài nhất 
+    freeOpen: số lượng ngoặc mở tự do
+    freeClose: số lượng ngoặc đóng tự do 
+}
+
+build(index, L, R):
+  nếu L == R: 
+    nếu s[L] == '(': 
+      return {0, 1, 0}
+    else:
+      return {0, 0, 1}
+  đặt mid = (L + R) / 2 
+  build(2 * index, L, mid)
+  build(2 * index + 1, mid + 1, R)
+  tree[i] = merge(tree[2*i] + tree[2*i + 1]);
+
+
+Tổng hợp thông tin của nút index dựa trên 2 * index và 2 * index + 1 
+
+đặt add = min(trái.freeOpen, phải.freeClose)
+maxLength = trái.maxLength + phải.maxLength + 2 * add
+freeOpen = trái.freeOpen + phải.freeOpen - add 
+freeClose = trái.freeClose + phải.freeClose - add 
+
+------------------------------------------------------------------------------------------------------------
+
+Gss: 
+
+Cho dãy số nguyên a gồm N số. Cho Q truy vấn, mỗi truy vấn gồm 1 đoạn [L .. R], hỏi đoạn con liên tục có tổng lớn nhất là bao nhiêu ? 
+
+
+[-2, 5, -1, 4, 8, -2, -6] 
+
+
+[-2, 5, -1]      [4, 8, -2, -6] 
+
+
+{
+    maxSum: tổng liên tục lớn nhất
+    maxRight: tổng liên tục lớn nhất nhưng BUỘC phải có a[R]
+    maxLeft: tổng liên tục lớn nhất nhưng BUỘC phải có a[L]
+    sum: tổng các số trong đoạn mà nút đang quản lý 
+}
+
+
+
+
+
+
+
+
+
+maxSum = max(trái.maxSum, phải.maxSum, trái.maxRight + phải.maxLeft)
+maxRight = max(phải.maxRight, phải.sum + trái.maxRight)
+maxLeft = max(trái.maxLeft, trái.sum + phải.maxLeft)
+sum = trái.sum + phải.sum 
+
+
+-------------
+
+kquery
+
+{
+  vector đã sort
+}
+
+rồi khi merge 2 segment thì đơn giản giống merge trong mergeSort
+
+với mỗi L->R tìm BS(x) để đếm xem có bao nhiêu số lớn hơn x;
+
+
+
+
+

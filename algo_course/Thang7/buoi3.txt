@@ -1,0 +1,242 @@
+C:\Users\HP PC\ICPC\algo_course\Thang7\res\image\buoi3_1lt.png
+
+```cpp
+struct itnode {
+    long long sum;
+    itnode *left, *right;
+};
+vector <itnode "> version;
+itnode "createNode() {
+    itnode *ret = new itnode();
+    ret->sum = 0ll;
+    ret ->left = NULL;
+    ret ->right = NULL;
+    return ret;
+}
+
+void build( itnode *&root, int L, int R ){
+    root = createNode()
+    if(L==R){
+        root->sum = a[L];
+        return;
+    }
+    int mid  = (L+R)/2;
+    build(root->left,L,mid);
+    build(root->right,mid+1,R);
+}
+
+long long get(itnode *root, int L, int R, int 1, int r){
+    if (1 > R | | L > r) {
+    return 0LL;
+
+    if (1 <= L && R <= r) {
+    return root->sum;
+
+    int mid = (L+R) /2;
+    long long sumLeft = get(root->left, L, mid, 1, r);
+    long long sumRight = get(root->right, mid + 1, R, 1, r);
+    return sumLeft + sumRight;
+    }
+}
+}
+
+void update(itnode *&root, int L, int R, int position, int x)
+{
+    if (position < L || position > R)
+    return;
+
+    if (L == R && position == L) {
+        root = createNode();
+        root->sum = x;
+        return;
+    }
+    int mid = (L +R) /2;
+    itnode *ret = createNode();
+    if (L <= position && position <= mid) {
+        ret->right = root->right;
+        update(ret->left, L, mid, position, x);
+
+    else {
+        ret->left = root->left;
+        update(ret->right, mid + 1, R, position, x);
+    }
+    ret->sum = ret->left->sum + ret->right->sum;
+    root = ret;
+    }
+}
+
+int main () {
+    itnode *root;
+    build(root, 1, n);
+    version.push_back(root);
+    /*
+    for các truy vấn
+        nếu là loại 3: copy version k
+        k--
+        itnode *new_version = new it_node();
+        itnode *versionK = version[k];
+        *new_version = *version[k];
+    nếu gặp truy vấn loại 2:
+        tính tổng trên dãy thứ k I
+        k --
+        itnode "versionk = version[k];
+        cout << get(versionk, 1, n, 1,r) << endl;
+    nếu gặp truy vấn loại 1:
+        chính sửa vị trí thứ p -> x trên dãy thứ k
+        k --
+        itnode "versionk = version[k];
+        update(versionk, 1, n, p, x);
+    */
+
+    return 0;
+}
+```
+
+---
+
+```
+Mkthnum:
+
+Cho một dãy số a gồm N số nguyên dương. Cho Q truy văn, mỗi truy vấn gồm 3 giá trị (1, r, k), ta xét dãy số a gồm các số từ 1 .. r, hỏi số nhỏ thứ k là số nào
+
+1 <= a[i] <= 10^9
+
+Nhận xét: Ta chỉ quan tâm số nào nhỏ hơn số nào
+
+[100, 1000000000, 213, 4] , k = 2 ==== > 100
+
+Kỹ thuật nén số:
+
+Ta nen cac số trở thanh nhung so từ 1 -> NMkthnum:
+
+Cho một dãy số a gồm N số nguyên dương. Cho Q truy văn, mỗi truy vấn gồm 3 giá trị (1, r, k), ta xét dãy số a gồm các số từ 1 .. r, hỏi số nhỏ thứ k là số nào
+
+1 <= a[i] <= 10^9
+
+Nhận xét: Ta chỉ quan tâm số nào nhỏ hơn số nào
+
+[100, 1000000000, 213, 4] , k = 2 ==== > 100
+
+Kỹ thuật nén số:
+
+Ta nen các số trở thanh những số từ 1 -> N
+
+[100, 1000000000, 213, 4] ---- > [2, 4, 3, 1]
+
+value[1] - 4
+value[2] = 100
+value[3] = 213
+value[4]=1000000000
+
+a = [5, 100, 2, 4, 4, 1, 9, 1000000000, 6, 152, 9, 7]
+
+b = [4, 8, 2, 3, 3, , 7, 10, 5, 9, 7, 6]
+
+[1 .. 10]
+
+[1 .. 5]
+
+[6 .. 10]
+
+--
+
+Segment tree thứ i:
+
+Nút index sẽ quản lý đoạn [L .. R], tương ứng với việc có bao nhiêu số nằm trong đoạn từ [L .. R] mà khi ta có i số đầu tiên
+
+Segment tree thứ 8:
+
+4, 8, 2, 3, 3, 1, 7, 10
+
+[1 .. 10] :8
+
+[6 .. 10] :3
+
+[1 .. 5]: 5
+
+
+Segment tree thứ 3:
+
+4, 8, 2
+
+| [1 .. 10] : 3
+[1 .. 5]: 2
+
+[6 .. 10] :1
+
+Nếu ta muốn đếm các số nam trong đoạn [L .. R] khi xet dãy a gom các phần tử từ x .. y
+
+Segment Tree y [L .. R]
+
+I
+
+Ta xét N + 1 phiên bản của cây segment tree, phiên ban 0 -> phiên bản N
+
+Phiên bản thứ i + 1 được dựa trên việc copy từ phiên bản thứ i và bổ sung thêm giá trị a[i + 1]
+
+Khi ta xét truy vẫn (x, y, k)
+
+4, 8, 2, 3, 3, 1, 7,10
+
+xét đoạn [4 .. 8]
+
+3, 3, 1, 7, 10, k=1
+
+[1 .. 5]:3
+
+[1 .. 10] :5
+
+[6 .. 10] : 2
+
+1:1
+
+[6 .. 8]:1
+
+[6 .. 7]:1
+
+[9 .. 10] :1
+
+[8 .. 8]:0
+
+[6 .. 6]:0
+
+[7 .. 7]:1
+
+```
+
+---
+
+Index:
+Cho một dãy số P gồm N số.
+Một giá trị H được gọi là tốt nếu (số lượng phần tử ( gia trị >= H)) >= H
+
+P = [4, 2, 2, 5, 1, 6, 8, 2, 4, 3, 3]
+
+H = 3 , có 7 Số >= H:  tốt 
+
+H = 6 , có 2 số >= H: không tốt
+
+Cho truy vấn Q(L,R) hãy tim H lớn nhất trong đoạn L->R;
+
+tree: dãy có bao nhiêu số trong đoạn [L->R];(giống bài trên).
+
+có bao nhiêu số trong đoạn [4..8] >=5;
+    version[8][1..5] -  version[4][1..5]
+
+xét đoạn 4->8 tìm số lướn nhất thỏa mãn: (số các số>=H)>=H
+vậy H chính là số lớn thứ H trong dãy.
+
+
+=> tìm số lớn thứ H trong dãy.
+4, 8, 2, 3, 3, 1, 7, 10
+
+                        [1..10]:8
+                [1..5]:5        [6..10]:3
+
+4, 8, 2
+
+                        [1..10]:3
+                [1..5]:2        [6..10]:1
+
+tree[4-8][6..10] = 2;
+cần 

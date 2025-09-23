@@ -1,0 +1,189 @@
+Gabby And Addition: 
+
+Định nghĩa phép cộng không nhớ giữa 2 số a và b là phép cộng khi xét từ hàng nhỏ nhất đến hàng lớn nhất, ta lấy tổng 2 số và không nhớ sang hàng lớn hơn. 
+
+Ví dụ: 
+
+145 + 299 = 334
+
+Cho một dãy số a gồm N số nguyên dương a1, a2, ......, aN 
+
+Xét 2 số ai và aj bất kỳ, hỏi tổng ai + aj nhỏ nhất và lớn nhất là bao nhiêu ??????? 
+
+
+Ví dụ: 
+
+a = [09, 01, 12, 09, 06, 52]
+
+0 64
+
+
+Nhận xét: Khi số lượng chữ số đã bằng nhau thì khi triển khai phép cộng không nhớ, ta có thể cộng từ trái sang phải. 
+
+for i: 2 -> n 
+  for j: 1 -> i - 1 
+    Chọn ra a[i] + a[j] nhỏ nhất và lớn nhất 
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+SPC1 (Spring Contest 2022) 
+
+Cho một tập hợp S là tập hợp rỗng {}
+
+Có Q thao tác, mỗi thao tác như sau: 
+
+1. Thêm một số x vào tập S 
+2. Nếu ta sắp xếp các số trong tập S không giảm, hỏi số nhỏ thứ K là số nào ??????? 
+
+
+thêm số 92 =====> 0000000092
+
+
+
+
+
+0145
+ 
+0163
+
+k = 1 
+
+------------------------------------------------------------------------------------------------------------------------------
+
+Type printer (IOI 2008) 
+
+tiktok      
+algorithm    
+algorithn
+algoritho     
+algo        
+titi        
+leetcode    
+leet       
+
+
+leetPcodeP--------algoPrithmP-nP---------titiP--ktokP
+
+
+
+
+lastString = "algorithm" 
+
+dfs(node *p, int &pos) {
+    for (ch: 'a' : 'z') {
+        nếu ch != lastString[pos] {
+            dfs(p->child[ch], pos) 
+        }
+    }
+    dfs(p->child[lastString[pos]], pos + 1) 
+}
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+Sparse Table: 
+
+Cho một dãy số nguyên dương a gồm N số a1, a2, ...., aN 
+
+Cho Q truy vấn, mỗi truy vấn gồm 2 vị trí l và r, hỏi số nhỏ nhất trong các số a[l], a[l + 1], ...., a[r] là bao nhiêu ???? 
+
+
+
+
+a = [9, 8, 6, 7, 9, 9, 4, 5, 2]
+
+Ví dụ: 
+
+f[2][3] = 
+
+f[3][1] = 6
+f[3][2] = 6 
+f[3][3] = -1 
+
+Gọi f[i][j] là giá trị nhỏ nhất khi xét các số từ vị trí i và sẽ kéo dài một đoạn là 2^j sang phía bên phải. Nếu không tồn tại, f[i][j] = -1 
+
+bài toán cơ sở: 
+
+f[i][0] = a[i]
+
+Nếu i + (1 << j) - 1 <= n 
+  f[i][j] = min(f[i][j - 1], f[i + (1 << j)][j - 1])
+
+
+for j: 1 -> 18 
+  for i: 1 -> n  
+    nếu i + (1 << j) - 1 <= n 
+      f[i][j] = min(f[i][j - 1], f[i + (1 << j)][j - 1])
+
+
+
+Truy vấn đoạn [l .. r] 
+
+đặt len = r - l + 1 
+đặt lg = log2(len) 
+in ra min(f[l][lg], f[r - (1 << lg) + 1][lg])
+
+-------------------------------------------------------------------------------------------------------------
+
+Company Queries: 
+
+Gọi f[u][j] là sếp bậc 2^j tính từ nhân viên u 
+
+khởi tạo: f[u][0] = e[u] với u: 2 -> n ,   f[1][0] = -1 
+
+nếu f[u][j - 1] != -1 và f[f[u][j - 1]][j - 1] != -1 
+    f[u][j] = f[f[u][j - 1]][j - 1]
+
+
+với truy vấn u, k 
+
+Duyệt j: 18 -> 0 
+  nếu k >= (1 << j): 
+    nếu f[u][j] == -1: 
+      in ra  -1 
+      return 
+    u = f[u][j] 
+
+Xuất u
+
+------------------------------------------------------------------------------------------------------------
+
+Planet Queries 
+
+Mổi đỉnh u -> t[u] 
+
+Gọi f[u][j] là đỉnh mà u sẽ nhảy đến khi nhảy với 1 số bước là 2^j 
+
+
+f[u][0] = t[u]
+
+f[u][j] = f[ f[u][j - 1] ][j - 1]
+
+
+1 <= k <= 10^9 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
