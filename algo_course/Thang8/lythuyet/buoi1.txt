@@ -1,0 +1,138 @@
+## Tháng 8: Một số kỹ thuật nâng cao
+
+- **Buổi 1:** Giải quyết bài toán dựa trên ý tưởng Merge Sort + Merge Sort Tree
+- **Buổi 2:** Bit manipulation
+- **Buổi 3:** Square Root Decomposition
+- **Buổi 4:** Sàng nguyên tố và một số bài toán ứng dụng của sàng nguyên tố
+- **Buổi 5:** Sweep Line
+- **Buổi 6:** Một số bài toán giải quyết bằng phương pháp Random
+- **Buổi 7:** Meet in the middle
+- **Buổi 8:** Làm kỳ thi
+------------------------------------------------------------------------------------
+FINDBRACSEQ
+
+Mục tiêu: Tìm dãy con dài nhất của xâu S sao cho dãy con đó là dãy ngoặc đúng.
+
+Input: Xâu S độ dài n chứa các ký tự '(' và ')'
+
+Output: Độ dài của dãy con dài nhất là dãy ngoặc đúng
+
+Ý tưởng chính:
+
+    - Sử dụng stack hoặc biến đếm để theo dõi số ngoặc mở/đóng hợp lệ
+    - Duyệt từ trái sang phải, ghép cặp ngoặc mở với ngoặc đóng
+    - Đếm số cặp ngoặc hợp lệ được tạo thành
+
+merge sort:
+    Cấu trúc Node:
+        - open: Số ngoặc mở '(' chưa được ghép
+        - close: Số ngoặc đóng ')' chưa được ghép
+        - pairs: Số cặp ngoặc đã ghép thành công
+
+    Base case:
+        - Gặp '(' → Node(1, 0, 0)
+        - Gặp ')' → Node(0, 1, 0)
+        - Ký tự khác → Node(0, 0, 0)
+
+    Merge hai nửa:
+        - Tính số cặp có thể ghép: canPair = min(leftNode.open, rightNode.close)
+        - Cập nhật số ngoặc dư: trừ đi số đã ghép
+        - Cộng thêm số cặp mới ghép được
+
+-----------------------------------------------------
+
+C11SEQ
+Đề bài: Cho mảng a[1..n] và hai số L, R. Đếm số cặp (i,j) sao cho L ≤ sum(a[i..j]) ≤ R
+
+Input:
+    Dòng 1: n, L, R
+    Dòng 2: mảng a[1..n]
+Output: 
+    Số lượng dãy con liên tiếp có tổng trong khoảng [L, R]
+
+Ý tưởng chính: merge sort
+
+1. Base case: Nếu l == r
+    kiểm tra xem a[l] có trong khoảng [minSum, maxSum] không
+
+2. Chia nhỏ: 
+    Chia đoạn [l, r] thành 2 phần [l, mid] và [mid+1, r]
+
+3. Đếm cross pairs: 
+    - Tính tất cả prefix sum từ mid về trái (preLeft)
+    - Tính tất cả suffix sum từ mid+1 về phải (sufRight)
+    - Với mỗi rightSum, tìm số leftSum sao cho minSum ≤ leftSum + rightSum ≤ maxSum
+        - Sử dụng binary search để đếm hiệu quả
+
+4. Kết hợp: Tổng = leftCnt + rightCnt + crossCnt
+
+----------------------------------------------------------
+Maximum Subarray
+
+Đề bài: Cho mảng số nguyên, tìm:
+
+Maximum Subarray Sum: Tổng lớn nhất của dãy con liên tiếp
+Maximum Subsequence Sum: Tổng lớn nhất của dãy con bất kỳ (không cần liên tiếp)
+-----
+Maximum Subsequence:
+    Nếu có số dương: tổng tất cả số dương
+    Nếu toàn số âm: chọn số lớn nhất
+
+-----Maximum Subarray Sum
+Ý tưởng chính: merge sort
+
+node:
+    maxSum: Tổng subarray lớn nhất trong đoạn
+    maxLeft: Tổng lớn nhất bắt đầu từ điểm trái nhất
+    maxRight: Tổng lớn nhất kết thúc ở điểm phải nhất
+    totalSum: Tổng toàn bộ đoạn
+Base case: 
+    Đoạn có 1 phần tử
+Merge: 
+    Kết hợp 2 nửa, tính toán các giá trị mới
+    Cross middle: leftResult.maxRight + rightResult.maxLeft
+    maxSum = max(Cross middle, left.maxSum, right.maxSum)
+
+----------------------------------------
+Merge Sort tree.
+
+Đếm số lượng inversions trong một mảng bằng cách sử dụng thuật toán Merge Sort.
+
+Định nghĩa Inversion:
+
+Một inversion là một cặp chỉ số (i, j) sao cho i < j nhưng arr[i] > arr[j]
+Nói cách khác, hai phần tử không theo thứ tự tăng dần
+
+y tuong: MergeSort(L,R) = left.cnt + right.cnt + more:
+node:
+    cnt: so luong inversions
+    arr[l,r]: duoc sort.
+
+Base case: Đoạn có 1 phần tử → cnt = 0, sorted = {arr[i]}
+
+Tính Cross Inversions(more):
+    Với mỗi phần tử x trong rightNode.sorted:
+    - Đếm số phần tử trong leftNode.sorted lớn hơn x
+    - Sử dụng lower_bound để tìm vị trí đầu tiên >= x
+    - Số inversions = leftNode.sorted.size() - (lower_bound_position)
+
+
+--------------------------------------------------------
+max to the right to min
+
+y tuong chinh: MergeSort(L,R) = left.cnt + right.cnt + more:
+
+cho hoan vi 1..n
+dem day con lien tiep sao cho pos_max(a[l..r]) > pos_min(a[l..r])
+y tuong:
+    node:
+        cnt: so luong day con lien tiep thoa man
+        sorted[l..r]: hoan vi duoc sort
+    base case: doan co 1 phan tu -> cnt = 0, sorted = {a[i]}
+    tinh cross pairs(more):
+        voi moi phan tu x trong rightNode.sorted:
+            dem so phan tu trong leftNode.sorted nho hon x
+            su dung lower_bound de tim vi tri dau tien >= x
+            so day con lien tiep thoa man = leftNode.sorted.size() - (lower_bound_position)
+------------------
+

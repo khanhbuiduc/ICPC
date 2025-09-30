@@ -1,0 +1,67 @@
+H. Maximal AND
+Tìm giá trị lớn nhất có thể của phép AND toàn bộ mảng sau khi thực hiện tối đa k phép toán.
+
+Phép toán cho phép
+    Chọn chỉ số i (1 ≤ i ≤ n)
+    Thay a[i] bằng a[i] OR 2^j với j từ 0 đến 30
+        - Tức là bật bit thứ j của a[i] lên 1
+Output
+    Giá trị lớn nhất của a[1] & a[2] & ... & a[n]
+---
+thuat toan chuan
+Duyệt từ bit cao nhất (30) xuống bit thấp nhất (0)
+    Với mỗi bit j:
+        Đếm số phần tử chưa có bit j bật
+        Nếu có thể bật tất cả bit j với số phép toán còn lại:
+            Thực hiện bật và trừ số phép toán
+        Kết quả sẽ có bit j = 1
+        Tiếp tục với bit tiếp theo
+
+---
+B. Rock and Lever
+
+Đếm số cặp (i,j) với i < j sao cho a[i] & a[j] >= a[i] ⊕ a[j]
+
+Output
+Số lượng cặp thỏa mãn điều kiện
+---
+tu phan tich:
+    1&1 >= 1^1 true
+    1&0 >= 1^0
+    0&0 >= 0^0 true 
+    0&1 >= 0^1
+=> neu bit dau tien cua a&b dong thoi la 1 thi thoa man.
+
+xet a[i] voi i: 1->n
+xet a[j] voi j: 1->i 
+
+----
+cach giai trong dap an van chua hieu. hien tai cu la cach cua minh
+---------------------------------------------------
+Maximum XOR Subarray
+
+Tìm giá trị XOR lớn nhất của một subarray (dãy con liên tiếp) trong mảng.
+
+cach cua claude: Prefix XOR + Trie:
+
+Tính Prefix XOR:
+    prefix[i] = a[0] ⊕ a[1] ⊕ ... ⊕ a[i]
+    ket qua: max (prefix[j] ⊕ prefix[i])
+
+Cấu trúc Trie cho bit:
+    Lưu trữ các prefix XOR dưới dạng nhị phân
+    Mỗi node có tối đa 2 con (bit 0 và bit 1)
+
+Thuật toán:
+
+    Với mỗi prefix XOR hiện tại
+    Tìm trong Trie prefix XOR trước đó sao cho XOR với nó cho kết quả lớn nhất
+    Ưu tiên chọn bit khác nhau ở các vị trí cao
+
+Tối ưu hóa:
+    Duyệt từ bit cao nhất xuống bit thấp nhất
+    Chọn đường đi cho XOR lớn nhất
+
+--------------------------------
+tai sao lai la trie:
+    can tim 1 cau truc du lieu ma tim bit phu hop tot nhat.
