@@ -1,76 +1,72 @@
 #include <bits/stdc++.h>
+#define FOR(i, a, b) for (int i = (a), _b = (b); i <= (_b); i++)
+#define FORD(i, b, a) for (int i = (b), _a = (a); i >= (_a); i++)
+#define FORE(i, a) for (auto i : a)
 using namespace std;
+//
+bool maximum(int &X, const int &Y)
+{
+    if (X < Y)
+    {
+        X = Y;
+        return true;
+    }
+    return false;
+}
 
+typedef long long ll;
 struct TrieNode
 {
     TrieNode *child[26];
-    int maxValue;
-    TrieNode()
+    int maxWeight;
+    TrieNode(int __maxWeight)
     {
-        for (int i = 0; i < 26; i++)
-            child[i] = nullptr;
-        maxValue = 0;
+        FOR(i, 0, 25) { child[i] = NULL; }
+        maxWeight = __maxWeight;
     }
 };
-
-struct Trie
+void addString(string &s, int w, TrieNode *&root)
 {
-    TrieNode *root;
-    Trie()
+    TrieNode *p = root;
+    for (char c : s)
     {
-        root = new TrieNode();
+        if (p->child[c - 'a'] == NULL)
+            p->child[c - 'a'] = new TrieNode(w);
+        maximum(p->child[c - 'a']->maxWeight, w);
+        p = p->child[c - 'a'];
     }
-
-    // Thêm 1 chuỗi cùng với value
-    void add(const string &s, int value)
+}
+int checkString(string &s, TrieNode *root)
+{
+    TrieNode *p = root;
+    int w = -1;
+    for (char c : s)
     {
-        TrieNode *cur = root;
-        for (char ch : s)
-        {
-            int idx = ch - 'a';
-            if (cur->child[idx] == nullptr)
-                cur->child[idx] = new TrieNode();
-            cur = cur->child[idx];
-            cur->maxValue = max(cur->maxValue, value);
-        }
+        if (p->child[c - 'a'] == NULL)
+            return -1;
+        w = p->child[c - 'a']->maxWeight;
+        p = p->child[c - 'a'];
     }
-
-    // Tìm maxValue của prefix s
-    int findMax(const string &s)
-    {
-        TrieNode *cur = root;
-        for (char ch : s)
-        {
-            int idx = ch - 'a';
-            if (cur->child[idx] == nullptr)
-                return -1; // prefix không tồn tại
-            cur = cur->child[idx];
-        }
-        return cur->maxValue;
-    }
-};
-
+    return w;
+}
 int main()
 {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
-    int n, q;
+    // freopen("input.txt", "r", stdin);
+    // freopen("output.txt", "w", stdout);
+    int n, q, w;
+    string s;
     cin >> n >> q;
-
-    Trie trie;
-    for (int i = 0; i < n; i++)
+    TrieNode *root = new TrieNode(0);
+    FOR(i, 1, n)
     {
-        string s;
-        int val;
-        cin >> s >> val;
-        trie.add(s, val);
+        cin >> s >> w;
+        addString(s, w, root);
     }
-
-    while (q--)
+    FOR(i, 1, q)
     {
-        string s;
         cin >> s;
-        cout << trie.findMax(s) << "\n";
+        cout << checkString(s, root) << endl;
     }
 }
