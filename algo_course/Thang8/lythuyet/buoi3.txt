@@ -1,0 +1,32 @@
+chia can:
+B. The BOSS Can Count Pairs 
+cho a[1..n], b[1..n]
+Đếm số cặp (i,j) sao cho 1≤i<j≤n và ai * aj = bi + bj (*)
+
+ngay tho:
+
+for moi (i,j): 
+    neu ai * aj = bi + bj:
+        cnt++;
+
+---
+
+nhan xet: 
+    bi + bj <= 2n 
+    => ai * aj <= 2n
+
+=> min(a[i], a[j]) <= sqr(2*n)
+
+do phuc tap: n can(2*n) < 100'000 * 500
+---
+
+sort(a), b theo vi tri a.
+
+for ai: 1 -> sqr(2n)
+    if a[i] * a[i] > 2*n: stop
+    for bj: 1 -> n 
+        tim xem co bao nhieu b[i] = d * a[j] - b[j];
+
+store = (ai,(bi,index))
+store.sorted.
+    

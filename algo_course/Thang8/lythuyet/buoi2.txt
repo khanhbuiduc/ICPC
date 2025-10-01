@@ -1,3 +1,6 @@
+Bit manipulation
+---------------------------------------------------
+
 H. Maximal AND
 Tìm giá trị lớn nhất có thể của phép AND toàn bộ mảng sau khi thực hiện tối đa k phép toán.
 
@@ -62,6 +65,63 @@ Tối ưu hóa:
     Duyệt từ bit cao nhất xuống bit thấp nhất
     Chọn đường đi cho XOR lớn nhất
 
---------------------------------
-tai sao lai la trie:
-    can tim 1 cau truc du lieu ma tim bit phu hop tot nhat.
+---
+
+---------------------------------------------------
+
+F. Equal XOR Segments
+
+Mục tiêu: Kiểm tra xem a[l..r] có thể chia thành k > 1 phần sao cho XOR của mỗi phần đều bằng nhau.
+
+a=[1,1,2,3,0] voi q(1,5)-> Yes
+vì 1=1=2^3^0
+---
+nhan xet:
+
+neu chia thanh k phan bang nhau:
+    res = y1 ^ y2 ... ^ yk
+    - neu k chan: res = y1.
+    - neu k le: res = 0.
+---
+neu: xor = 0 => yes.
+neu: xor = y1 => ton tai subarr_xor = y1 => yes 
+
+-------------------------------------------------------
+ake A Guess
+Đây là bài interactive: Cần tìm phần tử thứ k nhỏ nhất trong mảng ẩn bằng cách hỏi tối đa 2⋅n câu hỏi.
+
+Input:
+
+n phần tử trong mảng (3 ≤ n ≤ 10⁴)
+k: cần tìm phần tử thứ k nhỏ nhất (1 ≤ k ≤ n)
+Các loại câu hỏi có thể hỏi:
+
+"or i j": Hỏi kết quả a[i] | a[j] (bitwise OR)
+"and i j": Hỏi kết quả a[i] & a[j] (bitwise AND)
+"finish res": Trả lời kết quả cuối cùng
+
+---
+nhan xet: a + b = a | b + (a & b)
+
+thuat toan chuan:
+    a[1] & a[2] = x12;
+    a[1] | a[2] = y12;
+    tuong tu voi (a[2], a[3]) va (a[3], a[4]);
+
+a[1] + a[2] = x12 + y12; (*)
+a[2] + a[3] = x23 + y23; (**)
+a[1] + a[3] = x13 + y13; (***)
+
+=> (*) + (***) - (**)
+<=> 2*a[1] = (x12 + y12) +  (x13 + y13) - x23 + y23
+=> tinh dc a[1], a[2], a[3];
+---
+
+tinh a[4..n]:
+a + b = a | b + (a & b)
+=> a = a | b + (a & b) - b;
+=> a[i] = a[1] | a[i] + a[1] & a[i] - a[1]
+
+--> in ra nth_elementth(a, a + k -1, a+end)
+
+
