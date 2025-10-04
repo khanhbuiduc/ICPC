@@ -1,0 +1,9 @@
+void dfs(u)
+{
+    visited[u] = true;
+    for (auto v: adj[u])
+    {
+        if(visited[v])
+            dfs(v);
+    }
+}

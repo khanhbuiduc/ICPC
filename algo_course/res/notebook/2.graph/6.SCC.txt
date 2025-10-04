@@ -1,0 +1,30 @@
+void dfs(int u)
+{
+    low[u] = num[u] = ++cntDfs;
+    store.push(u);
+    for (int v : adj[u])
+    {
+        if (is_deleted[v])
+            continue;
+        if (num[v] > 0)
+            low[u] = min(low[u], num[v]);
+        else
+        {
+            dfs(v);
+            low[u] = min(low[u], low[v]);
+        }
+    }
+    if (low[u] == num[u])
+    {
+        ans++;//đếm số tplt mạnh
+        while (true)
+        {
+            int v = store.top();
+            store.pop();
+            is_deleted[v] = true;
+            root[v] = u;//nếu cần lưu trữ root;
+            if (v == u)
+                break;
+        }
+    }
+}

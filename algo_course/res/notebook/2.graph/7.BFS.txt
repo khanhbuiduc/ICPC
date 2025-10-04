@@ -1,0 +1,26 @@
+queue<int> q;
+int dist[1'000'005];
+void bfs()
+{
+    for (int i = 0; i <= m; i++)
+        dist[i] = -1;
+    dist[s0] = 0;
+    q.push(s0);
+    while (!q.empty())
+    {
+        int u = q.front(),q.pop();
+        for (auto v:adj[u])
+        {
+            if (dist[v] == -1)
+            {
+                dist[v] = dist[u] + 1;
+                if (v == 0)
+                {
+                    cout << dist[v];
+                    exit(0);
+                }
+                q.push(v);
+            }
+        }
+    }
+}

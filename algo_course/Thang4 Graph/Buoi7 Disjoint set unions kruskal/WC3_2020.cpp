@@ -50,7 +50,7 @@ int findRoot(int u)
 {
     return root[u] = (u == root[u] ? u : findRoot(root[u]));
 }
-void setUnionInkruskal(int u, int v, int cost)
+void setUnion(int u, int v, int cost)
 {
     int rootu = findRoot(u);
     int rootv = findRoot(v);
@@ -68,7 +68,7 @@ void kruskal()
 {
     sort(ALL(listEdges));
     for (auto &[cost, u, v] : listEdges)
-        setUnionInkruskal(u, v, cost);
+        setUnion(u, v, cost);
 }
 
 void initial()

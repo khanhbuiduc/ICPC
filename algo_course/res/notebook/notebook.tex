@@ -1,0 +1,249 @@
+\documentclass[10pt]{article}
+\usepackage[left=0.4in,right=0.4in,top=0.7in,bottom=0.4in]{geometry}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tocloft}
+\usepackage{pdflscape}
+\usepackage{multicol}
+\usepackage{graphicx}
+
+\renewcommand*{\ttdefault}{pcr}
+\renewcommand\cftsecfont{\fontsize{8}{9}\bfseries}
+\renewcommand\cftsecpagefont{\fontsize{8}{9}\mdseries}
+\renewcommand\cftsubsecfont{\fontsize{5}{6}\mdseries}
+\renewcommand\cftsubsecpagefont{\fontsize{5}{6}\mdseries}
+\renewcommand\cftsecafterpnum{\vspace{-1ex}}
+\renewcommand\cftsubsecafterpnum{\vspace{-1ex}}
+
+\lstdefinestyle{shared}{
+    belowcaptionskip=1\baselineskip,
+    breaklines=true,
+    xleftmargin=\parindent,
+    showstringspaces=false,
+    basicstyle=\fontsize{5.5}{6}\ttfamily,
+}
+\lstdefinestyle{cpp}{
+	style=shared,
+    language=C++,
+    keywordstyle=\bfseries\color{green!40!black},
+    commentstyle=\itshape\color{red!80!black},
+    identifierstyle=\color{blue},
+    stringstyle=\color{purple!40!black},
+}
+\lstdefinestyle{java}{
+    style=shared,
+    language=Java,
+    keywordstyle=\bfseries\color{green!40!black},
+    commentstyle=\itshape\color{purple!40!black},
+    identifierstyle=\color{blue},
+    stringstyle=\color{orange},
+}
+\lstdefinestyle{py}{
+    style=shared,
+    language=Python,
+    keywordstyle=\bfseries\color{green!40!black},
+    commentstyle=\itshape\color{purple!40!black},
+    identifierstyle=\color{blue},
+    stringstyle=\color{orange},
+}
+\lstdefinestyle{txt}{
+    style=shared,
+}
+\lstset{escapechar=@}
+
+\pagestyle{fancy}
+\fancyhead[L]{Academy of Cryptography Techniques}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{}
+
+\fancypagestyle{plain}
+{
+\fancyhead[L]{Academy of Cryptography Techniques}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{}
+}
+
+\title{\vspace{-4ex}\Large{Academy of Cryptography Techniques ACM-ICPC Notebook 2025}}
+\author{}
+\date{}
+
+\begin{document}
+\begin{landscape}
+\begin{multicols}{2}
+
+\maketitle
+\vspace{-13ex}
+\tableofcontents
+\pagestyle{fancy}
+
+\section{Initial Setup}
+\subsection{Template}
+\lstinputlisting[style=cpp]{c:/Users/HP PC/ICPC/algo_course/res/notebook/1.initial/initial.h}
+
+\section{Data Structures}
+\subsection{Disjoint Set Union (DSU)}
+\begin{lstlisting}[style=cpp]
+struct DSU {
+    vector<int> p, sz;
+    DSU(int n): p(n), sz(n,1) {
+        iota(p.begin(), p.end(), 0);
+    }
+    int find(int x) {
+        return (p[x]==x ? x : p[x]=find(p[x]));
+    }
+    bool unite(int a,int b){
+        a=find(a); b=find(b);
+        if(a==b) return false;
+        if(sz[a]<sz[b]) swap(a,b);
+        p[b]=a; sz[a]+=sz[b];
+        return true;
+    }
+};
+\end{lstlisting}
+
+\subsection{Segment Tree}
+\begin{lstlisting}[style=cpp]
+struct SegTree {
+    vector<int> tree;
+    int n;
+    
+    SegTree(int n) : n(n) {
+        tree.resize(4*n);
+    }
+    
+    void update(int node, int start, int end, 
+                int idx, int val) {
+        if (start == end) {
+            tree[node] = val;
+        } else {
+            int mid = (start + end) / 2;
+            if (idx <= mid)
+                update(2*node, start, mid, idx, val);
+            else
+                update(2*node+1, mid+1, end, idx, val);
+            tree[node] = tree[2*node] + tree[2*node+1];
+        }
+    }
+    
+    int query(int node, int start, int end, 
+              int l, int r) {
+        if (r < start || end < l) return 0;
+        if (l <= start && end <= r) return tree[node];
+        int mid = (start + end) / 2;
+        return query(2*node, start, mid, l, r) + 
+               query(2*node+1, mid+1, end, l, r);
+    }
+};
+\end{lstlisting}
+
+\section{Graph Algorithms}
+\subsection{Dijkstra}
+\begin{lstlisting}[style=cpp]
+vector<int> dijkstra(vector<vector<pair<int,int>>>& adj, int start) {
+    int n = adj.size();
+    vector<int> dist(n, INF);
+    dist[start] = 0;
+    priority_queue<pair<int,int>, 
+                  vector<pair<int,int>>,
+                  greater<pair<int,int>>> pq;
+    pq.push({0, start});
+    
+    while (!pq.empty()) {
+        auto [d, u] = pq.top(); pq.pop();
+        if (d > dist[u]) continue;
+        
+        for (auto [v, w] : adj[u]) {
+            if (dist[u] + w < dist[v]) {
+                dist[v] = dist[u] + w;
+                pq.push({dist[v], v});
+            }
+        }
+    }
+    return dist;
+}
+\end{lstlisting}
+
+\section{Math}
+\subsection{Number Theory}
+\begin{lstlisting}[style=cpp]
+// GCD and LCM
+int gcd(int a, int b) {
+    return b ? gcd(b, a % b) : a;
+}
+
+int lcm(int a, int b) {
+    return a / gcd(a, b) * b;
+}
+
+// Modular inverse
+int mod_inv(int a, int m) {
+    int g = gcd(a, m);
+    if (g != 1) return -1;
+    return mod_pow(a, m - 2, m);
+}
+
+// Fast power
+int mod_pow(int base, int exp, int mod) {
+    int result = 1;
+    base %= mod;
+    while (exp > 0) {
+        if (exp & 1) result = (1LL * result * base) % mod;
+        base = (1LL * base * base) % mod;
+        exp >>= 1;
+    }
+    return result;
+}
+\end{lstlisting}
+
+\section{Geometry}
+\subsection{Convex Hull}
+\begin{lstlisting}[style=cpp]
+// Graham scan algorithm
+struct Point {
+    int x, y;
+    bool operator<(Point p) const {
+        return x < p.x || (x == p.x && y < p.y);
+    }
+};
+
+// Cross product
+int cross(const Point& O, const Point& A, const Point& B) {
+    return (A.x - O.x) * (B.y - O.y) - (A.y - O.y) * (B.x - O.x);
+}
+
+vector<Point> convex_hull(vector<Point>& points) {
+    int n = points.size(), k = 0;
+    if (n <= 3) return points;
+    vector<Point> hull(2*n);
+    
+    sort(points.begin(), points.end());
+    
+    // Lower hull
+    for (int i = 0; i < n; i++) {
+        while (k >= 2 && cross(hull[k-2], hull[k-1], points[i]) <= 0) k--;
+        hull[k++] = points[i];
+    }
+    
+    // Upper hull
+    int t = k + 1;
+    for (int i = n - 2; i >= 0; i--) {
+        while (k >= t && cross(hull[k-2], hull[k-1], points[i]) <= 0) k--;
+        hull[k++] = points[i];
+    }
+    
+    hull.resize(k-1); // Last point is same as first
+    return hull;
+}
+\end{lstlisting}
+
+\end{multicols}
+\end{landscape}
+
+% Cheat sheets (bỏ comment nếu có file pdf)
+% \centerline{\includegraphics[trim={0 0 0 3cm}, clip, width=\textwidth]{cheatsheet/p01.pdf}}
+% \centerline{\includegraphics[trim={0 0 0 3cm}, clip, width=\textwidth]{cheatsheet/p02.pdf}}
+% ... thêm các trang khác tương tự ...
+
+\end{document}

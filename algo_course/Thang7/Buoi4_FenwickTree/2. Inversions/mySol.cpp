@@ -12,6 +12,7 @@ void update(int index, int vals)
     for (; index <= 100'000; index += index & -index)
         fw[index] += vals;
 }
+
 ll get(int index) // trc index có bao nhiêu số < index.
 {
     ll res = 0;
@@ -19,6 +20,7 @@ ll get(int index) // trc index có bao nhiêu số < index.
         res += fw[index];
     return res;
 }
+
 int main()
 {
     cin >> n;

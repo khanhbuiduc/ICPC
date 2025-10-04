@@ -32,5 +32,4 @@ int main()
 }
 /*
 cho a[1..n]: đếm số cặp nghịch thế.
-
  */

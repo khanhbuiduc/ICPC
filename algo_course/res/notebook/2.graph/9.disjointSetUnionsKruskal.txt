@@ -1,0 +1,16 @@
+//dsu
+int findRoot(u) {
+    return (root[u] = (root[u] == u) ? u : findRoot(root[u]));
+}
+void unionSet(int u, int v)
+{
+    int rootu = findRoot(u);
+    int rootv = findRoot(v);
+    if (rootu != rootv)
+    {
+        cnt_union--;
+        root[rootu] = rootv;
+    }
+}
+
+//

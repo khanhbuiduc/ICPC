@@ -33,3 +33,11 @@
 #cph
 *.prob
 *.json
+#latex
+*.aux
+*.log
+*.out
+*.toc
+*fdb_latexmk
+*.fls
+*.synctex.gz

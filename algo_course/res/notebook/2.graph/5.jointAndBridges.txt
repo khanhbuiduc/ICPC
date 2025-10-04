@@ -1,0 +1,48 @@
+bool visited[100005];
+vector<int> adj[200005];
+int num[100005], low[100005];
+int timeDFS = 0;
+vector<pair<int, int>> bridges;
+set<int> joints;
+//tìm cầu
+void dfs_bridges(int u, int father)
+{
+    num[u] = low[u] = ++timeDFS;
+    for (int v : adj[u])
+    {
+        if (v == father)
+            continue;
+        else if (num[v] > 0)
+            low[u] = min(low[u], num[v]);
+        else
+        {
+            dfs(v, u);
+            low[u] = min(low[u], low[v]);
+            if (num[v] == low[v])
+                bridges.emplace_back(u, v);
+        }
+    }
+}
+//tìm khớp.
+void dfs(int u, int father)
+{
+    num[u] = low[u] = ++timeDFS;
+    int children = 0;
+    for (int v : adj[u])
+    {
+        if (v == father)
+            continue;
+        else if (num[v] > 0)
+            low[u] = min(low[u], num[v]);
+        else
+        {
+            dfs(v, u);
+            children++;
+            low[u] = min(low[u], low[v]);
+            if (u == 1 && children >= 2)
+                joints.insert(u);
+            if (u != 1 && low[v] >= num[u])
+                joints.insert(u);
+        }
+    }
+}

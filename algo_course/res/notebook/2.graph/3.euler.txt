@@ -1,0 +1,12 @@
+//tất cả đỉnh trong đồ thị là bậc chẵn thì tồn tại đường đi euler
+set<int> adj[100005];
+void dfs_euler(int u)
+{
+  for(auto v:adj[u])
+  {
+    adj[v].erase(u);
+    adj[u].erase(v);
+    dfs(v);
+  }
+  ans.push_back(u);
+}
