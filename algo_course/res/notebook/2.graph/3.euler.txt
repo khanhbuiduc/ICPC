@@ -1,12 +1,14 @@
-//tất cả đỉnh trong đồ thị là bậc chẵn thì tồn tại đường đi euler
+// All vertices in graph have even degree for Euler cycle
 set<int> adj[100005];
+vector<int> ans;
+
 void dfs_euler(int u)
 {
   for(auto v:adj[u])
   {
     adj[v].erase(u);
     adj[u].erase(v);
-    dfs(v);
+    dfs_euler(v);
   }
   ans.push_back(u);
 }

@@ -1,5 +1,8 @@
+typedef pair<int, int> pii;
 priority_queue<pii, vector<pii>, greater<pii>> pq;
-dijkstra()
+int dist[100005];
+
+void dijkstra(int start)
 {
     pq.emplace(0, start);
     while (!pq.empty())

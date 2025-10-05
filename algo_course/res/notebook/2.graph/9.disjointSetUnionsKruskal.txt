@@ -1,7 +1,8 @@
-//dsu
-int findRoot(u) {
+// Disjoint Set Union
+int findRoot(int u) {
     return (root[u] = (root[u] == u) ? u : findRoot(root[u]));
 }
+
 void unionSet(int u, int v)
 {
     int rootu = findRoot(u);
@@ -12,5 +13,3 @@ void unionSet(int u, int v)
         root[rootu] = rootv;
     }
 }
-
-//

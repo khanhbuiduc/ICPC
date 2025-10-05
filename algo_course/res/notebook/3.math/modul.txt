@@ -1,23 +1,30 @@
-// Phép cộng
-(a + b) % M = (a % M + b % M) % M
+// Addition
+ll addMod(ll a, ll b) {
+    return (a % M + b % M) % M;
+}
 
-// Phép trừ
-(a - b) % M = (a % M - b % M + M) % M
+// Subtraction
+ll subMod(ll a, ll b) {
+    return (a % M - b % M + M) % M;
+}
 
-// Phép nhân
-(a × b) % M = ([a % M] × [b % M]) % M
+// Multiplication
+ll mulMod(ll a, ll b) {
+    return (a % M) * (b % M) % M;
+}
 
-// Phép chia (với M là số nguyên tố)
-1/a % M = a^(M-2) % M
+// Division (when M is prime)
+ll Division(ll a, ll b) {
+    return mulMod(a, powMod(b, M-2));
+}
 
-// Phép mũ: sử dụng hàm powMod
-
+// Exponentiation: use powMod function
 ll powMod(ll a, ll b) {
     ll res = 1;
     while (b > 0) {
         if (b & 1)
-            (res *= a) %= MOD;
-        (a *= a) %= MOD;
+            (res *= a) %= M;
+        (a *= a) %= M;
         b >>= 1;
     }
     return res;

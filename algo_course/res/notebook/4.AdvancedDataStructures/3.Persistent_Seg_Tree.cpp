@@ -2,10 +2,10 @@
 CSES Problem Set
 Range Queries and Copies:
 
-cho a[1..n].
-    query 1: thay đổi giá trị a[i] trong arr thứ k thành x.
-    query 2: sum(a[l..r]) in arr k
-    query 3: thêm version mới của arr thứ k.
+Given a[1..n].
+    query 1: change value a[i] in array k to x.
+    query 2: sum(a[l..r]) in array k
+    query 3: add new version of array k.
 */
 #include <bits/stdc++.h>
 #define FOR(i, a, b) for (int i = (a), _b = (b); i <= _b; i++)
@@ -13,7 +13,8 @@ cho a[1..n].
 using namespace std;
 typedef long long ll;
 int n, numQueries;
-int a[200'005];
+int a[200005];
+
 struct Node
 {
     Node *left;
@@ -22,6 +23,7 @@ struct Node
     Node() : sum(0), left(nullptr), right(nullptr) {};
 };
 vector<Node *> version;
+
 void BuildTree(Node *&root, int L, int R)
 {
     root = new Node();
@@ -35,6 +37,7 @@ void BuildTree(Node *&root, int L, int R)
     BuildTree(root->right, mid + 1, R);
     root->sum = root->left->sum + root->right->sum;
 }
+
 void update(Node *&root, int L, int R, int pos, int val)
 {
     root = new Node(*root);
@@ -52,6 +55,7 @@ void update(Node *&root, int L, int R, int pos, int val)
         update(root->right, mid + 1, R, pos, val);
     root->sum = root->left->sum + root->right->sum;
 }
+
 ll get(Node *&root, int L, int R, int l, int r)
 {
     if (R < l || r < L)
@@ -63,16 +67,18 @@ ll get(Node *&root, int L, int R, int l, int r)
     ll sum_R = get(root->right, mid + 1, R, l, r);
     return sum_L + sum_R;
 }
+
 void initial()
 {
     cin >> n >> numQueries;
     FOR(i, 1, n)
     cin >> a[i];
-    // tạo seg tree cho ver0.
+    // Create seg tree for ver0
     Node *ver0 = new Node();
     version.push_back(ver0);
     BuildTree(version[0], 1, n);
 }
+
 int main()
 {
     initial();

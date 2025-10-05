@@ -9,10 +9,11 @@ ll powMod(ll a, ll b) {
     return res;
 }
 
-//Chia kẹo Euler
-//Có N viên kẹo và có M đứa nhỏ. Hỏi có bao nhiêu cách để chia toàn bộ N viên cho M đứa nhỏ sao cho mỗi đứa phải có kẹo?
-//Số cách chia:  C(N-1, M-1)
-//tính C(n,k) nhanh
+// Stars and Bars Problem (Euler's Distribution)
+// N candies and M children. How many ways to distribute all N candies 
+// to M children such that each child gets at least one candy?
+// Number of ways: C(N-1, M-1)
+// Fast computation of C(n,k)
 
 typedef long long ll;
 const int MAXN = 2000005;

@@ -1,3 +1,9 @@
+// Strongly Connected Components using Tarjan's algorithm
+int low[100005], num[100005], cntDfs = 0, ans = 0;
+bool is_deleted[100005];
+int root[100005];
+stack<int> store;
+
 void dfs(int u)
 {
     low[u] = num[u] = ++cntDfs;
@@ -16,13 +22,13 @@ void dfs(int u)
     }
     if (low[u] == num[u])
     {
-        ans++;//đếm số tplt mạnh
+        ans++; // Count number of SCCs
         while (true)
         {
             int v = store.top();
             store.pop();
             is_deleted[v] = true;
-            root[v] = u;//nếu cần lưu trữ root;
+            root[v] = u; // Store root if needed
             if (v == u)
                 break;
         }

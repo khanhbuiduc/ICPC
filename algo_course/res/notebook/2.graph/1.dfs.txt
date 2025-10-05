@@ -1,9 +1,9 @@
-void dfs(u)
+void dfs(int u)
 {
     visited[u] = true;
     for (auto v: adj[u])
     {
-        if(visited[v])
+        if(!visited[v])
             dfs(v);
     }
 }

@@ -1,10 +1,10 @@
 bool visited[100005];
-vector<int> adj[200005];
+vector<int> adj[100005];
 int num[100005], low[100005];
 int timeDFS = 0;
 vector<pair<int, int>> bridges;
 set<int> joints;
-//tìm cầu
+
 void dfs_bridges(int u, int father)
 {
     num[u] = low[u] = ++timeDFS;
@@ -16,15 +16,16 @@ void dfs_bridges(int u, int father)
             low[u] = min(low[u], num[v]);
         else
         {
-            dfs(v, u);
+            dfs_bridges(v, u);
             low[u] = min(low[u], low[v]);
-            if (num[v] == low[v])
+            if (low[v] > num[u])
                 bridges.emplace_back(u, v);
         }
     }
 }
-//tìm khớp.
-void dfs(int u, int father)
+
+// Find articulation points
+void dfs_joints(int u, int father)
 {
     num[u] = low[u] = ++timeDFS;
     int children = 0;
@@ -36,12 +37,12 @@ void dfs(int u, int father)
             low[u] = min(low[u], num[v]);
         else
         {
-            dfs(v, u);
+            dfs_joints(v, u);
             children++;
             low[u] = min(low[u], low[v]);
-            if (u == 1 && children >= 2)
+            if (father == -1 && children >= 2)
                 joints.insert(u);
-            if (u != 1 && low[v] >= num[u])
+            if (father != -1 && low[v] >= num[u])
                 joints.insert(u);
         }
     }

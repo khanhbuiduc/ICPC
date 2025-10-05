@@ -1,11 +1,14 @@
-vector<int> store;//store bị ngược
+vector<int> store; // store result in reverse order
+
 void dfsTopo(int u)
 {
     visited[u] = true;
     for (int v : adj[u])
     {
-        if (visited[v] == false)
+        if (!visited[v])
             dfsTopo(v);
     }
-    store.push(u);
+    store.push_back(u);
 }
+
+

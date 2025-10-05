@@ -8,7 +8,8 @@ void bfs()
     q.push(s0);
     while (!q.empty())
     {
-        int u = q.front(),q.pop();
+        int u = q.front();
+        q.pop();
         for (auto v:adj[u])
         {
             if (dist[v] == -1)

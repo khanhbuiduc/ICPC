@@ -1,5 +1,6 @@
-int trace[100'005],state[100'005];
+int trace[100005], state[100005];
 bool haveCircle = false;
+
 void dfs_dag(int u)
 {
     state[u] = 1;
@@ -8,7 +9,7 @@ void dfs_dag(int u)
         if (state[v] == 0)
         {
             trace[v] = u;
-            dfs(v);
+            dfs_dag(v);
         }
         else if (state[v] == 1)
         {
@@ -19,6 +20,7 @@ void dfs_dag(int u)
     }
     state[u] = 2;
 }
+
 void print(int start, int end)
 {
     vector<int> ans;
@@ -27,7 +29,7 @@ void print(int start, int end)
         ans.push_back(cur);
     ans.push_back(end);
     cout << ans.size() << endl;
-    reverse(ALL(ans));
+    reverse(ans.begin(), ans.end());
     for (auto i : ans)
         cout << i << ' ';
 }

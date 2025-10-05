@@ -8,6 +8,9 @@
 \usepackage{pdflscape}
 \usepackage{multicol}
 \usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[vietnamese]{babel}
 
 \renewcommand*{\ttdefault}{pcr}
 \renewcommand\cftsecfont{\fontsize{8}{9}\bfseries}
@@ -84,228 +87,54 @@
 
 \section{Graph}
 \subsection{DFS}
-\begin{lstlisting}[style=cpp]
-void dfs(int u)
-{
-    visited[u] = true;
-    for (auto v: adj[u])
-    {
-        if(!visited[v])
-            dfs(v);
-    }
-}
-\end{lstlisting}
+\lstinputlisting[style=cpp]{c:/Users/HP PC/ICPC/algo_course/res/notebook/2.graph/1.dfs.txt}
 
 \subsection{DAG (Directed Acyclic Graph)}
-\begin{lstlisting}[style=cpp]
-int trace[100005], state[100005];
-bool haveCircle = false;
-
-void dfs_dag(int u)
-{
-    state[u] = 1;
-    for (int v : adj[u])
-    {
-        if (state[v] == 0)
-        {
-            trace[v] = u;
-            dfs_dag(v);
-        }
-        else if (state[v] == 1)
-        {
-            print(u, v);
-            haveCircle = true;
-            exit(0);
-        }
-    }
-    state[u] = 2;
-}
-
-void print(int start, int end)
-{
-    vector<int> ans;
-    ans.push_back(end);
-    for (int cur = start; cur != end; cur = trace[cur])
-        ans.push_back(cur);
-    ans.push_back(end);
-    cout << ans.size() << endl;
-    reverse(ans.begin(), ans.end());
-    for (auto i : ans)
-        cout << i << ' ';
-}
-\end{lstlisting}
+\lstinputlisting[style=cpp]{c:/Users/HP PC/ICPC/algo_course/res/notebook/2.graph/2.dag.txt}
 
 \subsection{Euler Path}
-\begin{lstlisting}[style=cpp]
-// All vertices in graph have even degree for Euler cycle
-set<int> adj[100005];
-vector<int> ans;
+\lstinputlisting[style=cpp]{c:/Users/HP PC/ICPC/algo_course/res/notebook/2.graph/3.euler.txt}
 
-void dfs_euler(int u)
-{
-    for(auto v : adj[u])
-    {
-        adj[v].erase(u);
-        adj[u].erase(v);
-        dfs_euler(v);
-    }
-    ans.push_back(u);
-}
-\end{lstlisting}
+\subsection{Topological Sort}
+\lstinputlisting[style=cpp]{c:/Users/HP PC/ICPC/algo_course/res/notebook/2.graph/4.topo.txt}
+
+\subsection{Joints and Bridges}
+\lstinputlisting[style=cpp]{c:/Users/HP PC/ICPC/algo_course/res/notebook/2.graph/5.jointAndBridges.txt}
+
+\subsection{Strongly Connected Components (SCC)}
+\lstinputlisting[style=cpp]{c:/Users/HP PC/ICPC/algo_course/res/notebook/2.graph/6.SCC.txt}
+
+\subsection{BFS}
+\lstinputlisting[style=cpp]{c:/Users/HP PC/ICPC/algo_course/res/notebook/2.graph/7.BFS.txt}
 
 \subsection{Dijkstra}
-\begin{lstlisting}[style=cpp]
-vector<int> dijkstra(vector<vector<pair<int,int>>>& adj, int start) {
-    int n = adj.size();
-    vector<int> dist(n, INF);
-    dist[start] = 0;
-    priority_queue<pair<int,int>, 
-                  vector<pair<int,int>>,
-                  greater<pair<int,int>>> pq;
-    pq.push({0, start});
-    
-    while (!pq.empty()) {
-        auto [d, u] = pq.top(); pq.pop();
-        if (d > dist[u]) continue;
-        
-        for (auto [v, w] : adj[u]) {
-            if (dist[u] + w < dist[v]) {
-                dist[v] = dist[u] + w;
-                pq.push({dist[v], v});
-            }
-        }
-    }
-    return dist;
-}
-\end{lstlisting}
+\lstinputlisting[style=cpp]{c:/Users/HP PC/ICPC/algo_course/res/notebook/2.graph/8.dijkstra.txt}
+
+\subsection{Disjoint Set Union and Kruskal}
+\lstinputlisting[style=cpp]{c:/Users/HP PC/ICPC/algo_course/res/notebook/2.graph/9.disjointSetUnionsKruskal.txt}
 
 \section{Math}
-\subsection{Number Theory}
-\begin{lstlisting}[style=cpp]
-// GCD and LCM
-int gcd(int a, int b) {
-    return b ? gcd(b, a % b) : a;
-}
+\subsection{Modular Arithmetic}
+\lstinputlisting[style=cpp]{c:/Users/HP PC/ICPC/algo_course/res/notebook/3.math/modul.txt}
 
-int lcm(int a, int b) {
-    return a / gcd(a, b) * b;
-}
-
-// Modular inverse
-int mod_inv(int a, int m) {
-    int g = gcd(a, m);
-    if (g != 1) return -1;
-    return mod_pow(a, m - 2, m);
-}
-
-// Fast power
-int mod_pow(int base, int exp, int mod) {
-    int result = 1;
-    base %= mod;
-    while (exp > 0) {
-        if (exp & 1) result = (1LL * result * base) % mod;
-        base = (1LL * base * base) % mod;
-        exp >>= 1;
-    }
-    return result;
-}
-\end{lstlisting}
-
-\subsection{Convex Hull}
-\begin{lstlisting}[style=cpp]
-// Graham scan algorithm
-struct Point {
-    int x, y;
-    bool operator<(Point p) const {
-        return x < p.x || (x == p.x && y < p.y);
-    }
-};
-
-// Cross product
-int cross(const Point& O, const Point& A, const Point& B) {
-    return (A.x - O.x) * (B.y - O.y) - (A.y - O.y) * (B.x - O.x);
-}
-
-vector<Point> convex_hull(vector<Point>& points) {
-    int n = points.size(), k = 0;
-    if (n <= 3) return points;
-    vector<Point> hull(2*n);
-    
-    sort(points.begin(), points.end());
-    
-    // Lower hull
-    for (int i = 0; i < n; i++) {
-        while (k >= 2 && cross(hull[k-2], hull[k-1], points[i]) <= 0) k--;
-        hull[k++] = points[i];
-    }
-    
-    // Upper hull
-    int t = k + 1;
-    for (int i = n - 2; i >= 0; i--) {
-        while (k >= t && cross(hull[k-2], hull[k-1], points[i]) <= 0) k--;
-        hull[k++] = points[i];
-    }
-    
-    hull.resize(k-1); // Last point is same as first
-    return hull;
-}
-\end{lstlisting}
+\subsection{Combinatorics}
+\lstinputlisting[style=cpp]{c:/Users/HP PC/ICPC/algo_course/res/notebook/3.math/combinatoric.txt}
 
 \section{Advanced Data Structures}
-\subsection{Disjoint Set Union (DSU)}
-\begin{lstlisting}[style=cpp]
-struct DSU {
-    vector<int> p, sz;
-    DSU(int n): p(n), sz(n,1) {
-        iota(p.begin(), p.end(), 0);
-    }
-    int find(int x) {
-        return (p[x]==x ? x : p[x]=find(p[x]));
-    }
-    bool unite(int a,int b){
-        a=find(a); b=find(b);
-        if(a==b) return false;
-        if(sz[a]<sz[b]) swap(a,b);
-        p[b]=a; sz[a]+=sz[b];
-        return true;
-    }
-};
-\end{lstlisting}
-
 \subsection{Segment Tree}
-\begin{lstlisting}[style=cpp]
-struct SegTree {
-    vector<int> tree;
-    int n;
-    
-    SegTree(int n) : n(n) {
-        tree.resize(4*n);
-    }
-    
-    void update(int node, int start, int end, 
-                int idx, int val) {
-        if (start == end) {
-            tree[node] = val;
-        } else {
-            int mid = (start + end) / 2;
-            if (idx <= mid)
-                update(2*node, start, mid, idx, val);
-            else
-                update(2*node+1, mid+1, end, idx, val);
-            tree[node] = tree[2*node] + tree[2*node+1];
-        }
-    }
-    
-    int query(int node, int start, int end, 
-              int l, int r) {
-        if (r < start || end < l) return 0;
-        if (l <= start && end <= r) return tree[node];
-        int mid = (start + end) / 2;
-        return query(2*node, start, mid, l, r) + 
-               query(2*node+1, mid+1, end, l, r);
-    }
-};
-\end{lstlisting}
+\lstinputlisting[style=cpp]{c:/Users/HP PC/ICPC/algo_course/res/notebook/4.AdvancedDataStructures/1_Segment_Tree.txt}
+
+\subsection{Lazy Propagation}
+\lstinputlisting[style=cpp]{c:/Users/HP PC/ICPC/algo_course/res/notebook/4.AdvancedDataStructures/2_Lazy_Update.txt}
+
+\subsection{Persistent Segment Tree}
+\lstinputlisting[style=cpp]{c:/Users/HP PC/ICPC/algo_course/res/notebook/4.AdvancedDataStructures/3.Persistent_Seg_Tree.cpp}
+
+\subsection{Fenwick Tree}
+\lstinputlisting[style=cpp]{c:/Users/HP PC/ICPC/algo_course/res/notebook/4.AdvancedDataStructures/4_Fenwick_Tree.cpp}
+
+\subsection{Trie}
+\lstinputlisting[style=cpp]{c:/Users/HP PC/ICPC/algo_course/res/notebook/4.AdvancedDataStructures/5_Trie.cpp}
 
 \end{multicols}
 \end{landscape}
