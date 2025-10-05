@@ -78,28 +78,23 @@ int main()
     initial();
     while (numQueries--)
     {
-        int type, k, val, pos, b, L, R;
+        int type, k, val, pos, b, l, r;
         cin >> type >> k;
+        k--;
         if (type == 1)
         {
             cin >> pos >> val;
-            update(version[k - 1], 1, n, pos, val);
+            update(version[k], 1, n, pos, val);
         }
         else if (type == 2)
         {
-            cin >> L >> R;
-            cout << get(version[k - 1], 1, n, L, R) << endl;
+            cin >> l >> r;
+            cout << get(version[k], 1, n, l, r) << endl;
         }
         else if (type == 3)
         {
-            Node *newVer = new Node(*version[k - 1]);
+            Node *newVer = new Node(*version[k]);
             version.push_back(newVer);
         }
     }
 }
-/*
-cho a[1..n].
-query 1: set a[i] trong arr thứ k thành x.
-query 2: sum(a[l..r])
-query 3: thêm version mới của arr thứ k.
-*/

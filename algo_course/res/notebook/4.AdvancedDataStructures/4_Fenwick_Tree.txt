@@ -1,6 +1,0 @@
-/*
-khi bài toán:
-    query 1: tăng f[x] lên k đơn vị.
-    query 2: tính sum(f[1->i]);
-*/
-

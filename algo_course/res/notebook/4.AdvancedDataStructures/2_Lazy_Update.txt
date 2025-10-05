@@ -9,7 +9,7 @@ struct Node
     int maxValue;
 };
 Node tree[maxP];
-void lazyUpdate(int index, int l, int r)
+void pushDown(int index, int l, int r)
 {
     if (tree[index].lazyValue > 0 && l < r)
     {
@@ -22,7 +22,7 @@ void lazyUpdate(int index, int l, int r)
 }
 void update(int index, int L, int R, int x, int y, int k)
 {
-    lazyUpdate(index, L, R);
+    pushDown(index, L, R);
 
     if (x > R || L > y)
     {
@@ -33,7 +33,7 @@ void update(int index, int L, int R, int x, int y, int k)
     {
         tree[index].lazyValue += k;
         tree[index].maxValue += k;
-        lazyUpdate(index, L, R);
+        pushDown(index, L, R);
         return;
     }
 
@@ -44,7 +44,7 @@ void update(int index, int L, int R, int x, int y, int k)
 }
 int get(int index, int L, int R, int x, int y)
 {
-    lazyUpdate(index, L, R);
+    pushDown(index, L, R);
 
     if (x > R || L > y)
     {
@@ -63,11 +63,6 @@ int get(int index, int L, int R, int x, int y)
 }
 int main()
 {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-
-    // freopen("input.txt", "r", stdin);
-    // freopen("output.txt", "w", stdout);
     int n, m, x, y, k;
     cin >> n >> m;
     while (m--)

@@ -1,3 +1,5 @@
+//cho a[1..n] cho query(l,r) tim min (a[l..r]);
+
 #include <iostream>
 #include <math.h>
 using namespace std;
