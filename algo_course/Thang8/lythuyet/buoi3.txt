@@ -1,4 +1,4 @@
-SQUARE ROOT DECOMPOSITION
+SQUARE ROOT DECOMPOSITION: <200k mới chia căn đc
 
 B. The BOSS Can Count Pairs
 
@@ -50,34 +50,140 @@ THUẬT TOÁN:
 DQUERY
 
 Với mỗi truy vấn (i, j), đếm số phần tử phân biệt trong đoạn a[i], a[i+1], ..., a[j]
-
+các query: 
+{1 9},{8 15},{10 14},{1 8},{2 7},{3 3},{10 11},{17 17},{16 17},{5 8},{9 16}
 -----
 nhan xet:
 Sử dụng Mo's Algorithm (Square Root Decomposition):
 
-1. Chia các truy vấn thành √n nhóm theo giá trị i/√n
-2. Sắp xếp truy vấn: trong cùng nhóm, sắp xếp theo j
-3. Duy trì cửa sổ trượt [L, R] và đếm phần tử phân biệt:
-   - Dùng mảng cnt[] để đếm tần suất
-   - Dùng biến distinct để đếm số phần tử phân biệt
-4. Mở rộng/thu hẹp cửa sổ để xử lý từng truy vấn
+1. chia a thành căn(n) dãy. mỗi dãy căn n phần tử:
+   n = 17 => mỗi segment: 4 pt:
+   a = [2,9,9,1   6,4,4,3   4,4,2,1   9,2,6,5     10]
+2. chia các query: thành block theo l, sort theo r.
+   block 1: {3 3},{2 7},{1 8},{1 9}
+   block 2: {5 8},{8 15}
+   block 3: {10 11},{10 14}, {9 16}
+   block 4: {16 17}
+   block 5: {17 17}
+3. gọi cnt[x] là số pt  = x
+   3 3 => cnt[9] = 1 (dif=1)
+   (truy vấn thêm id để trả về đúng thứ tự kết quả)
+   2 7 => cnt[9] = 2, cnt[1]=1,cnt[6]=1,cnt[4]=2 //(dif = 4)
+   1 8 => cnt[9] = 2, cnt[1]=1,cnt[6]=1,cnt[4]=2,cnt[3]=1, cnt[2]=1,  (dif = 6)
+   ...
+---------------------------
+xét q1:
+   L=q[1].l
+   R=q[1].r
+   diff = 0;
+   for i: L->R
+      cnt[a[i]]++;
+      nếu cnt[a[i]]==1
+         diff++;
+   q[1].ans = dif.
+----------------------------
+duyệt i:2->Q 
+   l = q[i].l
+   r = q[i].r
+   while l < L // tăng cnt l->L-1 xuống 1
+      L--
+      cnt[a[L]]++
+      nếu cnt[a[L]] == 1 thì dif++;
+   while L < l //giảm cnt của a[L..l-1] xuống 1
+      cnt[a[L]]--
+      nếu cnt[a[L]] == 0 thì dif--;
+      L++;
+   while R < r //tăng cnt của a[R+1..r] lên 1
+      R++;
+      cnt[a[R]]++
+      nếu cnt[a[L]] == 1 thì dif++;
+   while r < R //giảm cnt của a[r+1..R]
+      cnt[a[R]]--
+      nếu cnt[a[L]] == 0 thì dif--;
+      R--
+-------------------------------
+độ phức tạp:Q truy vấn. mỗi truy vấn tăng giảm L,R
 
-Ví dụ cụ thể:
-Mảng: a = [1, 1, 2, 1, 3] (n = 5)
-Truy vấn: (1,5), (2,4), (3,5), (1,3), (2,5)
+đặt block = 330
+bool compare(query a, query b){
+   nếu a.l/block == b.l/blobk
+      return a.r<b.r;
+   return a.l < b.l
+}
 
-Bước 1: Chia truy vấn thành √n nhóm
-   √5 ≈ 2.24 → chọn block_size = 2
-   Nhóm 0: i/2 = 0 → truy vấn có i ∈ [1,2]
-   Nhóm 1: i/2 = 1 → truy vấn có i ∈ [3,4]
-   Bước 2: Sắp xếp truy vấn
-Bước 2: Sắp xếp truy vấn
-   Truy vấn gốc: (1,5), (2,4), (3,5), (1,3), (2,5)
 
-   Nhóm 0 (i ∈ [1,2]): (1,5), (2,4), (1,3), (2,5)
-   - Sắp xếp theo j: (1,3),(2,4), (1,5), , (2,5)
+-------------------------------
 
-   Nhóm 1 (i ∈ [3,4]): (3,5)
-   - Đã sắp xếp: (3,5)
+AC6: 2021
 
-   Thứ tự xử lý: (1,3),(2,4), (1,5), (2,5), (3,5)
+ax + by = n; a,b,n là số dương. xét các nghiệm không âm x,y.
+in ra min(x+y)
+
+a,b,n < 10^9
+
+------
+ngây thơ:
+   g = gcd(a,b) => n%g phải bằng 0;
+   a/=g; b/=g; n/=g
+   ax + by = n
+   giả sử a<=b; (*)
+   ta có y, x = (n-by)/a
+   => cần tính min(y + (n-by)/a) 
+   ta có: nếu y1 < y2 (**)
+      y1 + (n-by1)/a so sánh y2 + (n-by2)/a
+      => (a-b)*y1 so sánh (a-b)*y2;
+      mà (*) và (**) => x1 + y1 > x2 + y2
+      => chọn y lớn nhất có thể
+         1. (n-by)%a == 0
+         2. n-by>=0 => y <= n/b
+-------
+duyệt:
+   for y: n/b -> 0;
+      nếu (n-b*y) % a == 0
+         x=(n-by)/a
+         in ra x + y;
+         dừng thuật toán.
+-------
+
+tại sao lại access được trong khi a,b,n lên tới 1 tỉ;
+   xét a,b,n khi đã giảm g;
+   - TH1: b>33000 => n/b < 33000: y duyệt 33000 bước
+   - TH2: a<33000
+      định lý Dirichlet: n con thỏ, n - 1 chuồng 
+      => (n-by)%a : nếu xét 33000 bội b liên tục thì chắc chẵn sẽ có số chia hết cho a.
+
+----------------------------------------
+
+Hole
+
+có n lỗ. lỗ i có streng[i] ví dụ như hình.
+
+C:\Users\HP PC\ICPC\algo_course\Thang8\lythuyet\res\buoi3bai4.png 
+
+quả bóng ở ô thứ i có sức mạnh là j thì sẽ nhảy đến ô i + j và cứ như vậy.
+   có 2 query:
+      0 a b: thay thế streng[a] = b
+      1 a: in ra vị trí cuối cùng , số hold đi qua
+---
+chia thành các khối
+2 1 4 1 | 1 4 2 1 | 2 1 3 1 | 1 2 2 1 
+
+   - mỗi block:
+      chứa <330 số.
+      next[u] = x;//vị trí cuối trong block đến đc từ u.
+      step[u] = y;//số bước đi đc trong step khi ở u.
+
+-------------------------
+update block 
+      2 1 4 1 | 1 4 2 1 | 1  1  1  1 | 1  2  2  1 
+last  3 3 3 4 | 6 6 7 8 | 12 12 12 12| 16 16 15 16
+step  1 1 0 0 | 1 0 0 0 | 3  2  1  0 | 2  1  0  0
+
+update: 0 6 1:
+nếu 6 + 1 trong block
+   last[6] = last[6 + 1]
+   step[6] = step[6+1] + 1
+-----
+xét những số trc step[6]:
+   last[5] = last[5 + val[5]]
+   step[5] = step[5 + val[5]] + 1;
