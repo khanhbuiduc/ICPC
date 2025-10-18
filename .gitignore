@@ -41,3 +41,6 @@
 *fdb_latexmk
 *.fls
 *.synctex.gz
+#executables
+*.input
+*.output
