@@ -120,19 +120,15 @@ Tính Cross Inversions(more):
 --------------------------------------------------------
 max to the right to min
 
-y tuong chinh: MergeSort(L,R) = left.cnt + right.cnt + more:
+cho một hoán vị p[1..n]
+đếm số cặp (i,j) sao cho vị trí số lớn nhất > vị trí số nhỏ nhất.
 
-cho hoan vi 1..n
-dem day con lien tiep sao cho pos_max(a[l..r]) > pos_min(a[l..r])
-y tuong:
-    node:
-        cnt: so luong day con lien tiep thoa man
-        sorted[l..r]: hoan vi duoc sort
-    base case: doan co 1 phan tu -> cnt = 0, sorted = {a[i]}
-    tinh cross pairs(more):
-        voi moi phan tu x trong rightNode.sorted:
-            dem so phan tu trong leftNode.sorted nho hon x
-            su dung lower_bound de tim vi tri dau tien >= x
-            so day con lien tiep thoa man = leftNode.sorted.size() - (lower_bound_position)
-------------------
+solve(l,r): đếm số cặp (i,j) thỏa mãn 1<=i<=j<=r   
+pos(min) < pos(max)
 
+solve(l,r) = solve(l,mid) + solve(mid +1,r) + more;
+
+th1: max min bên trái:
+    sufmax[i], sufmin[i]
+
+lưu trữ: pos[[p[i]]] = i

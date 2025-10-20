@@ -6,53 +6,37 @@ typedef long long ll;
 #define ALL(v) (v).begin(), (v).end()
 int a[1'000'005];
 int n;
-
-ll merge(int L, int R)
+typedef tuple<int, int, int, int> tiii; // cnt,indexMin,indexMax,sz;
+tiii merge(tiii L, tiii R)
 {
-    int mid = (L + R) >> 1;
-    vector<int> sufMinL;
-    // preMaxR
-    FOR(i, mid + 1, R)
-    {
-        preMaxR.push_back(a[i]);
-    }
-    FOR(i, mid + 2, R)
-    {
-        preMaxR[i] = max(preMaxR[i - 1], preMaxR[i]);
-    }
-    // more
-    ll more = 0;
-    for (auto ri : preMaxR)
-    {
-        auto lower = lower_bound(ALL(sufMinL), ri);
-        if (lower == sufMinL.begin())
-            continue;
-        lower--;
-        more += (lower - sufMinL.begin() + 1);
-    }
-    return more;
+    int cnt = 0;
+    auto [cnt_L, posMin_L, posMax_L, sz_L] = L;
+    auto [cnt_R, posMin_R, posMax_R, sz_R] = R;
+    int posMin = min(posMin_L, posMin_R), posMax = max(posMax_L, posMax_R);
+    if (posMin == posMin_L && posMax == posMax_L)
+        cnt = cnt_L + cnt_R + cnt_L * (sz_R);
+    if (posMin == posMin_R && posMax == posMax_R)
+        cnt = cnt_L + cnt_R + cnt_R * (sz_L);
+    // nếu min 1 bên max 1 bên.
+    return {cnt, posMin, posMax, sz_L + sz_R};
 }
 
-ll solve(int L, int R)
+tiii solve(int L, int R)
 {
     if (L == R)
-        return 0;
+        return {0, L, L, 1};
     int mid = (L + R) / 2;
-    ll left = solve(L, mid);
-    ll right = solve(mid + 1, R);
-    return left + right + merge(L, R);
+    tiii left = solve(L, mid);
+    tiii right = solve(mid + 1, R);
+    return merge(left, right);
 }
 
 int main()
 {
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-    cin >> n;
-    FOR(i, 1, n)
-    {
-        cin >> a[i];
-    }
-    cout << solve(1, n);
+    priority_queue<int> maxheap1;
+    priority_queue<int> maxheap2;
+    swap(maxheap1, maxheap2);
+    maxheap1.;
 }
 
 /*
@@ -66,23 +50,29 @@ int main()
     5 3 6 1 4 2
     -> min trái, max phải;
     => cặp đc thêm vào thỏa mãn: min trái phải là min của 2 bên, max phải là max 2 bên
-    sufMin[l..r]: sufmin[i] = min a[i..r];
-    preMax[l..r]: preMax[i] = max a[1..i];
+th1: max min bên trái
+    sufMinL,sufMaxL
+    preMinR,preMaxR
+    ---
+    (li,ri) thỏa mãn:
+        sufMaxL[li] > preMaxR[ri]
+        sufMinL[li] < preMinR[ri]
+        pos[sufMinL[li]] < pos[sufMaxL[ri]]
+    duyệt li: mid->l
+    nếu xác định đc ri max có thể thỏa mãn
+        sufMaxL[li] > preMaxR[ri]
+        sufMinL[li] < preMinR[ri]
+    thì mid+1->ri cũng thỏa mãn
+        nếu  li giảm thì ri cũng giảm -> dùng 2 poiter
+        li thỏa mãn: pos[sufMinL[li]] < pos[sufMaxL[ri]]
+        more += j - (mid +1) +1 = j - mid;
+    tình huống 2: giống tình huống 1:
+    tình huống 3: min bên trái, max bên phải
+        sufMaxL[li] < preMaxR[ri]
+        sufMinL[li] < preMinR[ri]
+    FOR j: mid + 1 ->  r
+        tìm vị trí x xa nhất thỏa mãn:
+        tìm vị trí y gần nhất thỏa mãn:
+        cnt+= (x-y+1);
 
-    left = 5 3 6 và Right = 1 4 2
-    left:
-        cnt = 2
-        sufmin = 3 3 6
-        premax = 5 5 6
-    right
-        cnt = 2
-        sufmin = 1 2 2
-        premax = 1 4 4
-    với mỗi ri:right:
-        lower = lower_bound(sufmin, ri)
-        lower = sufmin.begin(); continue;
-        lower--;
-        more += lower - sufmin.begin()
-
-    lỗi 1:256Mb <(1 triệu int = 4tr*8 = 32 triệu)
-*/
+    */
