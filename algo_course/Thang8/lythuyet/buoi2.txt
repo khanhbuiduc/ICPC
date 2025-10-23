@@ -34,12 +34,26 @@ tu phan tich:
     0&0 >= 0^0 true 
     0&1 >= 0^1
 => neu bit dau tien cua a&b dong thoi la 1 thi thoa man.
+----------------------
+trong đáp án:
 
-xet a[i] voi i: 1->n
-xet a[j] voi j: 1->i 
+check[i] = true nếu số thứ i đã đc sử dụng, ngược lại là false
 
-----
-cach giai trong dap an van chua hieu. hien tai cu la cach cua minh
+duyệt bit: 30->0
+    //đếm xem: có bao nhiêu bít i = 1 và chưa đc sử dụng
+    cnt = 0;
+    nếu !check[i] và a[i]&(1<<bit) > 0
+        cnt++;
+    ans+= cnt*(cnt-1)/2
+------------------------
+khánh:
+cnt[i]: đếm xem có bao nhiêu số có bít lớn nhất bằng i;  
+duyệt i: 1->n;
+    for bit:30->1:
+        nếu a[i]&&(1<<bit) thì cnt++;
+FOR i:0->30
+    ans += C(cnt[i],2)
+
 ---------------------------------------------------
 Maximum XOR Subarray
 
@@ -87,7 +101,7 @@ neu: xor = 0 => yes.
 neu: xor = y1 => ton tai subarr_xor = y1 => yes 
 
 -------------------------------------------------------
-ake A Guess
+take A Guess
 Đây là bài interactive: Cần tìm phần tử thứ k nhỏ nhất trong mảng ẩn bằng cách hỏi tối đa 2⋅n câu hỏi.
 
 Input:

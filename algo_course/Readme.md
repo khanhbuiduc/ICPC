@@ -1,0 +1,115 @@
+# Lộ Trình Học Competitive Programming
+
+## Tháng 1: Cấu trúc dữ liệu cơ bản - Thư viện STL
+
+- **Buổi 1:** Giới thiệu về thuật toán, Độ phức tạp thuật toán, Cấu trúc dữ liệu vector, Hàm sắp xếp
+- **Buổi 2:** Stack
+- **Buổi 3:** Queue / Deque
+- **Buổi 4:** Heap
+- **Buổi 5:** Binary Search Tree (Set / Multiset)
+- **Buổi 6:** Binary Search Tree (Map / Multimap)
+- **Buổi 7:** Bitset
+- **Buổi 8:** Làm kỳ thi
+
+## Tháng 2: Một số kỹ thuật cơ bản
+
+- **Buổi 1:** Two pointers
+- **Buổi 2:** Binary Search
+- **Buổi 3:** Binary Search on the answer
+- **Buổi 4:** Binary Search on float number / Ternary Search
+- **Buổi 5:** Greedy
+- **Buổi 6:** Recursion / Backtracking
+- **Buổi 7:** Divide and Conquer
+- **Buổi 8:** Làm kỳ thi
+
+## Tháng 3: Quy hoạch động cơ bản
+
+- **Buổi 1:** Giới thiệu quy hoạch động
+- **Buổi 2:** Một số bài toán cổ điển
+- **Buổi 3:** Làm bài tập quy hoạch động nâng cao (level 1)
+- **Buổi 4:** Làm bài tập quy hoạch động nâng cao (level 2)
+- **Buổi 5:** Làm bài tập quy hoạch động
+- **Buổi 6:** Đổi biến số trong quy hoạch động
+- **Buổi 7:** Làm bài tập về đổi biến số
+- **Buổi 8:** Làm kỳ thi
+
+## Tháng 4: Đồ thị cơ bản
+
+- **Buổi 1:** Giới thiệu về đồ thị + Thuật toán DFS
+- **Buổi 2:** Sắp xếp Topo
+- **Buổi 3:** Tìm khớp và cầu
+- **Buổi 4:** Thành phần liên thông mạnh
+- **Buổi 5:** Thuật toán BFS
+- **Buổi 6:** Thuật toán Dijkstra + Tối ưu bằng Heap
+- **Buổi 7:** Disjoint Set Unions + Thuật toán Kruskal
+- **Buổi 8:** Làm kỳ thi
+
+## Tháng 5: Toán cơ bản
+
+- **Buổi 1:** Tổ hợp
+- **Buổi 2:** Làm bài tập về tổ hợp
+- **Buổi 3:** Quy hoạch động + Tổ hợp
+- **Buổi 4:** Xác suất
+- **Buổi 5:** Kỳ vọng
+- **Buổi 6:** Lý thuyết trò chơi (Giải bằng quy hoạch động)
+- **Buổi 7:** Một số phương pháp chứng minh toán học
+- **Buổi 8:** Làm kỳ thi
+
+## Tháng 6: Làm bài tập tổng hợp
+
+## Tháng 7: Cấu trúc dữ liệu nâng cao
+
+- **Buổi 1:** Segment Tree
+- **Buổi 2:** Lazy Update On Segment Tree
+- **Buổi 3:** Persistent Segment Tree
+- **Buổi 4:** Fenwick Tree
+- **Buổi 5:** Trie
+- **Buổi 6:** Sparse Table
+- **Buổi 7:** Lowest Common Ancestor
+- **Buổi 8:** Làm kỳ thi
+
+## Tháng 8: Một số kỹ thuật nâng cao
+
+- **Buổi 1:** Giải quyết bài toán dựa trên ý tưởng Merge Sort + Merge Sort Tree
+- **Buổi 2:** Bit manipulation
+- **Buổi 3:** Square Root Decomposition
+- **Buổi 4:** Sàng nguyên tố và một số bài toán ứng dụng của sàng nguyên tố
+- **Buổi 5:** Sweep Line
+- **Buổi 6:** Một số bài toán giải quyết bằng phương pháp Random
+- **Buổi 7:** Meet in the middle
+- **Buổi 8:** Làm kỳ thi
+
+## Tháng 9: Quy hoạch động nâng cao
+
+- **Buổi 1:** Quy hoạch động bitmask
+- **Buổi 2:** Làm bài tập Quy hoạch động bitmask
+- **Buổi 3:** Quy hoạch động chữ số
+- **Buổi 4:** Làm bài tập Quy hoạch động chữ số
+- **Buổi 5:** Quy hoạch động nhân ma trận
+- **Buổi 6:** Quy hoạch động trên cây
+- **Buổi 7:** Optimize DP by Divide And Conquer
+- **Buổi 8:** Làm kỳ thi
+
+## Tháng 10: Đồ thị nâng cao
+
+- **Buổi 1:** Maximum Flow + Maximum Matching
+- **Buổi 2:** Làm bài tập về luồng
+- **Buổi 3:** Lát cắt cực tiểu
+- **Buổi 4:** Eulerian Tour
+- **Buổi 5:** Heavy-Light Decomposition
+- **Buổi 6:** Centroid Decomposition
+- **Buổi 7:** 2-SAT
+- **Buổi 8:** Làm kỳ thi
+
+## Tháng 11: Toán nâng cao
+
+- **Buổi 1:** Bao hàm loại trừ
+- **Buổi 2:** Lý thuyết trò chơi (Hàm Grundy)
+- **Buổi 3:** Geometry
+- **Buổi 4:** Convex Hull
+- **Buổi 5:** Đạo hàm, tích phân
+- **Buổi 6:** Phi hàm Euler
+- **Buổi 7:** Hàm Mobius và nghịch đảo Mobius
+- **Buổi 8:** Làm kỳ thi
+
+## Tháng 12: Làm bài tập tổng hợp
