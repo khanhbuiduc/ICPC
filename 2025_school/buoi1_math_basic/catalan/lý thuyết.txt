@@ -1,0 +1,37 @@
+catalan(n) được định nghĩa như sau:
+- C(0) = 1
+- C(n) = Σ C(i)*C(n-i-1) với i từ 0 đến n-1 với n > 0
+---
+C(n) = (2n)! / ( (n+1)! * n! )
+---
+bài 1: đếm số cách sắp xếp dấu ngoặc đúng trong biểu thức có n cặp ngoặc.
+đáp án: C(n)
+
+gọi C(i) là số cách đặt khi có i ngoặc. 
+    C(0) = 1;
+đặt ngoặc ban đầu {}:
+ bên trong: i ngoặc (i:1->n-1)
+ bên ngoài: (n - i - 1) ngoặc
+số cách đặt = số cách đặt bên trong * số cách đặt bên ngoài.
+
+=>  C(n) = Σ(C(i) * C(n-i-1)) với i:1->n-1
+
+---
+bài 2: đếm số cách phân chia đa giác lồi có (n + 2) cạnh thành các tam giác.
+
+gọi C(i) là số cách chia đa giá có i cạnh.
+    chọn 1 cạnh, và 1 đỉnh không thuộc cạnh. tạo thành tam giác. chia đa giác thành 3 phần.
+        - tam giác
+        - đa giác 1: i + 2 cạnh
+        - đa giác 2: (n + 2) - (i+2) - 1 cạnh.
+                    = (n + 2) - (i+2) - 1
+        đặt N = n + 2
+    c(N) = Σ(C(i) * C(N-i-1))
+
+để tạo thành tam giác ABC lúc này:
+    A...C có k + 2 cạnh → số cách phân chia là C(k)
+    C...B có n - k + 1 cạnh → số cách phân chia là C(n-k-1)
+C(n) = Σ C(k)*C(n-k-1) với k từ 0 đến n-1
+
+đáp án: C(n)
+---

@@ -1,0 +1,22 @@
+---prime-----------------------------------------
+Sum of Divisors
+---
+đề bài: cho n. tính tổng ước số của n.
+1 <= n <= 10^12.
+---
+thuật toán chuẩn.
+ta có: n = a*b thì a là ước, b là ước.
+ll sum = 0
+duyệt a: 1-> căn n.
+    nếu n%a == 0:
+        (sum+=a)%=mod
+        b=n/a;
+        nếu b != a thì (sum+=a)%=mod 
+------------------
+PRIME1 - Prime Generator
+
+cho t <=10 truy vấn, cho L,R: in ra số nguyên tố L->R. (L-R<10k; L,R<=1 tỉ)
+dùng segment sieve.
+------------------
+
+    

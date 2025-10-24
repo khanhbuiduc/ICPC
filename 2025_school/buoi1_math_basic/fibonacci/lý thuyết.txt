@@ -1,0 +1,16 @@
+ fibonancii được định nghĩa như sau:
+- F(0) = 0
+- F(1) = 1
+- F(n) = F(n-1) + F(n-2) với n > 1
+---
+bài 1: bài toán sinh sản thỏ:
+1 cặp thỏ:
+    - 1 tháng trưởng thành
+    - từ tháng thứ 2 thỏ trưởng thành sẽ sinh ra 1 cặp thỏ con mỗi tháng
+    tháng thứ n có bao nhiêu cặp thỏ.
+
+giải: fibonancii
+---
+bài 2: đếm số cách xếp n - 1 khối 2*1 thành hình 2*(n-1)
+
+đáp án: fib(n)
