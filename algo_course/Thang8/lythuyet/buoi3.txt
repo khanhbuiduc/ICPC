@@ -6,6 +6,8 @@ B. The BOSS Can Count Pairs
 Cho mảng a[1..n], b[1..n]
 Đếm số cặp (i,j) sao cho 1≤i<j≤n và ai * aj = bi + bj
 
+1<=a[i],b[j]<=n
+
 Cách ngây thơ:
 for mọi cặp (i,j) với i < j:
     if ai * aj = bi + bj:
@@ -20,31 +22,25 @@ nhan xet:
     => min(ai, aj) ≤ √(2n)
 
 do phuc tap: O(n * √(2n)) < 100'000 * 500
+
 ---
+duyệt d: 1->căn n:
+   ai = d.
+   ai*aj = bi*bj
+   Gọi cnt[x]: số lượng vị trí có b[i] = x, a[i] = d;
+   duyệt j:1->n
+      đếm có bao nhiêu số i trc đó sao cho: bi = d*aj -  bj
+      nếu 1<= d*aj - bj <=n
+      nếu aj = d thì cnt[b[i]]++
 
-THUẬT TOÁN:
+--------------xét bài toán đơn giản hơn-------------
+bài toán: đếm có bao nhiêu cặp: ai + aj = k
+gọi cnt[x]: số lượng số có giá trị  = x;
 
-1. Nhóm phần tử theo giá trị a[i]:
-   groups[val] = vector<pair<bi, index>>
-
-2. Duyệt các cặp giá trị (ai, aj):
-   for ai in groups:
-       if val1 * val1 > 2*n: break  // Tối ưu
-       
-       for aj in groups:
-           if ai * aj > 2*n: break
-           
-           // Điều kiện: ai * aj = bi + bj
-
-3. Đếm cặp chi tiết:
-   Với mỗi cặp (val1, val2):
-   - Duyệt list1 = groups[val1]
-   - Duyệt list2 = groups[val2] 
-   - Đếm cặp (i,j) với i < j và bi + bj = val1 * val2
-
-4. Tối ưu cho trường hợp val1 = val2:
-   - Cần xử lý riêng để tránh đếm trùng
-   - Sử dụng map để đếm nhanh hơn
+duyệt i: 1->n
+   ans+= cnt[K-a[i]];
+   cnt[a[i]++];
+---
 
 ------------------
 DQUERY
@@ -164,7 +160,7 @@ quả bóng ở ô thứ i có sức mạnh là j thì sẽ nhảy đến ô i +
    có 2 query:
       0 a b: thay thế streng[a] = b
       1 a: in ra vị trí cuối cùng , số hold đi qua
----
+----------------------
 chia thành các khối
 2 1 4 1 | 1 4 2 1 | 2 1 3 1 | 1 2 2 1 
 

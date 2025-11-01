@@ -1,0 +1,7 @@
+cho mê cung m*n gồm các kí tự:
+    O: an toàn
+    X: cạm bẫy
+    E: an toàn
+tìm đường đi ngắn nhất từ e ra biên
+
+ouput

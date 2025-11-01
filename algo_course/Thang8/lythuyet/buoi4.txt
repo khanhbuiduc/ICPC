@@ -1,0 +1,60 @@
+kỹ thuật hash: kĩ thuật cắn test 90%
+Hashing là kỹ thuật chuyển đổi một chuỗi thành một số nguyên duy nhất
+
+hash(s) = s[0]*BASE^0 + s[1]*BASE^1 + s[2]*BASE^2 + ... + s[n-1]*BASE^(n-1)
+
+------------------------------------------------------------------------------------
+String Matching
+---
+cho 1 chuỗi s hãy cho biết:
+bao nhiêu vị trí mà T xuất hiện trong s dưới dạng chuỗi con liên tục.
+---
+cho s = abbsadasuidipppajsdkjh
+t = ppp
+
+Duyệt i: 0->m-1
+    hashT += (t[i] - 'a' + 1) * power27[i]; 
+duyệt i:0->n-1
+    prefix_s[i+1] = prefix_s[i] + s[i] * pow31(i); 
+---
+ans = 0
+kiểm tra [l..l+m-1] trong S:
+    ll hashS = prefix[r] - prefix[l-1];
+    nếu hashS == hashT * power27[l-1] thì ans ++
+
+---ví dụ---
+Vị trí 14: "ppp"
+l = 14, r = 16
+
+hashS = prefix[16] - prefix[13]
+      = p*27^13 + p*27^14 + p*27^15
+
+hashT = p*27^0 + p*27^1 + p*27^2
+
+Chuẩn hóa:
+hashT * power27[13] = (p*27^0 + p*27^1 + p*27^2) * 27^13
+                    = p*27^13 + p*27^14 + p*27^15
+                    == hashS ✓
+------------------------------------------------------------------------------------
+
+palindrome queries
+
+cho chuỗi s gồm n kí tự và q truy vấn.
+
+query(l,r) chuỗi s[l..r] có đối xứng hay không.
+
+---
+kasjdhkasjjsahakjshd
+asjjsa:8->13 có đối xứng không.
+
+FOR i: 1->n
+    prefix[i] = s[i-1] * pow31(i-1) + prefix[i-1]
+FOR i: n->1
+    suffix[i] = s[i-1] * pow31(n - i) + suffix[i+1]
+
+for n->1
+    left_hash = (prefix[r] - prefix[l-1]) * power27[n - R]
+    right_hash =  (sufix[l] - sufix[r + 1]) * power27[L - 1]
+-------------------------------------------------------------------------------------
+
+

@@ -1,0 +1,10 @@
+## Tháng 8: Một số kỹ thuật nâng cao
+
+- **Buổi 1:** Giải quyết bài toán dựa trên ý tưởng Merge Sort + Merge Sort Tree
+- **Buổi 2:** Bit manipulation
+- **Buổi 3:** Square Root Decomposition
+- **Buổi 4:** Sàng nguyên tố và một số bài toán ứng dụng của sàng nguyên tố
+- **Buổi 5:** Sweep Line
+- **Buổi 6:** Một số bài toán giải quyết bằng phương pháp Random
+- **Buổi 7:** Meet in the middle
+- **Buổi 8:** Làm kỳ thi
