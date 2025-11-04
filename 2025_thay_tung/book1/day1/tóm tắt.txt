@@ -1,0 +1,19 @@
+novel
+n phím xếp thành hình tròn:
+    - mỗi phím là kí tự lating
+    - có thể nhiều phím 1 kí tự.
+
+quy tắc bẩm:
+    1. chọn 1 phím
+    2. thao tác:
+        - chọn phím tiếp theo chiều kim đồng hồ và nhấn(không nhấn 2 lần, không nhấn nút mà bỏ qua nút trc đó.)
+        - kí tự hiện tại là x, chuyển đến vị trí có kí tự là x ở vị trí khác.
+---
+cho keys có length(keys) = n
+cho s.
+có thể gõ đc s không.
+---
+n = 4
+keys = abcb
+s = ababa
+

@@ -1,0 +1,18 @@
+mood
+
+đề bài:đi dạo n phút, ban đầu trạng thái tâm lý x = 0.
+mỗi phút: trạng thái tâm lý thay đổi.
+    buồn: x--
+    phút thứ i: x = 2*(x+i-2) = 2*x + 2i - 4 =  2*(x1 - i - 2)
+    về nhà: x = 0
+
+cho n. số lượng phút ít nhất steven rơi vào trạng thái buồn.
+---
+x0  = 0
+x1 = () = -2
+x2 = -2 * x1 + 2*2  - 4 = -2
+x3 = -2 + 
+---
+n = 5
+t = 0: x = 0
+t = 1: x = 2*(x+i-2) = 

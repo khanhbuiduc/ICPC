@@ -44,3 +44,4 @@
 #executables
 *.input
 *.output
+*.ans
