@@ -1,0 +1,30 @@
+cost:22
+A B D C F G 
+cost:20
+A B D E G 
+cost:14
+A B D F G 
+cost:25
+A B E D C F G 
+cost:17
+A B E D F G 
+cost:11
+A B E G 
+cost:22
+A C D B E G 
+cost:21
+A C D E G 
+cost:15
+A C D F G 
+cost:22
+A C F D B E G 
+cost:21
+A C F D E G 
+cost:9
+A C F G 
+----min_path----
+cost:9
+A C F G 
+----remove ----
+cost:11
+A B E G 
