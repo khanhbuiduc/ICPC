@@ -34,7 +34,7 @@ void dfs_dag(int u)
         }
         else if (state[v] == 1)
         {
-            print(u, v);
+            print_circle(u, v);
             haveCircle = true;
             exit(0);
         }
@@ -44,13 +44,17 @@ void dfs_dag(int u)
 ```
 
 ```cpp
-void print(int start, int end)
+void print_circle(int u, int v)
 {
     vector<int> ans;
-    ans.push_back(end);
-    for (int cur = start; cur != end; cur = trace[cur])
+    ans.push_back(v);
+    int cur = u;
+    while (cur != v)
+    {
         ans.push_back(cur);
-    ans.push_back(end);
+        cur = trace[cur];
+    }
+    ans.push_back(v);
     cout << ans.size() << endl;
     reverse(ALL(ans));
     for (auto i : ans)
@@ -95,7 +99,8 @@ void dfsTopo(int u)
 ### tìm cầu
 
 ```cpp
-void dfs_bridges(int u, int father)
+vector<pii> bridges;
+void dfs_bridge(int u, int father)
 {
     num[u] = low[u] = ++timeDFS;
     for (int v : adj[u])
@@ -106,7 +111,7 @@ void dfs_bridges(int u, int father)
             low[u] = min(low[u], num[v]);
         else
         {
-            dfs(v, u);
+            dfs_bridge(v, u);
             low[u] = min(low[u], low[v]);
             if (num[v] == low[v])
                 bridges.emplace_back(u, v);
@@ -148,10 +153,11 @@ void dfs(int u, int father)
 thành phần liên thông mạnh
 
 ```cpp
+stack<int> store_scc;
 void dfs(int u)
 {
     low[u] = num[u] = ++cntDfs;
-    store.push(u);
+    store_scc.push(u);
     for (int v : adj[u])
     {
         if (is_deleted[v])
@@ -166,11 +172,10 @@ void dfs(int u)
     }
     if (low[u] == num[u])
     {
-        ans++;
         while (true)
         {
-            int v = store.top();
-            store.pop();
+            int v = store_scc.top();
+            store_scc.pop();
             is_deleted[v] = true;
             root[v] = u;//nếu cần lưu trữ root;
             if (v == u)
@@ -187,10 +192,9 @@ tìm đường đi ngắn nhất đến mọi đỉnh
 ```cpp
 queue<int> q;
 int dist[1'000'005];
-void bfs()
+void bfs(int s0)
 {
-    for (int i = 0; i <= m; i++)
-        dist[i] = -1;
+    FOR(i, 0, n){dist[i] = -1;}
     dist[s0] = 0;
     q.push(s0);
     while (!q.empty())
@@ -201,7 +205,7 @@ void bfs()
             if (dist[v] == -1)
             {
                 dist[v] = dist[u] + 1;
-                if (v == 0)
+                if (v == 0)//tìm min path từ s0 đến đỉnh 0
                 {
                     cout << dist[v];
                     exit(0);
@@ -217,7 +221,7 @@ void bfs()
 
 ```cpp
 priority_queue<pii, vector<pii>, greater<pii>> pq;
-dijkstra()
+void dijkstra(int start)
 {
     pq.emplace(0, start);
     while (!pq.empty())
@@ -242,7 +246,7 @@ dijkstra()
 int findRoot(u) {
     return (root[u] = (root[u] == u) ? u : findRoot(root[u]));
 }
-void unionSet(int u, int v)
+void setUnion(int u, int v)
 {
     int rootu = findRoot(u);
     int rootv = findRoot(v);

@@ -1,0 +1,10 @@
+bai1: cho hình vuông ABCD chứa hv MNPQ. M, N, P, Q nằm trên cạnh hình vuông ABCD. 
+cho u,v tính S(MNO)
+
+ta thấy S(MNO) = 1/4(MNPQ) = 1/4(MN*MN) = 1/4(u*u+v*v)
+
+u,v<2*10^9
+u*u < 2*10^18 (vượt double)
+
+=> tính 2 phần số thực và số thập phân riêng rồi cộng vào nhau.
+----------------

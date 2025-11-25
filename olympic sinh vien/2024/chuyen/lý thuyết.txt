@@ -1,0 +1,52 @@
+bài 1:
+lưới a[n][m]. rô bốt đi từ (1,1) -> (n,m), có k vật cản (xt,yt)
+rô bốt có thể đi:
+    - xuống dưới
+    - sang phải
+n,m,k <= 10^5
+xt,yt <= 1000
+==> đếm cách đi từ ô (1,1) -> (n,m);
+---
+với xt,yt <= 1000 sử dụng quy hoạch động
+btcs: a[1][1] = 1;
+đáp án: a[n][m]
+QHD:
+    FOR(i,1,min(1000,n))
+    FOR(j,1,min(1000,m))
+        nếu bên phải đi đc:
+            thì a[i][j+1] += a[i][j]  
+        nếu bên dưới đi đc:
+            thì a[i+1][j] += a[i][j]  
+---
+nếu n,m <= 1000 in ra a[n][m]
+ans = 0;
+nếu n>1000:
+    xét từng ô a[1000][j] với j: 1-> min(1000,m)  
+        down = (n - 1000) - 1
+        right = (m - j) - 1
+        ans += C(down+right, down);
+C(n,k) = n! * inv(n-k)! * inv(k!)
+n<200k, k <100k.
+------------------------------------------------------------------------------
+bài 2 nén dãy.
+
+cho dãy a1^a2^a3^a4
+s1 = (a1^a2) ^ (a2^a3) ^ (a3^a4)
+s2 = ((a1^a2) ^ (a2^a3)) ^ ((a2^a3) ^ (a3^a4))
+s3 =  (a1^a2) ^ (a2^a3) ^ (a2^a3) ^ (a3^a4)
+
+s0 = 1  1   1  1
+s1 = 1  2   2  1
+s2 = 1  3   3  1
+s3 = 1  3   3  1
+---------------------
+1 =>        1
+1 1 =>      1 1
+1 1 1 =>    1 2 1
+1 1 1 1 =>  1 3 3 1
+
+=> có n số: C(0,n-1), C(1,n-1), C(2,n-1) ... , C(n-1,n-1)
+
+n<10^5.
+C(k,n) = fact[n] * invfact(n - k) * invfact(k) % 2 = chẵn hay lẻ. 
+

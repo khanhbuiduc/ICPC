@@ -2,9 +2,9 @@
 #include <math.h>
 using namespace std;
 const int inf = 1000000007;
+int n, numQueries;
 int a[200005];
 int it[4 * 200005];
-int n, numQueries;
 void build(int index, int L, int R)
 {
     if (L == R)

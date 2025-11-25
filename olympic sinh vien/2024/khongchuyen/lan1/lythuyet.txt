@@ -1,0 +1,29 @@
+bai 1 đố vui
+bài 2 đăng ký học phần
+bài 3 ba số nguyên tố
+bài 4 đường đi
+
+bài 1:
+an ghi s và đưa cho bình 
+bình ghi thêm s thành chuỗi t
+cường: thêm 1 ký tự vào vị trí bất kì 
+
+s + s -> t
+t + char -> z
+
+cho z:
+9
+ABUCD ABCD
+hỏi z là kí tự gì.
+------------------
+ABUCD ABCD
+ABUC DABCD
+---
+xét:
+AB UCD
+AB CD
+=> dãy là abcd
+ABUC
+DABCD
+khác thì bỏ.
+=> done

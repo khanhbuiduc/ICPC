@@ -1,0 +1,92 @@
+bài 1: tính gcd(fib(a),fib(b)) % MOD
+=> fib(g(a,b))
+
+subtask 1: a,b,M <50
+    tính lần lượt: gcd(fib(a),fib(b))
+subtask 2: a,b,M <10^9
+    fib(g(a,b))
+    g = gcd(a,b)
+    fib(g)
+    thay vì dùng QHD => dùng while hay đệ quy.
+    O(1 tỉ) time.
+subtask 3: a,b,M < 10^9
+    dùng công thức.
+
+------------------------------------------------
+phát kẹo:
+
+có n bạn xếp thành hàng ngang.
+    bạn thứ i có i cái kẹo.
+    xét bạn i: L->R
+        bạn i%k==0 hoặc tổng chữ số của i % k.
+            nhận 2*ai cái kẹo
+        else
+            nhận ai cái kẹo.
+    thao tác
+      1: a[i] = c;
+      2: xét [L,R], k. in ra số kẹo từng bạn nhận đc.
+
+---
+    đặc biệt:
+    k: 1-> 9
+---
+tính tổng L->R
+    segmet_tree
+người i có thể là i hoặc ai
+    tạo 9 segment tree tương ứng với 9 k.
+
+-------------------------------------------------------------------------
+bài 3: đường chạy
+    n đỉnh(1->n), n-1 cạnh đảm bảo đồ thị là 1 union. đường đi 2 chiều. 
+    đỉnh i có độ cao h.
+xét đường đi x,y,z
+    độ dài là độ dài đường đi ngắn nhất x->y->z->x
+    độ cao là độ cao max của x,y,z;
+
+yc: tính tổng đoạn đường có độ dài t.
+---
+nhận xét 1: đường đi ngắn nhất x-> y->z = 2 dist [x->y->z]
+---
+cách ngây thơ.
+subtask 1: n<200
+subtask 2: t=2,hi = 1 hoặc hi = 2;
+
+n<200:
+tính tất cả. 
+    dist[u][v] là khoảng cách ngắn nhất từ u->v, u<v;
+    high[u][v] là chiều cao cao nhất khi đi min u->v;
+---
+subtask 2,3
+vd:t=3
+    đếm(<3) - đếm(<=3) 
+
+xét cạnh (u,v) bên u có x đỉnh h<=t, bên v có y đỉnh h<=t
+    ans1 += C(1,u) * C(2,v) + C(1,v) * C(2,u)
+xét cạnh (u,v) bên u có x đỉnh h < t, bên v có y đỉnh h<t
+    ans2 += C(1,u) * C(2,v) + C(1,v) * C(2,u)
+return ans1 - ans2;
+-------------------------------    
+bài 4:
+cho p, s,q, L,R 
+đếm xem L->R có bao nhiêu đoạn % sum = 0;
+---
+vd: 070070
+q1 = [1,6]
+ouput = 9
+---s.len<= 10^5---
+0 7 0 0 7 0
+gọi mảng a có a[i] = s[i-1]
+
+gọi pre[i] = pre[i-1] - a[i];
+
+
+---
+khi s,q < 100
+s = 100
+(L,R) 
+FOR(i,1,q){
+    int L,R;
+    map<int,int> cnt;
+    duyệt l->r: dùng cnt đếm.
+    tinh
+}

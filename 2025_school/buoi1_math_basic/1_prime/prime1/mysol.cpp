@@ -6,14 +6,13 @@ vector<int> primes;
 vector<ll> ans;
 void sieve(int n)
 {
-    vector<char> is_prime(n + 1, true);
+    vector<bool> is_prime(n + 1, true);
     is_prime[0] = is_prime[1] = false;
-
-    for (int p = 2; 1ll * p * p <= n; ++p)
+    for (int p = 2; p * p <= n; ++p)
         if (is_prime[p])
-            for (ll j = 1ll * p * p; j <= n; j += p)
+            for (int j = p * p; j <= n; j += p)
                 is_prime[j] = false;
-                
+
     for (int i = 2; i <= n; ++i)
         if (is_prime[i])
             primes.push_back(i);

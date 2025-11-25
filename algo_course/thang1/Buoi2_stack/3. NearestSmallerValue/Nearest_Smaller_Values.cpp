@@ -1,25 +1,35 @@
 #include <bits/stdc++.h>
+#define FOR(i, a, b) for (int i = a; i <= b; i++)
 using namespace std;
 #define ff first
 #define ss second
 typedef pair<int, int> pii;
+int n;
+int a[200'005];
+vector<int> NSV()
+{
+    vector<int> res(n + 1);
+    stack<int> st;
+
+    FOR(i, 1, n)
+    {
+        // Xóa các phần tử >= a[i]
+        while (!st.empty() && a[st.top()] >= a[i])
+            st.pop();
+
+        res[i] = st.empty() ? 0 : st.top();
+        st.push(i);
+    }
+    return res;
+}
 
 int main()
 {
-    int n;
     cin >> n;
-    int xi, i = 1;
-    stack<pii> st;
-    st.push({0, 0});
-    while (i <= n)
-    {
-        cin >> xi;
-        while (st.top().ff >= xi)
-            st.pop();
-        cout << st.top().ss << ' ';
-        st.push({xi, i});
-        i++;
-    }
+    FOR(i, 1, n) { cin >> a[i]; }
+    vector<int> nearestSV = NSV();
+    for (auto i : nearestSV)
+        cout << i << ' ';
 }
 // stack lưu vị trí gần nhất tiềm năng
 // 2 5 1 4 8 3 2 5
